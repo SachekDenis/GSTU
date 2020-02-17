@@ -1,9 +1,8 @@
 ﻿using BusinessLogic;
-using System;
 
 namespace ImformLab1
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {

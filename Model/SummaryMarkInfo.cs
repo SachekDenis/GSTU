@@ -6,7 +6,7 @@ namespace Model
 {
     public class SummaryMarkInfo
     {
-        public List<Exam> Exams { get; set; }
+        public IReadOnlyCollection<SubjectMark> Marks { get; set; }
         //public double AverageMarkInGroup { get; set; }
 
         //public double AverageMathMark { get; set; }

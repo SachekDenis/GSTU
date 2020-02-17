@@ -26,7 +26,7 @@ namespace BusinessLogic
 
             try
             {
-                return reader.ReadFile<StudentInfo>(inputFile);
+                return reader.ReadFile(inputFile);
             }
             catch
             {
@@ -46,7 +46,11 @@ namespace BusinessLogic
             var studentTotals = creator.CastToStudentAvegareInfo(studentInfos);
             var summaryMarkInfo = creator.CastToSummaryMarkInfo(studentInfos);
 
-            var groupReport = new GroupReport() { SummaryMarkInfo = summaryMarkInfo, StudentAvegareInfos = studentTotals };
+            var groupReport = new GroupReport()
+            {
+                SummaryMarkInfo = summaryMarkInfo,
+                StudentAvegareInfos = studentTotals
+            };
 
             try
             {

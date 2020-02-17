@@ -7,9 +7,9 @@ namespace BusinessLogic
 {
     public class AverageInfoCreator
     {
-        public IEnumerable<StudentAvegareInfo> CastToStudentAvegareInfo(IEnumerable<StudentInfo> studentInfoes)
+        public IEnumerable<StudentAvegareInfo> CastToStudentAvegareInfo(IEnumerable<StudentInfo> studentInfos)
         {
-            return studentInfoes.Select(e => new StudentAvegareInfo()
+            return studentInfos.Select(e => new StudentAvegareInfo()
             {
                 FirstName = e.FirstName,
                 Surname = e.Surname,
@@ -17,25 +17,20 @@ namespace BusinessLogic
             });
         }
 
-        public SummaryMarkInfo CastToSummaryMarkInfo(IEnumerable<StudentInfo> studentInfoes)
+        public SummaryMarkInfo CastToSummaryMarkInfo(IEnumerable<StudentInfo> studentInfos)
         {
+            var averageMarks = studentInfos
+                .SelectMany(e => e.Marks)
+                .GroupBy(x => x.Subject)
+                .Select(e => new SubjectMark()
+                {
+                    Subject = e.Key,
+                    Mark = e.Average(e => e.Mark)
+                }).ToList();
+
             var summaryMarkInfo = new SummaryMarkInfo()
             {
-                Exams = new List<Exam>()
-                {
-                    new Exam() { Subject = Subject.Algoritmisation, Mark = studentInfoes.Average(e => e.MathMark) },
-                    new Exam() { Subject = Subject.Drawing, Mark = studentInfoes.Average(e => e.DrawingMark) },
-                    new Exam() { Subject = Subject.Math, Mark = studentInfoes.Average(e => e.MathMark) },
-                    new Exam() { Subject = Subject.Physics, Mark = studentInfoes.Average(e => e.PhysicsMark) },
-                    new Exam() { Subject = Subject.Chemistry, Mark = studentInfoes.Average(e => e.ChemistryMark) },
-                    new Exam() { Subject = Subject.Average, Mark = studentInfoes.Average(e => AverageMark(e)) }
-                },
-                //AverageAlgoritmisationMark = studentInfoes.Average(e => e.AlgoritmisationMark),
-                //AverageDrawingMark = studentInfoes.Average(e => e.DrawingMark),
-                //AverageMathMark = studentInfoes.Average(e => e.MathMark),
-                //AveragePhysicsMark = studentInfoes.Average(e => e.PhysicsMark),
-                //AverageChemistryMark = studentInfoes.Average(e => e.ChemistryMark),
-                //AverageMarkInGroup = studentInfoes.Average(e => AverageMark(e))
+                Marks = averageMarks.AsReadOnly()
             };
 
             return summaryMarkInfo;
@@ -43,11 +38,9 @@ namespace BusinessLogic
 
         private double AverageMark(StudentInfo studentInfo)
         {
-            return (studentInfo.MathMark
-                + studentInfo.PhysicsMark
-                + studentInfo.ChemistryMark
-                + studentInfo.AlgoritmisationMark
-                + studentInfo.DrawingMark) / 5.0;
+            return studentInfo.Marks
+                .Sum(e => e.Mark)
+                / studentInfo.Marks.Count;
         }
 
 
