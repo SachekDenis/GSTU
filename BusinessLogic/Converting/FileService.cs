@@ -41,7 +41,7 @@ namespace BusinessLogic
 
             try
             {
-                var fileProcessor = new FileProcessor(writer, reader);
+                var fileProcessor = new FileConverter(writer, reader);
                 var studentInfos = fileProcessor.ReadInfoFromFile(inputFileName);
                 fileProcessor.WriteRecord(outputFileName, studentInfos);
             }

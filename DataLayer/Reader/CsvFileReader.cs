@@ -1,5 +1,4 @@
 ﻿using CsvHelper;
-using Logger;
 using Model;
 using System;
 using System.Collections.Generic;
@@ -33,8 +32,8 @@ namespace FileReaders
                         StudentInfo studentInfo = new StudentInfo();
                         studentInfo.FirstName = csv.GetField<string>(0);
                         studentInfo.Surname = csv.GetField<string>(1);
-                        studentInfo.Marks = new List<SubjectMark>();
-                        subjectNames.ForEach(name => studentInfo.Marks.Add(new SubjectMark() { Subject = name, Mark = csv.GetField<int>(name) }));
+                        studentInfo.Marks = new List<Subject>();
+                        subjectNames.ForEach(name => studentInfo.Marks.Add(new Subject() { SubjectName = name, Mark = csv.GetField<int>(name) }));
                         records.Add(studentInfo);
                     }
                 }

@@ -7,6 +7,6 @@ namespace Model
     {
         public string Surname { get; set; }
         public string FirstName { get; set; }
-        public List<SubjectMark> Marks { get;set; }
+        public List<Subject> Marks { get;set; }
     }
 }

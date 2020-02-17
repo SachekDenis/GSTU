@@ -4,13 +4,10 @@ using System.Text;
 
 namespace Model
 {
-    public enum Subject
+    public class Subject
     {
-        Math,
-        Algoritmisation,
-        Drawing,
-        Physics,
-        Chemistry,
-        Average
+        public string SubjectName { get; set; }
+
+        public double Mark { get; set; }
     }
 }

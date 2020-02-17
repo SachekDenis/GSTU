@@ -1,6 +1,6 @@
 ﻿using FileReaders;
 using FileWriters;
-using Logger;
+using System.Linq;
 using Model;
 using System;
 using System.Collections.Generic;
@@ -8,12 +8,12 @@ using System.Text;
 
 namespace BusinessLogic
 {
-    public class FileProcessor
+    public class FileConverter
     {
         private readonly IWriter writer;
         private readonly IReader reader;
 
-        public FileProcessor(IWriter writer, IReader reader)
+        public FileConverter(IWriter writer, IReader reader)
         {
             this.writer = writer ?? throw new ArgumentNullException(nameof(writer));
             this.reader = reader ?? throw new ArgumentNullException(nameof(reader));
@@ -49,7 +49,7 @@ namespace BusinessLogic
             var groupReport = new GroupReport()
             {
                 SummaryMarkInfo = summaryMarkInfo,
-                StudentAvegareInfos = studentTotals
+                StudentAvegareInfos = studentTotals.ToList().AsReadOnly()
             };
 
             try
