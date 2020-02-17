@@ -15,7 +15,7 @@ namespace BusinessLogic
             var consoleHandler = new ConsoleHandler();
             var inputFileName = string.Empty;
             var outputFileName = string.Empty;
-            Format format = Format.Json;
+            var format = Format.Json;
 
             try
             {
@@ -42,8 +42,8 @@ namespace BusinessLogic
             try
             {
                 var fileProcessor = new FileProcessor(writer, reader);
-                var infos = fileProcessor.ReadInfoFromFile(inputFileName);
-                fileProcessor.WriteRecord(outputFileName, infos);
+                var studentInfos = fileProcessor.ReadInfoFromFile(inputFileName);
+                fileProcessor.WriteRecord(outputFileName, studentInfos);
             }
             catch (Exception ex)
             {

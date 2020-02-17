@@ -33,7 +33,7 @@ namespace FileWriters
 
                     range = worksheet.Cells[lastRow + 2, 1];
 
-                    range.LoadFromCollection(information.SummaryMarkInfo.Exams, true);
+                    range.LoadFromCollection(information.SummaryMarkInfo.Marks, true);
 
                     package.Save();
                 }

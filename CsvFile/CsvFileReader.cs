@@ -1,5 +1,6 @@
 ﻿using CsvHelper;
 using Logger;
+using Model;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -10,12 +11,12 @@ namespace FileReaders
 {
     public class CsvFileReader : IReader
     {
-        public IEnumerable<T> ReadFile<T>(string path) where T : class
+        public IEnumerable<StudentInfo> ReadFile(string path)
         {
             if (path == string.Empty || path == null)
                 throw new ArgumentNullException();
 
-            IEnumerable<T> records = null;
+            var records = new List<StudentInfo>();
 
             try
             {
@@ -24,7 +25,19 @@ namespace FileReaders
                 {
                     csv.Read();
                     csv.ReadHeader();
-                    records = csv.GetRecords<T>().ToList();
+
+                    List<string> subjectNames = csv.Context.HeaderRecord.Skip(2).ToList();
+
+                    while (csv.Read())
+                    {
+                        StudentInfo studentInfo = new StudentInfo();
+                        studentInfo.FirstName = csv.GetField<string>(0);
+                        studentInfo.Surname = csv.GetField<string>(1);
+                        studentInfo.Marks = new List<SubjectMark>();
+                        subjectNames.ForEach(name => studentInfo.Marks.Add(new SubjectMark() { Subject = name, Mark = csv.GetField<int>(name) }));
+                        records.Add(studentInfo);
+                    }
+                    //records = csv.GetRecords<StudentInfo>().ToList();
                 }
             }
             catch

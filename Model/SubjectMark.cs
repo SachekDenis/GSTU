@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Model
 {
-    public class Exam
+    public class SubjectMark
     {
-        public Subject Subject { get; set; }
+        public string Subject { get; set; }
 
         public double Mark { get; set; }
     }
