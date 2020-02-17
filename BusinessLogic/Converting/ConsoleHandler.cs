@@ -14,15 +14,15 @@ namespace BusinessLogic
         public void ParseConsoleArguments(string[] args, ref string inputFile, ref string outputFile, ref Format format)
         {
             if (args.Length < 6
-                || (args[0] != inputArgument
-                && args[2] != inputArgument
-                && args[4] != inputArgument)
-                || (args[0] != outputArgument
-                && args[2] != outputArgument
-                && args[4] != outputArgument)
-                || (args[0] != formatArgument
-                && args[2] != formatArgument
-                && args[4] != formatArgument))
+                || !args.Contains(inputArgument)
+                || !args.Contains(outputArgument)
+                || !args.Contains(formatArgument)
+                || args.Where((argument, index) =>
+                (index % 2 == 0)
+                && argument != inputArgument
+                && argument != outputArgument
+                && argument != formatArgument)
+                .Count() != 0)
                 throw new ArgumentException("Invalid console arguments");
 
             inputFile = args[Array.IndexOf(args, inputArgument) + 1];

@@ -6,7 +6,7 @@ namespace Model
 {
     public class GroupReport
     {
-        public IEnumerable<StudentAvegareInfo> StudentAvegareInfos { get; set; }
+        public IReadOnlyCollection<StudentAvegareInfo> StudentAvegareInfos { get; set; }
 
         public SummaryMarkInfo SummaryMarkInfo { get; set; }
     }
