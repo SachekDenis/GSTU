@@ -13,6 +13,9 @@ namespace BusinessLogic
         private const string formatArgument = "-f";
         public void ParseConsoleArguments(string[] args, ref string inputFile, ref string outputFile, ref Format format)
         {
+            if(args == null)
+                throw new ArgumentNullException(nameof(args));
+
             if (args.Length < 6
                 || !args.Contains(inputArgument)
                 || !args.Contains(outputArgument)

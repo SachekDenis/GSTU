@@ -7,6 +7,6 @@ namespace FileReaders
 {
     public interface IReader
     {
-        IEnumerable<StudentInfo> ReadFile(string path);
+        IEnumerable<StudentMarksInfo> ReadFile(string path);
     }
 }

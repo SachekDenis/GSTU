@@ -7,7 +7,7 @@ namespace FileWriters
 {
     public interface IWriter
     {
-        void WriteToFile(GroupReport info, string path);
+        void WriteToFile(GroupMarksReport info, string path);
 
     }
 }

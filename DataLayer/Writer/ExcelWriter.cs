@@ -9,7 +9,7 @@ namespace FileWriters
 {
     public class ExcelWriter : IWriter
     {
-        public void WriteToFile(GroupReport information, string path)
+        public void WriteToFile(GroupMarksReport information, string path)
         {
             if (information == null || path == null)
                 throw new ArgumentNullException();
@@ -32,7 +32,7 @@ namespace FileWriters
 
                     range = worksheet.Cells[lastRow + 2, 1];
 
-                    range.LoadFromCollection(information.SummaryMarkInfo.Marks, true);
+                    range.LoadFromCollection(information.SummaryMarkInfo.AverageMarks, true);
 
                     package.Save();
                 }

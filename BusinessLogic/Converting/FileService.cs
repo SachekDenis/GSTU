@@ -3,6 +3,7 @@ using FileWriters;
 using NLog;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace BusinessLogic
@@ -23,12 +24,21 @@ namespace BusinessLogic
             {
                 consoleHandler.ParseConsoleArguments(consoleArguments, ref inputFileName, ref outputFileName, ref format);
             }
+            catch (ArgumentNullException ex)
+            {
+                logger.Error($"Arguments are missing. Message: {ex.Message}");
+            }
+            catch (ArgumentException ex)
+            {
+                logger.Error($"Incorrect arguments. Message: {ex.Message}");
+            }
             catch (Exception ex)
             {
-                logger.Error(ex.Message);
+                logger.Error($"Error occured. Message: {ex.Message}");
             }
 
             IWriter writer = null;
+
             switch (format)
             {
                 case Format.Json:
@@ -47,9 +57,17 @@ namespace BusinessLogic
                 var studentInfos = fileProcessor.ReadInfoFromFile(inputFileName);
                 fileProcessor.WriteRecord(outputFileName, studentInfos);
             }
+            catch (FileNotFoundException ex)
+            {
+                logger.Error($"File does not exist. Filename: {ex.FileName}. Message: {ex.Message}");
+            }
+            catch (IOException ex)
+            {
+                logger.Error($"Error occured while working with file. Message: {ex.Message}");
+            }
             catch (Exception ex)
             {
-                logger.Error(ex.Message);
+                logger.Error($"Error occured. Message: {ex.Message}");
             }
         }
     }
