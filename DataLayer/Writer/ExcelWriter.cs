@@ -20,7 +20,7 @@ namespace FileWriters
 
                 using (ExcelPackage package = new ExcelPackage(excelFile))
                 {
-                    var worksheet = package.Workbook.Worksheets.Add($"{typeof(SummaryMarkInfo).ToString()}{package.Workbook.Worksheets.Count}");
+                    var worksheet = package.Workbook.Worksheets.Add($"{typeof(SummaryMarkInfo).Name}{package.Workbook.Worksheets.Count}");
 
                     var range = worksheet.Cells[1, 1];
 

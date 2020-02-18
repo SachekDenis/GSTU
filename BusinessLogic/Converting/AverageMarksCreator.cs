@@ -20,7 +20,7 @@ namespace BusinessLogic
         public SummaryMarkInfo CastToSummaryMarkInfo(IEnumerable<StudentMarksInfo> studentInfos)
         {
             var averageMarks = studentInfos
-                .SelectMany(student => student.Marks)
+                .SelectMany(student => student.Subjects)
                 .GroupBy(mark => mark.Name)
                 .Select(subject => new Subject()
                 {
@@ -44,9 +44,9 @@ namespace BusinessLogic
 
         private double AverageMark(StudentMarksInfo studentInfo)
         {
-            return studentInfo.Marks
+            return studentInfo.Subjects
                 .Sum(subject => subject.Mark)
-                / studentInfo.Marks.Count;
+                / studentInfo.Subjects.Count;
         }
 
 

@@ -1,5 +1,6 @@
 ﻿using FileReaders;
 using FileWriters;
+using Ninject;
 using NLog;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,6 @@ namespace BusinessLogic
         public void ConvertFile(string[] consoleArguments)
         {
             var logger = LogManager.GetCurrentClassLogger();
-            var reader = new CsvFileReader();
             var consoleHandler = new ConsoleHandler();
             var inputFileName = string.Empty;
             var outputFileName = string.Empty;
@@ -37,19 +37,10 @@ namespace BusinessLogic
                 logger.Error($"Error occured. Message: {ex.Message}");
             }
 
-            IWriter writer = null;
+            var kernel = new StandardKernel(new Bindings(format));
 
-            switch (format)
-            {
-                case Format.Json:
-                    writer = new JsonWriter();
-                    break;
-                case Format.Xlsx:
-                    writer = new ExcelWriter();
-                    break;
-                default:
-                    break;
-            }
+            var writer = kernel.Get<IWriter>();
+            var reader = kernel.Get<IReader>();
 
             try
             {

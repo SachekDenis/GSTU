@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Unicode;
 
 namespace FileWriters
 {
@@ -14,7 +16,12 @@ namespace FileWriters
             if (information == null || path == null)
                 throw new ArgumentNullException();
 
-            string serializedCollection = JsonSerializer.Serialize(information);
+            var options = new JsonSerializerOptions
+            {
+                Encoder = JavaScriptEncoder.Create(UnicodeRanges.All)
+            };
+
+            string serializedCollection = JsonSerializer.Serialize(information,options);
 
             try
             {
