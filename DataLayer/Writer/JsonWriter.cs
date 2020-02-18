@@ -9,7 +9,7 @@ namespace FileWriters
 {
     public class JsonWriter : IWriter
     {
-        public void WriteToFile(GroupReport information, string path)
+        public void WriteToFile(GroupMarksReport information, string path)
         {
             if (information == null || path == null)
                 throw new ArgumentNullException();

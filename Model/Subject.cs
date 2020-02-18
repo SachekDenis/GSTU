@@ -6,7 +6,7 @@ namespace Model
 {
     public class Subject
     {
-        public string SubjectName { get; set; }
+        public string Name { get; set; }
 
         public double Mark { get; set; }
     }

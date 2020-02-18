@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Model
 {
-    public class GroupReport
+    public class GroupMarksReport
     {
         public IReadOnlyCollection<StudentAvegareInfo> StudentAvegareInfos { get; set; }
 

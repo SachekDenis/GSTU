@@ -10,12 +10,13 @@ namespace FileReaders
 {
     public class CsvFileReader : IReader
     {
-        public IEnumerable<StudentInfo> ReadFile(string path)
+
+        public IEnumerable<StudentMarksInfo> ReadFile(string path)
         {
             if (path == string.Empty || path == null)
                 throw new ArgumentNullException();
 
-            var records = new List<StudentInfo>();
+            var records = new List<StudentMarksInfo>();
 
             try
             {
@@ -29,11 +30,11 @@ namespace FileReaders
 
                     while (csv.Read())
                     {
-                        StudentInfo studentInfo = new StudentInfo();
+                        StudentMarksInfo studentInfo = new StudentMarksInfo();
                         studentInfo.FirstName = csv.GetField<string>(0);
                         studentInfo.Surname = csv.GetField<string>(1);
                         studentInfo.Marks = new List<Subject>();
-                        subjectNames.ForEach(name => studentInfo.Marks.Add(new Subject() { SubjectName = name, Mark = csv.GetField<int>(name) }));
+                        subjectNames.ForEach(name => studentInfo.Marks.Add(new Subject() { Name = name, Mark = csv.GetField<int>(name) }));
                         records.Add(studentInfo);
                     }
                 }

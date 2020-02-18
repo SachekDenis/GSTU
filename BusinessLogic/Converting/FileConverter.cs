@@ -19,10 +19,10 @@ namespace BusinessLogic
             this.reader = reader ?? throw new ArgumentNullException(nameof(reader));
         }
 
-        public IEnumerable<StudentInfo> ReadInfoFromFile(string inputFile)
+        public IEnumerable<StudentMarksInfo> ReadInfoFromFile(string inputFile)
         {
             if (inputFile == null || inputFile == string.Empty)
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(inputFile));
 
             try
             {
@@ -35,18 +35,21 @@ namespace BusinessLogic
 
         }
 
-        public void WriteRecord(string outputFile, IEnumerable<StudentInfo> studentInfos)
+        public void WriteRecord(string outputFile, IEnumerable<StudentMarksInfo> studentInfos)
         {
 
             if (outputFile == null || outputFile == string.Empty)
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(outputFile));
 
-            var creator = new AverageInfoCreator();
+            if(studentInfos == null)
+                throw new ArgumentNullException(nameof(studentInfos));
+
+            var creator = new AverageMarksCreator();
 
             var studentTotals = creator.CastToStudentAvegareInfo(studentInfos);
             var summaryMarkInfo = creator.CastToSummaryMarkInfo(studentInfos);
 
-            var groupReport = new GroupReport()
+            var groupReport = new GroupMarksReport()
             {
                 SummaryMarkInfo = summaryMarkInfo,
                 StudentAvegareInfos = studentTotals.ToList().AsReadOnly()

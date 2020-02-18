@@ -6,6 +6,6 @@ namespace Model
 {
     public class SummaryMarkInfo
     {
-        public IReadOnlyCollection<Subject> Marks { get; set; }
+        public IReadOnlyCollection<Subject> AverageMarks { get; set; }
     }
 }
