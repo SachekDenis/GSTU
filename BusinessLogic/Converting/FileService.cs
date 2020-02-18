@@ -1,6 +1,6 @@
 ﻿using FileReaders;
 using FileWriters;
-using NLog;
+using Logger;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,10 +9,8 @@ namespace BusinessLogic
 {
     public class FileService
     {
-
         public void ConvertFile(string[] consoleArguments)
         {
-            var logger = LogManager.GetCurrentClassLogger();
             var reader = new CsvFileReader();
             var consoleHandler = new ConsoleHandler();
             var inputFileName = string.Empty;
@@ -25,7 +23,7 @@ namespace BusinessLogic
             }
             catch (Exception ex)
             {
-                logger.Error(ex.Message);
+                LogHelper.Log(ex.Message);
             }
 
             IWriter writer = null;
@@ -49,7 +47,7 @@ namespace BusinessLogic
             }
             catch (Exception ex)
             {
-                logger.Error(ex.Message);
+                LogHelper.Log(ex.Message);
             }
         }
     }
