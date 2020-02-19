@@ -15,7 +15,7 @@ namespace BusinessLogic
         public void ConvertFile(string[] consoleArguments)
         {
             var logger = LogManager.GetCurrentClassLogger();
-            var consoleHandler = new ConsoleHandler();
+            var consoleHandler = new ConsoleParser();
             var inputFileName = string.Empty;
             var outputFileName = string.Empty;
             var format = Format.Json;

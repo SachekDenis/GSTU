@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace BusinessLogic
 {
-    public class AverageMarksCreator
+    public class DataCaster
     {
         public IEnumerable<StudentAvegareInfo> CastToStudentAvegareInfo(IEnumerable<StudentMarksInfo> studentInfos)
         {

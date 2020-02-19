@@ -44,7 +44,7 @@ namespace BusinessLogic
             if(studentInfos == null)
                 throw new ArgumentNullException(nameof(studentInfos));
 
-            var creator = new AverageMarksCreator();
+            var creator = new DataCaster();
 
             var studentTotals = creator.CastToStudentAvegareInfo(studentInfos);
             var summaryMarkInfo = creator.CastToSummaryMarkInfo(studentInfos);
