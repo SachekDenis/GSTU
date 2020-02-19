@@ -1,8 +1,6 @@
 ﻿using Model;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Unicode;
@@ -21,16 +19,10 @@ namespace FileWriters
                 Encoder = JavaScriptEncoder.Create(UnicodeRanges.All)
             };
 
-            string serializedCollection = JsonSerializer.Serialize(information,options);
+            string serializedCollection = JsonSerializer.Serialize(information, options);
 
-            try
-            {
-                File.WriteAllText(path, serializedCollection);
-            }
-            catch
-            {
-                throw;
-            }
+            using var writer = new StreamWriter(path);
+            writer.Write(serializedCollection);
         }
     }
 }
