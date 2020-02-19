@@ -6,7 +6,7 @@ using FileWriters;
 
 namespace BusinessLogic
 {
-    public class ConsoleHandler
+    public class ConsoleParser
     {
         private const string inputArgument = "-i";
         private const string outputArgument = "-o";

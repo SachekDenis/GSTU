@@ -7,9 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lab1", "Lab1.csproj", "{DD9
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogic", "..\BusinessLogic\BusinessLogic.csproj", "{CC31C930-F800-4140-B46B-1CF36FE90F94}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model", "..\Model\Model.csproj", "{CCA873A7-4C2E-4A60-B8E8-17D2FAC1FEE4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayer", "..\DataLayer\DataLayer.csproj", "{9C23EB1D-E0E9-410E-BD33-05FAFEC474DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataLayer", "..\DataLayer\DataLayer.csproj", "{9C23EB1D-E0E9-410E-BD33-05FAFEC474DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,10 +23,6 @@ Global
 		{CC31C930-F800-4140-B46B-1CF36FE90F94}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC31C930-F800-4140-B46B-1CF36FE90F94}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC31C930-F800-4140-B46B-1CF36FE90F94}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CCA873A7-4C2E-4A60-B8E8-17D2FAC1FEE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CCA873A7-4C2E-4A60-B8E8-17D2FAC1FEE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CCA873A7-4C2E-4A60-B8E8-17D2FAC1FEE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CCA873A7-4C2E-4A60-B8E8-17D2FAC1FEE4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9C23EB1D-E0E9-410E-BD33-05FAFEC474DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9C23EB1D-E0E9-410E-BD33-05FAFEC474DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C23EB1D-E0E9-410E-BD33-05FAFEC474DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
