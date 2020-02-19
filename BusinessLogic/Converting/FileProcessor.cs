@@ -1,19 +1,18 @@
-﻿using FileReaders;
-using FileWriters;
-using System.Linq;
-using Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using FileReaders;
+using FileWriters;
+using Model;
 
 namespace BusinessLogic
 {
-    public class FileConverter
+    public class FileProcessor
     {
         private readonly IWriter writer;
         private readonly IReader reader;
 
-        public FileConverter(IWriter writer, IReader reader)
+        public FileProcessor(IWriter writer, IReader reader)
         {
             this.writer = writer ?? throw new ArgumentNullException(nameof(writer));
             this.reader = reader ?? throw new ArgumentNullException(nameof(reader));
@@ -24,14 +23,7 @@ namespace BusinessLogic
             if (inputFile == null || inputFile == string.Empty)
                 throw new ArgumentNullException(nameof(inputFile));
 
-            try
-            {
-                return reader.ReadFile(inputFile);
-            }
-            catch
-            {
-                throw;
-            }
+            return reader.ReadFile(inputFile);
 
         }
 
@@ -41,13 +33,11 @@ namespace BusinessLogic
             if (outputFile == null || outputFile == string.Empty)
                 throw new ArgumentNullException(nameof(outputFile));
 
-            if(studentInfos == null)
+            if (studentInfos == null)
                 throw new ArgumentNullException(nameof(studentInfos));
 
-            var creator = new DataCaster();
-
-            var studentTotals = creator.CastToStudentAvegareInfo(studentInfos);
-            var summaryMarkInfo = creator.CastToSummaryMarkInfo(studentInfos);
+            var studentTotals = studentInfos.CastToStudentAvegareInfo();
+            var summaryMarkInfo = studentInfos.CastToSummaryMarkInfo();
 
             var groupReport = new GroupMarksReport()
             {
@@ -55,14 +45,8 @@ namespace BusinessLogic
                 StudentAvegareInfos = studentTotals.ToList().AsReadOnly()
             };
 
-            try
-            {
-                writer.WriteToFile(groupReport, outputFile);
-            }
-            catch
-            {
-                throw;
-            }
+
+            writer.WriteToFile(groupReport, outputFile);
         }
     }
 }

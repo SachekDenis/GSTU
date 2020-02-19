@@ -5,19 +5,19 @@ using System.Linq;
 
 namespace BusinessLogic
 {
-    public class DataCaster
+    public static class DataCaster
     {
-        public IEnumerable<StudentAvegareInfo> CastToStudentAvegareInfo(IEnumerable<StudentMarksInfo> studentInfos)
+        public static IEnumerable<StudentAvegareInfo> CastToStudentAvegareInfo(this IEnumerable<StudentMarksInfo> studentInfos)
         {
             return studentInfos.Select(studentInfo => new StudentAvegareInfo()
             {
                 FirstName = studentInfo.FirstName,
                 Surname = studentInfo.Surname,
-                AverageMark = AverageMark(studentInfo)
+                AverageMark = GetAverageMark(studentInfo)
             });
         }
 
-        public SummaryMarkInfo CastToSummaryMarkInfo(IEnumerable<StudentMarksInfo> studentInfos)
+        public static SummaryMarkInfo CastToSummaryMarkInfo(this IEnumerable<StudentMarksInfo> studentInfos)
         {
             var averageMarks = studentInfos
                 .SelectMany(student => student.Subjects)
@@ -42,7 +42,7 @@ namespace BusinessLogic
             return summaryMarkInfo;
         }
 
-        private double AverageMark(StudentMarksInfo studentInfo)
+        private static double GetAverageMark(StudentMarksInfo studentInfo)
         {
             return studentInfo.Subjects
                 .Sum(subject => subject.Mark)

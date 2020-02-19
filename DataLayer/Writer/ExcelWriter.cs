@@ -1,46 +1,37 @@
 ﻿using Model;
 using OfficeOpenXml;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
 namespace FileWriters
 {
     public class ExcelWriter : IWriter
     {
+        private const int rowOffset = 2;
         public void WriteToFile(GroupMarksReport information, string path)
         {
             if (information == null || path == null)
                 throw new ArgumentNullException();
 
-            try
-            {
-                FileInfo excelFile = new FileInfo(path);
 
-                using (ExcelPackage package = new ExcelPackage(excelFile))
-                {
-                    var worksheet = package.Workbook.Worksheets.Add($"{typeof(SummaryMarkInfo).Name}{package.Workbook.Worksheets.Count}");
+            var excelFile = new FileInfo(path);
 
-                    var range = worksheet.Cells[1, 1];
+            using ExcelPackage package = new ExcelPackage(excelFile);
+            var worksheet = package.Workbook.Worksheets.Add($"{typeof(SummaryMarkInfo).Name}{package.Workbook.Worksheets.Count}");
 
-                    range.LoadFromCollection(information.StudentAvegareInfos, true);
+            var range = worksheet.Cells[1, 1];
 
-                    range.AutoFitColumns();
+            range.LoadFromCollection(information.StudentAvegareInfos, true);
 
-                    var lastRow = worksheet.Dimension.End.Row;
+            range.AutoFitColumns();
 
-                    range = worksheet.Cells[lastRow + 2, 1];
+            var lastRow = worksheet.Dimension.End.Row;
 
-                    range.LoadFromCollection(information.SummaryMarkInfo.AverageMarks, true);
+            range = worksheet.Cells[lastRow + rowOffset, 1];
 
-                    package.Save();
-                }
-            }
-            catch
-            {
-                throw;
-            }
+            range.LoadFromCollection(information.SummaryMarkInfo.AverageMarks, true);
+
+            package.Save();
         }
     }
 }

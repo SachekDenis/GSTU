@@ -19,6 +19,7 @@ namespace BusinessLogic
         public override void Load()
         {
             Bind<IReader>().To<CsvFileReader>();
+            Bind<FileProcessor>().To<FileProcessor>().InSingletonScope();
             switch (_format)
             {
                 case Format.Json:

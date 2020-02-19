@@ -15,14 +15,14 @@ namespace BusinessLogic
         public void ConvertFile(string[] consoleArguments)
         {
             var logger = LogManager.GetCurrentClassLogger();
-            var consoleHandler = new ConsoleParser();
+            var consoleParser = new ConsoleParser();
             var inputFileName = string.Empty;
             var outputFileName = string.Empty;
             var format = Format.Json;
 
             try
             {
-                consoleHandler.ParseConsoleArguments(consoleArguments, ref inputFileName, ref outputFileName, ref format);
+                consoleParser.ParseConsoleArguments(consoleArguments, out inputFileName, out outputFileName, out format);
             }
             catch (ArgumentNullException ex)
             {
@@ -39,12 +39,10 @@ namespace BusinessLogic
 
             var kernel = new StandardKernel(new Bindings(format));
 
-            var writer = kernel.Get<IWriter>();
-            var reader = kernel.Get<IReader>();
+            var fileProcessor = kernel.Get<FileProcessor>();
 
             try
             {
-                var fileProcessor = new FileConverter(writer, reader);
                 var studentInfos = fileProcessor.ReadInfoFromFile(inputFileName);
                 fileProcessor.WriteRecord(outputFileName, studentInfos);
             }

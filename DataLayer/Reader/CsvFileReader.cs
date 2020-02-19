@@ -1,11 +1,10 @@
-﻿using CsvHelper;
-using Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
+using CsvHelper;
+using Model;
 
 namespace FileReaders
 {
@@ -19,37 +18,37 @@ namespace FileReaders
 
             var records = new List<StudentMarksInfo>();
 
-            try
+
+            using (var reader = new StreamReader(path))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
-                using (var reader = new StreamReader(path))
-                using (var csv = new CsvReader(reader,CultureInfo.InvariantCulture))
+                csv.Read();
+                csv.ReadHeader();
+
+                var subjectNames = csv.Context.HeaderRecord.Skip(2).ToList();
+
+                while (csv.Read())
                 {
-                    csv.Read();
-                    csv.ReadHeader();
-
-                    List<string> subjectNames = csv.Context.HeaderRecord.Skip(2).ToList();
-
-                    while (csv.Read())
+                    var studentInfo = new StudentMarksInfo
                     {
-                        StudentMarksInfo studentInfo = new StudentMarksInfo
-                        {
-                            FirstName = csv.GetField<string>(0),
-                            Surname = csv.GetField<string>(1),
-                        };
+                        FirstName = csv.GetField<string>(0),
+                        Surname = csv.GetField<string>(1),
+                    };
 
-                        List<Subject> subjects = new List<Subject>();
+                    List<Subject> subjects = new List<Subject>();
 
-                        subjectNames.ForEach(name => subjects.Add(new Subject() { Name = name, Mark = csv.GetField<int>(name) }));
+                    subjectNames.ForEach(
+                        name => subjects.Add(
+                            new Subject()
+                            {
+                                Name = name,
+                                Mark = csv.GetField<int>(name)
+                            }));
 
-                        studentInfo.Subjects = subjects.AsReadOnly();
-                        
-                        records.Add(studentInfo);
-                    }
+                    studentInfo.Subjects = subjects.AsReadOnly();
+
+                    records.Add(studentInfo);
                 }
-            }
-            catch
-            {
-                throw;
             }
 
             return records;
