@@ -25,7 +25,7 @@ namespace FileReaders
                 csv.Read();
                 csv.ReadHeader();
 
-                var subjectNames = csv.Context.HeaderRecord.Skip(2).ToList();
+                var subjectNames = csv.Context.HeaderRecord.Skip(3).ToList();
 
                 while (csv.Read())
                 {
@@ -33,6 +33,7 @@ namespace FileReaders
                     {
                         FirstName = csv.GetField<string>(0),
                         Surname = csv.GetField<string>(1),
+                        MiddleName = csv.GetField<string>(2)
                     };
 
                     List<Subject> subjects = new List<Subject>();

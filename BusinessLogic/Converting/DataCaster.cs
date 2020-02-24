@@ -13,6 +13,7 @@ namespace BusinessLogic
             {
                 FirstName = studentInfo.FirstName,
                 Surname = studentInfo.Surname,
+                MiddleName = studentInfo.MiddleName,
                 AverageMark = GetAverageMark(studentInfo)
             });
         }

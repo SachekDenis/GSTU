@@ -2,6 +2,7 @@
 using OfficeOpenXml;
 using System;
 using System.IO;
+using System.Linq;
 
 namespace FileWriters
 {
@@ -17,6 +18,7 @@ namespace FileWriters
             var excelFile = new FileInfo(path);
 
             using ExcelPackage package = new ExcelPackage(excelFile);
+
             var worksheet = package.Workbook.Worksheets.Add($"{typeof(SummaryMarkInfo).Name}{package.Workbook.Worksheets.Count}");
 
             var range = worksheet.Cells[1, 1];
