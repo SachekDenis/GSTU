@@ -7,6 +7,7 @@ namespace Model
     {
         public string Surname { get; set; }
         public string FirstName { get; set; }
+        public string MiddleName { get;set;}
         public IReadOnlyCollection<Subject> Subjects { get;set; }
     }
 }

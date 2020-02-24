@@ -10,6 +10,8 @@ namespace Model
 
         public string Surname { get; set; }
 
+        public string MiddleName { get;set;}
+
         public double AverageMark { get; set; }
     }
 }
