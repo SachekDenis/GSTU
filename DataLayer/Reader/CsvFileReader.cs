@@ -29,6 +29,9 @@ namespace FileReaders
 
                 while (csv.Read())
                 {
+                    if (csv.Context.Record.Length != csv.Context.HeaderRecord.Length)
+                        throw new InvalidDataException("File contains excess data");
+
                     var studentInfo = new StudentMarksInfo
                     {
                         FirstName = csv.GetField<string>(0),
