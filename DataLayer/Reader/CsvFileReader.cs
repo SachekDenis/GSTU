@@ -39,7 +39,7 @@ namespace FileReaders
                         MiddleName = csv.GetField<string>(2)
                     };
 
-                    List<Subject> subjects = new List<Subject>();
+                    var subjects = new List<Subject>();
 
                     subjectNames.ForEach(
                         name => subjects.Add(

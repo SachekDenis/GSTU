@@ -20,9 +20,15 @@ namespace BusinessLogic
             var outputFileName = string.Empty;
             var format = Format.Json;
 
+            var kernel = new StandardKernel(new Bindings(format));
+
+            var fileProcessor = kernel.Get<FileProcessor>();
+
             try
             {
                 consoleParser.ParseConsoleArguments(consoleArguments, out inputFileName, out outputFileName, out format);
+                var studentInfos = fileProcessor.ReadInfoFromFile(inputFileName);
+                fileProcessor.WriteRecord(outputFileName, studentInfos);
             }
             catch (ArgumentNullException ex)
             {
@@ -31,20 +37,6 @@ namespace BusinessLogic
             catch (ArgumentException ex)
             {
                 logger.Error($"Incorrect arguments. Message: {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                logger.Error($"Error occured. Message: {ex.Message}");
-            }
-
-            var kernel = new StandardKernel(new Bindings(format));
-
-            var fileProcessor = kernel.Get<FileProcessor>();
-
-            try
-            {
-                var studentInfos = fileProcessor.ReadInfoFromFile(inputFileName);
-                fileProcessor.WriteRecord(outputFileName, studentInfos);
             }
             catch (FileNotFoundException ex)
             {
