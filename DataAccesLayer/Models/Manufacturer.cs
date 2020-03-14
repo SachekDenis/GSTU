@@ -4,9 +4,12 @@ using System.Text;
 
 namespace DataAccesLayer.Models
 {
-    public class User
+    public class Manufacturer
     {
         public int Id { get; set; }
-        public List<Order> Orders { get; set; }
+
+        public string Name { get; set; }
+
+        public string Country { get; set; }
     }
 }

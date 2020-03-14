@@ -12,8 +12,13 @@ namespace DataAccesLayer.EntityFramework
     {
         public DbSet<Product> Products { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<GraphicalCard> GraphicalCards {get;set;}
+        public DbSet<Buyer> Users { get; set; }
+        public DbSet<GraphicalCard> GraphicalCards { get; set; }
+        public DbSet<Cpu> Cpus { get; set; }
+        public DbSet<Motherboard> Motherboards { get; set; }
+        public DbSet<Ram> Rams { get; set; }
+        public DbSet<Manufacturer> Manufacturers { get; set; }
+
         public StoreContext(DbContextOptions<StoreContext> options) : base(options)
         {
             Database.EnsureCreated();
