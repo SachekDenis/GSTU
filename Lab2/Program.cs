@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.IO;
+using DataAccesLayer.Repo;
 
 namespace Lab2
 {
@@ -21,6 +22,7 @@ namespace Lab2
                 {
                     options.UseSqlServer(config.GetConnectionString("StoreConnection"));
                 })
+                .AddSingleton(typeof(IRepository<>),typeof(StoreRepository<>))
                 .BuildServiceProvider();
 
             var context = services.GetService<StoreContext>();
