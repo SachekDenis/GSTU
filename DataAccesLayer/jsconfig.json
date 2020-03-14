@@ -1,5 +1,0 @@
-{
-  "ConnectionStrings": {
-    "StoreConnection": "Data Source=(localdb)\\MSSQLLocalDB;Integrated Security=True;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
-  }
-}
