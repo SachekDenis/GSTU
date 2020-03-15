@@ -10,6 +10,7 @@ namespace DataAccesLayer.Models
         public string Name { get; set; }
         public decimal Price { get; set; }
         public Manufacturer Manufacturer { get; set; }
+        public Supply Supply {get;set;}
         public Characteristics AdditionalInformation { get; set; }
 
     }
