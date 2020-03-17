@@ -18,8 +18,11 @@ namespace FileWriters
             var excelFile = new FileInfo(path);
 
             using ExcelPackage package = new ExcelPackage(excelFile);
+            
+            if(package.Workbook.Worksheets.Count(worksheet=>worksheet.Name == typeof(SummaryMarkInfo).Name) > 0)
+                package.Workbook.Worksheets.Delete(typeof(SummaryMarkInfo).Name);
 
-            var worksheet = package.Workbook.Worksheets.Add($"{typeof(SummaryMarkInfo).Name}{package.Workbook.Worksheets.Count}");
+            var worksheet = package.Workbook.Worksheets.Add(typeof(SummaryMarkInfo).Name);
 
             var range = worksheet.Cells[1, 1];
 

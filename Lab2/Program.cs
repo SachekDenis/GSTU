@@ -22,7 +22,7 @@ namespace Lab2
                 {
                     options.UseSqlServer(config.GetConnectionString("StoreConnection"));
                 })
-                .AddSingleton(typeof(IRepository<>),typeof(StoreRepository<>))
+                .AddSingleton(typeof(IRepository<>), typeof(StoreRepository<>))
                 .BuildServiceProvider();
 
             var context = services.GetService<StoreContext>();

@@ -4,9 +4,8 @@ using System.Text;
 
 namespace DataAccesLayer.Models
 {
-    public class Product
+    public class Product:Entity
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
         public int ManufacturerId { get; set; }

@@ -6,11 +6,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="BusinessLogic\**" />
+    <Compile Remove="DataAccesLayer\**" />
+    <EmbeddedResource Remove="BusinessLogic\**" />
+    <EmbeddedResource Remove="DataAccesLayer\**" />
+    <None Remove="BusinessLogic\**" />
+    <None Remove="DataAccesLayer\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DataAccesLayer\DataAccesLayer.csproj" />
+    <ProjectReference Include="BusinessLogic\BusinessLogic.csproj" />
+    <ProjectReference Include="DataAccesLayer\DataAccesLayer.csproj" />
   </ItemGroup>
 
 </Project>

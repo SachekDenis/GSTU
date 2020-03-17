@@ -7,18 +7,16 @@ using System.Text;
 
 namespace BusinessLogic.Managment
 {
-    class ProductManager : IManager<Product>
+    class ProductValidator : Validator<Product>
     {
-        private readonly IRepository<Product> _products;
-
         private readonly IRepository<Order> _orders;
 
-        public ProductManager(IRepository<Product> products)
+        public ProductValidator(IRepository<Product> products, IRepository<Order> orders):base(products)
         {
-            _products = products;
+            _orders = orders;
         }
 
-        public void Add(Product item)
+        public override void Add(Product item)
         {
             if (item == null)
             {
@@ -26,17 +24,18 @@ namespace BusinessLogic.Managment
             }
 
             if (item.Manufacturer == null
-                || item.Supply == null)
+                || item.Supply == null
+                || item.AdditionalInformation == null)
             {
                 throw new InvalidOperationException("Product must have manufaturer and supplier");
             }
 
-            _products.Add(item);
+            _items.Add(item);
         }
 
-        public void Delete(int itemId)
+        public override void Delete(int itemId)
         {
-            var product = _products.GetById(itemId).Result;
+            var product = _items.GetById(itemId).Result;
 
             if (product == null)
             {
@@ -50,52 +49,36 @@ namespace BusinessLogic.Managment
                 throw new InvalidOperationException("Product connected to order");
             }
 
-            _products.Delete(itemId);
+            _items.Delete(itemId);
         }
 
-        public IEnumerable<Product> GetAll()
-        {
-            return _products.GetAll().Result;
-        }
-
-        public Product GetById(int itemId)
-        {
-            var product = _products.GetById(itemId).Result;
-
-            return product;
-        }
-
-        public void Update(Product item)
+        public override void Update(Product item)
         {
             if (item == null)
             {
                 throw new ArgumentNullException(nameof(item));
             }
 
-            var productToUpdate = _products.GetById(item.Id).Result;
+            var productToUpdate = _items.GetById(item.Id).Result;
 
-            if (item == null)
+            if (productToUpdate == null)
             {
                 throw new InvalidOperationException("Product with such id doesn't exist");
             }
 
-            if (item.Manufacturer == null || item.Supply == null || item.AdditionalInformation == null)
+            if (item.Manufacturer == null
+                || item.Supply == null
+                || item.AdditionalInformation == null)
             {
                 throw new MissingFieldException("Producat must have manufaturer, supply, additionalInformation");
             }
 
-            if(item.Price < 0)
+            if (item.Price < 0)
             {
                 throw new FormatException("Price cant be negative");
             }
 
-            productToUpdate.Manufacturer = item.Manufacturer;
-            productToUpdate.Name = item.Name;
-            productToUpdate.Price = item.Price;
-            productToUpdate.Supply = item.Supply;
-            productToUpdate.AdditionalInformation = item.AdditionalInformation;
-
-            _products.Update(productToUpdate);
+            _items.Update(item);
         }
     }
 }
