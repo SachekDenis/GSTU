@@ -20,13 +20,11 @@ namespace BusinessLogic
             var outputFileName = string.Empty;
             var format = Format.Json;
 
-            var kernel = new StandardKernel(new Bindings(format));
-
-            var fileProcessor = kernel.Get<FileProcessor>();
-
             try
             {
                 consoleParser.ParseConsoleArguments(consoleArguments, out inputFileName, out outputFileName, out format);
+                var kernel = new StandardKernel(new Bindings(format));
+                var fileProcessor = kernel.Get<FileProcessor>();
                 var studentInfos = fileProcessor.ReadInfoFromFile(inputFileName);
                 fileProcessor.WriteRecord(outputFileName, studentInfos);
             }

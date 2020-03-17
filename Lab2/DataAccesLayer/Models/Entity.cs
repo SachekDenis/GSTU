@@ -4,6 +4,8 @@ using System.Text;
 
 namespace DataAccesLayer.Models
 {
-    public abstract class Characteristics:Entity
-    { }
+    public abstract class Entity
+    {
+        public int Id {get;set;}
+    }
 }

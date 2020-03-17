@@ -4,11 +4,9 @@ using System.Text;
 
 namespace DataAccesLayer.Models
 {
-    public class Order
+    public class Order:Entity
     {
-        public int Id { get; set; }
         public int ProductId {get;set;}
-
         public Product Product {get;set;}
         public int Count { get; set; }
     }
