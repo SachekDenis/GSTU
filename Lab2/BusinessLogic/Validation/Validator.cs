@@ -1,4 +1,5 @@
-﻿using DataAccesLayer.Models;
+﻿using BusinessLogic.Exception;
+using DataAccesLayer.Models;
 using DataAccesLayer.Repo;
 using System;
 using System.Collections.Generic;
@@ -15,24 +16,30 @@ namespace BusinessLogic.Managment
             _items = items;
         }
 
-        public virtual void Add(T item)
+        public void Add(T item)
         {
             if (item == null)
             {
                 throw new ArgumentNullException(nameof(item));
             }
 
+            if (!ValidateProperties(item))
+                throw new ValidationException($"{nameof(T)} has invalid properties");
+
             _items.Add(item);
         }
 
-        public virtual void Delete(int itemId)
+        public void Delete(int itemId)
         {
             var item = _items.GetById(itemId).Result;
 
             if (item == null)
             {
-                throw new InvalidOperationException($"{nameof(T)} not found");
+                throw new ValidationException($"{nameof(T)} not found");
             }
+
+            if (!ValidateReferences(item))
+                throw new ValidationException($"{nameof(T)} has references");
 
             _items.Delete(itemId);
         }
@@ -47,7 +54,7 @@ namespace BusinessLogic.Managment
             return _items.GetById(itemId).Result;
         }
 
-        public virtual void Update(T item)
+        public void Update(T item)
         {
             if (item == null)
             {
@@ -56,12 +63,25 @@ namespace BusinessLogic.Managment
 
             var itemToUpdate = _items.GetById(item.Id).Result;
 
+            if (!ValidateProperties(item))
+                throw new ValidationException($"{nameof(T)} has invalid properties");
+
             if (itemToUpdate == null)
             {
-                throw new InvalidOperationException($"{nameof(T)} with such id doesn't exist");
+                throw new ValidationException($"{nameof(T)} with such id doesn't exist");
             }
 
             _items.Update(item);
+        }
+
+        protected virtual bool ValidateReferences(T item)
+        {
+            return true;
+        }
+
+        protected virtual bool ValidateProperties(T item)
+        {
+            return true;
         }
     }
 }
