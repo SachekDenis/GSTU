@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="BusinessLogic\**" />
+    <Compile Remove="DataLayer\**" />
+    <Compile Remove="Logger\**" />
+    <Compile Remove="Model\**" />
+    <Compile Remove="src\**" />
+    <EmbeddedResource Remove="BusinessLogic\**" />
+    <EmbeddedResource Remove="DataLayer\**" />
+    <EmbeddedResource Remove="Logger\**" />
+    <EmbeddedResource Remove="Model\**" />
+    <EmbeddedResource Remove="src\**" />
+    <None Remove="BusinessLogic\**" />
+    <None Remove="DataLayer\**" />
+    <None Remove="Logger\**" />
+    <None Remove="Model\**" />
+    <None Remove="src\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="src\BusinessLogic\BusinessLogic.csproj" />
+    <ProjectReference Include="src\DataLayer\DataLayer.csproj" />
+  </ItemGroup>
+
+</Project>
