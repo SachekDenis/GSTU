@@ -7,7 +7,7 @@ using System.Text;
 
 namespace BusinessLogic.Managment
 {
-    public class Validator<T>
+    public abstract class Validator<T>
         where T : Entity
     {
         protected readonly IRepository<T> _items;
