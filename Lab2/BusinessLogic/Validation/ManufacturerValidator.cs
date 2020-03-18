@@ -15,23 +15,9 @@ namespace BusinessLogic.Managment
             _products = products;
         }
 
-        public override void Delete(int itemId)
+        protected override bool ValidateReferences(Manufacturer item)
         {
-            var manufaturer = _items.GetById(itemId).Result;
-
-            if (manufaturer  == null)
-            {
-                throw new InvalidOperationException("Manufacturer not found");
-            }
-
-            var canDeleteManufaturer = _products.GetAll().Result.Any(product => product.ManufacturerId == itemId);
-
-            if (!canDeleteManufaturer)
-            {
-                throw new InvalidOperationException("Product references to this manufaturer");
-            }
-
-            _items.Delete(itemId);
+            return _products.GetAll().Result.Any(product => product.ManufacturerId == item.Id); ;
         }
     }
 }
