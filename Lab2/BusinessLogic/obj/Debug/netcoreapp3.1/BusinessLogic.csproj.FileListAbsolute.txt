@@ -1,0 +1,12 @@
+C:\Users\User\source\repos\SachekDenis\SachekDenis_.Net\Lab2\BusinessLogic\bin\Debug\netcoreapp3.1\appsettings.json
+C:\Users\User\source\repos\SachekDenis\SachekDenis_.Net\Lab2\BusinessLogic\bin\Debug\netcoreapp3.1\BusinessLogic.deps.json
+C:\Users\User\source\repos\SachekDenis\SachekDenis_.Net\Lab2\BusinessLogic\bin\Debug\netcoreapp3.1\BusinessLogic.dll
+C:\Users\User\source\repos\SachekDenis\SachekDenis_.Net\Lab2\BusinessLogic\bin\Debug\netcoreapp3.1\BusinessLogic.pdb
+C:\Users\User\source\repos\SachekDenis\SachekDenis_.Net\Lab2\BusinessLogic\bin\Debug\netcoreapp3.1\DataAccesLayer.dll
+C:\Users\User\source\repos\SachekDenis\SachekDenis_.Net\Lab2\BusinessLogic\bin\Debug\netcoreapp3.1\DataAccesLayer.pdb
+C:\Users\User\source\repos\SachekDenis\SachekDenis_.Net\Lab2\BusinessLogic\obj\Debug\netcoreapp3.1\BusinessLogic.csprojAssemblyReference.cache
+C:\Users\User\source\repos\SachekDenis\SachekDenis_.Net\Lab2\BusinessLogic\obj\Debug\netcoreapp3.1\BusinessLogic.AssemblyInfoInputs.cache
+C:\Users\User\source\repos\SachekDenis\SachekDenis_.Net\Lab2\BusinessLogic\obj\Debug\netcoreapp3.1\BusinessLogic.AssemblyInfo.cs
+C:\Users\User\source\repos\SachekDenis\SachekDenis_.Net\Lab2\BusinessLogic\obj\Debug\netcoreapp3.1\BusinessLogic.csproj.CopyComplete
+C:\Users\User\source\repos\SachekDenis\SachekDenis_.Net\Lab2\BusinessLogic\obj\Debug\netcoreapp3.1\BusinessLogic.dll
+C:\Users\User\source\repos\SachekDenis\SachekDenis_.Net\Lab2\BusinessLogic\obj\Debug\netcoreapp3.1\BusinessLogic.pdb

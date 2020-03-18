@@ -1,0 +1,150 @@
+{
+  "StudentAvegareInfos": [
+    {
+      "FirstName": "Alfrinus",
+      "Surname": "Ducio",
+      "MiddleName": "Dubetor",
+      "AverageMark": 6.333333333333333
+    },
+    {
+      "FirstName": "Agucus",
+      "Surname": "Ducus",
+      "MiddleName": "Annulius",
+      "AverageMark": 4.333333333333333
+    },
+    {
+      "FirstName": "Fabelius",
+      "Surname": "Anius",
+      "MiddleName": "Babetus",
+      "AverageMark": 4.666666666666667
+    },
+    {
+      "FirstName": "Dibilius",
+      "Surname": "Betor",
+      "MiddleName": "Befritor",
+      "AverageMark": 5.666666666666667
+    },
+    {
+      "FirstName": "Brautin",
+      "Surname": "Dotor",
+      "MiddleName": "Dogues",
+      "AverageMark": 5.333333333333333
+    },
+    {
+      "FirstName": "Dunules",
+      "Surname": "Betus",
+      "MiddleName": "Brautus",
+      "AverageMark": 5.333333333333333
+    },
+    {
+      "FirstName": "Fanules",
+      "Surname": "Brius",
+      "MiddleName": "Abicus",
+      "AverageMark": 3.6666666666666665
+    },
+    {
+      "FirstName": "Dofrilus",
+      "Surname": "Dilius",
+      "MiddleName": "Bidacio",
+      "AverageMark": 5.666666666666667
+    },
+    {
+      "FirstName": "Aufries",
+      "Surname": "Alcus",
+      "MiddleName": "Ebucus",
+      "AverageMark": 4
+    },
+    {
+      "FirstName": "Babotor",
+      "Surname": "Antor",
+      "MiddleName": "Anbonus",
+      "AverageMark": 5.333333333333333
+    },
+    {
+      "FirstName": "Agucio",
+      "Surname": "Alus",
+      "MiddleName": "Babetin",
+      "AverageMark": 6.666666666666667
+    },
+    {
+      "FirstName": "Egustor",
+      "Surname": "Eunus",
+      "MiddleName": "Dunules",
+      "AverageMark": 4.333333333333333
+    },
+    {
+      "FirstName": "Eunules",
+      "Surname": "Ator",
+      "MiddleName": "Afries",
+      "AverageMark": 4.333333333333333
+    },
+    {
+      "FirstName": "Babunus",
+      "Surname": "Alus",
+      "MiddleName": "Aufritin",
+      "AverageMark": 5.333333333333333
+    },
+    {
+      "FirstName": "Badator",
+      "Surname": "Binus",
+      "MiddleName": "Dinules",
+      "AverageMark": 3
+    },
+    {
+      "FirstName": "Dabecio",
+      "Surname": "Dunus",
+      "MiddleName": "Dabucio",
+      "AverageMark": 3.3333333333333335
+    },
+    {
+      "FirstName": "Anules",
+      "Surname": "Bitin",
+      "MiddleName": "Fanulius",
+      "AverageMark": 6.666666666666667
+    },
+    {
+      "FirstName": "Brautin",
+      "Surname": "Bitor",
+      "MiddleName": "Beguslius",
+      "AverageMark": 6.666666666666667
+    },
+    {
+      "FirstName": "Dugustin",
+      "Surname": "Datin",
+      "MiddleName": "Dubucus",
+      "AverageMark": 4.333333333333333
+    },
+    {
+      "FirstName": "Bifricio",
+      "Surname": "Betor",
+      "MiddleName": "Dudanus",
+      "AverageMark": 6
+    },
+    {
+      "FirstName": "Bebenus",
+      "Surname": "Ecio",
+      "MiddleName": "Albelius",
+      "AverageMark": 3.3333333333333335
+    }
+  ],
+  "SummaryMarkInfo": {
+    "AverageMarks": [
+      {
+        "Name": "Математика",
+        "Mark": 5.571428571428571
+      },
+      {
+        "Name": "Физика",
+        "Mark": 4.285714285714286
+      },
+      {
+        "Name": "История",
+        "Mark": 5.0476190476190474
+      },
+      {
+        "Name": "TotalAverageMark",
+        "Mark": 4.968253968253968
+      }
+    ]
+  }
+}
