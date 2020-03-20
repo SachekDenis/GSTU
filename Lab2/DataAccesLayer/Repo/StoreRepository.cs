@@ -9,6 +9,7 @@ namespace DataAccesLayer.Repo
 {
     public class StoreRepository<T> : IRepository<T> where T : class
     {
+        private bool disposed = false;
         private readonly StoreContext _context;
 
         public StoreRepository(StoreContext context)
@@ -47,6 +48,24 @@ namespace DataAccesLayer.Repo
         {
             _context.Update(item);
             await _context.SaveChangesAsync();
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected async virtual void Dispose(bool disposing)
+        {
+            if (!disposed)
+            {
+                if (disposing)
+                {
+                    await _context.DisposeAsync();
+                }
+                disposed = true;
+            }
         }
     }
 }

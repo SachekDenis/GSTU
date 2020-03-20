@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User\\source\\repos\\SachekDenis\\SachekDenis_.Net\\Lab1\\ConsoleFileConverter.csproj": {}
+    "C:\\Users\\User\\Source\\Repos\\SachekDenis\\SachekDenis_.Net\\Lab1\\ConsoleFileConverter.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User\\source\\repos\\SachekDenis\\SachekDenis_.Net\\Lab1\\ConsoleFileConverter.csproj": {
+    "C:\\Users\\User\\Source\\Repos\\SachekDenis\\SachekDenis_.Net\\Lab1\\ConsoleFileConverter.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\source\\repos\\SachekDenis\\SachekDenis_.Net\\Lab1\\ConsoleFileConverter.csproj",
+        "projectUniqueName": "C:\\Users\\User\\Source\\Repos\\SachekDenis\\SachekDenis_.Net\\Lab1\\ConsoleFileConverter.csproj",
         "projectName": "ConsoleFileConverter",
-        "projectPath": "C:\\Users\\User\\source\\repos\\SachekDenis\\SachekDenis_.Net\\Lab1\\ConsoleFileConverter.csproj",
+        "projectPath": "C:\\Users\\User\\Source\\Repos\\SachekDenis\\SachekDenis_.Net\\Lab1\\ConsoleFileConverter.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\source\\repos\\SachekDenis\\SachekDenis_.Net\\Lab1\\obj\\",
+        "outputPath": "C:\\Users\\User\\Source\\Repos\\SachekDenis\\SachekDenis_.Net\\Lab1\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackagesFallback\\",
@@ -32,11 +32,11 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\Users\\User\\source\\repos\\SachekDenis\\SachekDenis_.Net\\Lab1\\src\\BusinessLogic\\BusinessLogic.csproj": {
-                "projectPath": "C:\\Users\\User\\source\\repos\\SachekDenis\\SachekDenis_.Net\\Lab1\\src\\BusinessLogic\\BusinessLogic.csproj"
+              "C:\\Users\\User\\Source\\Repos\\SachekDenis\\SachekDenis_.Net\\Lab1\\src\\BusinessLogic\\BusinessLogic.csproj": {
+                "projectPath": "C:\\Users\\User\\Source\\Repos\\SachekDenis\\SachekDenis_.Net\\Lab1\\src\\BusinessLogic\\BusinessLogic.csproj"
               },
-              "C:\\Users\\User\\source\\repos\\SachekDenis\\SachekDenis_.Net\\Lab1\\src\\DataLayer\\DataLayer.csproj": {
-                "projectPath": "C:\\Users\\User\\source\\repos\\SachekDenis\\SachekDenis_.Net\\Lab1\\src\\DataLayer\\DataLayer.csproj"
+              "C:\\Users\\User\\Source\\Repos\\SachekDenis\\SachekDenis_.Net\\Lab1\\src\\DataLayer\\DataLayer.csproj": {
+                "projectPath": "C:\\Users\\User\\Source\\Repos\\SachekDenis\\SachekDenis_.Net\\Lab1\\src\\DataLayer\\DataLayer.csproj"
               }
             }
           }
@@ -68,14 +68,14 @@
         }
       }
     },
-    "C:\\Users\\User\\source\\repos\\SachekDenis\\SachekDenis_.Net\\Lab1\\src\\BusinessLogic\\BusinessLogic.csproj": {
+    "C:\\Users\\User\\Source\\Repos\\SachekDenis\\SachekDenis_.Net\\Lab1\\src\\BusinessLogic\\BusinessLogic.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\source\\repos\\SachekDenis\\SachekDenis_.Net\\Lab1\\src\\BusinessLogic\\BusinessLogic.csproj",
+        "projectUniqueName": "C:\\Users\\User\\Source\\Repos\\SachekDenis\\SachekDenis_.Net\\Lab1\\src\\BusinessLogic\\BusinessLogic.csproj",
         "projectName": "BusinessLogic",
-        "projectPath": "C:\\Users\\User\\source\\repos\\SachekDenis\\SachekDenis_.Net\\Lab1\\src\\BusinessLogic\\BusinessLogic.csproj",
+        "projectPath": "C:\\Users\\User\\Source\\Repos\\SachekDenis\\SachekDenis_.Net\\Lab1\\src\\BusinessLogic\\BusinessLogic.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\source\\repos\\SachekDenis\\SachekDenis_.Net\\Lab1\\src\\BusinessLogic\\obj\\",
+        "outputPath": "C:\\Users\\User\\Source\\Repos\\SachekDenis\\SachekDenis_.Net\\Lab1\\src\\BusinessLogic\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackagesFallback\\",
@@ -96,8 +96,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\Users\\User\\source\\repos\\SachekDenis\\SachekDenis_.Net\\Lab1\\src\\DataLayer\\DataLayer.csproj": {
-                "projectPath": "C:\\Users\\User\\source\\repos\\SachekDenis\\SachekDenis_.Net\\Lab1\\src\\DataLayer\\DataLayer.csproj"
+              "C:\\Users\\User\\Source\\Repos\\SachekDenis\\SachekDenis_.Net\\Lab1\\src\\DataLayer\\DataLayer.csproj": {
+                "projectPath": "C:\\Users\\User\\Source\\Repos\\SachekDenis\\SachekDenis_.Net\\Lab1\\src\\DataLayer\\DataLayer.csproj"
               }
             }
           }
@@ -143,14 +143,14 @@
         }
       }
     },
-    "C:\\Users\\User\\source\\repos\\SachekDenis\\SachekDenis_.Net\\Lab1\\src\\DataLayer\\DataLayer.csproj": {
+    "C:\\Users\\User\\Source\\Repos\\SachekDenis\\SachekDenis_.Net\\Lab1\\src\\DataLayer\\DataLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\source\\repos\\SachekDenis\\SachekDenis_.Net\\Lab1\\src\\DataLayer\\DataLayer.csproj",
+        "projectUniqueName": "C:\\Users\\User\\Source\\Repos\\SachekDenis\\SachekDenis_.Net\\Lab1\\src\\DataLayer\\DataLayer.csproj",
         "projectName": "DataLayer",
-        "projectPath": "C:\\Users\\User\\source\\repos\\SachekDenis\\SachekDenis_.Net\\Lab1\\src\\DataLayer\\DataLayer.csproj",
+        "projectPath": "C:\\Users\\User\\Source\\Repos\\SachekDenis\\SachekDenis_.Net\\Lab1\\src\\DataLayer\\DataLayer.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\source\\repos\\SachekDenis\\SachekDenis_.Net\\Lab1\\src\\DataLayer\\obj\\",
+        "outputPath": "C:\\Users\\User\\Source\\Repos\\SachekDenis\\SachekDenis_.Net\\Lab1\\src\\DataLayer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackagesFallback\\",

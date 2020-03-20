@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BusinessLogic.Managment
+namespace BusinessLogic.Validation
 {
     public abstract class Validator<T>
         where T : Entity

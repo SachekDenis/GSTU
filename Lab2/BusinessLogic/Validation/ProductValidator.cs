@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace BusinessLogic.Managment
+namespace BusinessLogic.Validation
 {
     class ProductValidator : Validator<Product>
     {
@@ -18,14 +18,16 @@ namespace BusinessLogic.Managment
 
         protected override bool ValidateProperties(Product item)
         {
-            return item.Manufacturer == null
+            return !(item.Manufacturer == null
                 || item.Supply == null
-                || item.AdditionalInformation == null;
+                || item.AdditionalInformation == null
+                || item.Price <= 0
+                || string.IsNullOrEmpty(item.Name));
         }
 
         protected override bool ValidateReferences(Product item)
         {
-            return _orders.GetAll().Result.Any(order => order.ProductId == item.Id); ;
+            return _orders.GetAll().Result.Any(order => order.ProductId == item.Id);
         }
 
     }
