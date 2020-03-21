@@ -4,6 +4,6 @@ using System.Text;
 
 namespace DataAccesLayer.Models
 {
-    public abstract class Characteristics:Entity
+    public class Characteristics:Entity
     { }
 }

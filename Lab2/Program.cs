@@ -9,6 +9,8 @@ using BusinessLogic.Validation;
 using BusinessLogic.Services;
 using BusinessLogic.Dto;
 using DataAccesLayer.Models;
+using AutoMapper;
+using BusinessLogic.MapperProfile;
 
 namespace Lab2
 {
@@ -28,6 +30,7 @@ namespace Lab2
                 }, ServiceLifetime.Transient)
                 .AddSingleton(typeof(IRepository<>), typeof(StoreRepository<>))
                 .AddTransient(typeof(SupplyValidator))
+                .AddAutoMapper(typeof(StoreProfile))
                 .AddTransient(typeof(SupplierValidator))
                 .AddTransient(typeof(ProductValidator))
                 .AddTransient(typeof(RamValidator))
@@ -70,7 +73,7 @@ namespace Lab2
                 SupplierId = supplier.Id
             };
 
-            adminService.AddRam(ramDto);
+            adminService.AddProduct(ramDto,services.GetService<RamValidator>());
 
             Console.WriteLine("Hello World!");
         }

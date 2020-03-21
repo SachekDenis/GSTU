@@ -14,20 +14,31 @@ namespace BusinessLogic.Services
         private readonly SupplyValidator _supplyValidator;
         private readonly SupplierValidator _supplierValidator;
         private readonly ProductValidator _productValidator;
+        private readonly IMapper _mapper;
 
-        public AdminService(RamValidator ramValidator, SupplyValidator supplyValidator, ProductValidator productValidator, SupplierValidator supplierValidator)
+        public AdminService(RamValidator ramValidator,
+            SupplyValidator supplyValidator,
+            ProductValidator productValidator,
+            SupplierValidator supplierValidator,
+            IMapper mapper)
         {
             _ramValidator = ramValidator;
             _supplyValidator = supplyValidator;
             _productValidator = productValidator;
             _supplierValidator = supplierValidator;
+            _mapper = mapper;
         }
 
-        public void AddRam(RamDto ram)
+        public void AddProduct<TDto,TEntity>(TDto ramDto, Validator<TEntity> validator) where TEntity:Entity
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<RamDto, Supply>()).CreateMapper();
-            Supply supply = mapper.Map<Supply>(ram);
+            Supply supply = _mapper.Map<Supply>(ramDto);
             _supplyValidator.Add(supply);
+            TEntity ram = _mapper.Map<TEntity>(ramDto);
+            validator.Add(ram);
+            Product ramProduct = _mapper.Map<Product>(ramDto);
+            ramProduct.SupplyId = supply.Id;
+            ramProduct.AdditionalInformationId = ram.Id;
+            _productValidator.Add(ramProduct);
         }
     }
 }

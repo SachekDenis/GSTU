@@ -43,7 +43,7 @@ namespace BusinessLogic.Validation
                 || _motherboards.GetAll().Result.Where(ram => item.AdditionalInformationId == ram.Id).Any()
                 || _cpus.GetAll().Result.Where(ram => item.AdditionalInformationId == ram.Id).Any()
                 || _graphicalCards.GetAll().Result.Where(ram => item.AdditionalInformationId == ram.Id).Any())
-                || item.Price <= 0
+                || item.Price < 0
                 || string.IsNullOrEmpty(item.Name));
         }
 

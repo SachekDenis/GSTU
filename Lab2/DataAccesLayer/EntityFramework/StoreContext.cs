@@ -20,6 +20,7 @@ namespace DataAccesLayer.EntityFramework
         public DbSet<Manufacturer> Manufacturers { get; set; }
         public DbSet<Supply> Supplies { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<Characteristics> Characteristics { get; set; }
 
         public StoreContext(DbContextOptions<StoreContext> options) : base(options)
         {
