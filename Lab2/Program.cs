@@ -73,7 +73,7 @@ namespace Lab2
                 SupplierId = supplier.Id
             };
 
-            adminService.AddProduct(ramDto,services.GetService<RamValidator>());
+            adminService.AddRam(ramDto);
 
             Console.WriteLine("Hello World!");
         }

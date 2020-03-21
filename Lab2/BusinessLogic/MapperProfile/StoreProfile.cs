@@ -14,6 +14,10 @@ namespace BusinessLogic.MapperProfile
             CreateMap<RamDto, Supply>();
             CreateMap<RamDto, Ram>();
             CreateMap<RamDto, Product>();
+
+            CreateMap<OrderDto,Order>();
+            CreateMap<ManufacturerDto,Manufacturer>();
+            CreateMap<SupplierDto,Supplier>();
         }
     }
 }

@@ -12,7 +12,6 @@ namespace DataAccesLayer.Models
         public int ManufacturerId { get; set; }
         public int SupplyId { get; set; }
         public int AdditionalInformationId { get; set; }
-        public Characteristics AdditionalInformation { get; set; }
 
     }
 }

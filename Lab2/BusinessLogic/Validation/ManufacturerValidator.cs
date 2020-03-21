@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace BusinessLogic.Validation
 {
-    class ManufacturerValidator : Validator<Manufacturer>
+    public class ManufacturerValidator : Validator<Manufacturer>
     {
         private readonly IRepository<Product> _products;
         public ManufacturerValidator(IRepository<Manufacturer> manufacturers,
