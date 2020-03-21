@@ -18,6 +18,8 @@ namespace DataAccesLayer.EntityFramework
         public DbSet<Motherboard> Motherboards { get; set; }
         public DbSet<Ram> Rams { get; set; }
         public DbSet<Manufacturer> Manufacturers { get; set; }
+        public DbSet<Supply> Supplies { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
 
         public StoreContext(DbContextOptions<StoreContext> options) : base(options)
         {
