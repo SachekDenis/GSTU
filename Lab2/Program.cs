@@ -33,7 +33,7 @@ namespace Lab2
                 .AddAutoMapper(typeof(StoreProfile))
                 .AddTransient(typeof(SupplierValidator))
                 .AddTransient(typeof(ProductValidator))
-                .AddTransient(typeof(RamValidator))
+                .AddTransient(typeof(ManufacturerValidator))
                 .AddTransient(typeof(AdminService))
                 .BuildServiceProvider();
 
@@ -73,7 +73,7 @@ namespace Lab2
                 SupplierId = supplier.Id
             };
 
-            adminService.AddRam(ramDto);
+            adminService.DeleteProduct(1);
 
             Console.WriteLine("Hello World!");
         }

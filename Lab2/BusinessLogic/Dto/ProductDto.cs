@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BusinessLogic.Dto
 {
-    public class RamDto
+    public class ProductDto
     {
         public string Name { get; set; }
         public decimal Price { get; set; }
@@ -12,11 +12,7 @@ namespace BusinessLogic.Dto
         public int ManufacturerId { get; set; }
         public DateTime Date { get; set; }
         public int SupplierId { get; set; }
-        public string Type { get; set; }
-        public int Frequency { get; set; }
-        public double Volume { get; set; }
-        public string Timings { get; set; }
-
-
+        public int CategoryId { get; set; }
+        public Dictionary<string, string> Characteristics { get; set; }
     }
 }

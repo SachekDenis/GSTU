@@ -11,7 +11,7 @@ namespace DataAccesLayer.Models
         public int CountInStorage { get; set; }
         public int ManufacturerId { get; set; }
         public int SupplyId { get; set; }
-        public int AdditionalInformationId { get; set; }
+        public int CategoryId { get; set; }
 
     }
 }

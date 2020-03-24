@@ -14,7 +14,6 @@ namespace BusinessLogic.Services
         private readonly SupplierValidator _supplierValidator;
         private readonly ProductValidator _productValidator;
         private readonly ManufacturerValidator _manufacturerValidator;
-        private readonly RamValidator _ramValidator;
         private readonly IMapper _mapper;
 
         public AdminService(
@@ -22,20 +21,13 @@ namespace BusinessLogic.Services
             ProductValidator productValidator,
             SupplierValidator supplierValidator,
             ManufacturerValidator manufacturerValidator,
-            RamValidator ramValidator,
             IMapper mapper)
         {
             _supplyValidator = supplyValidator;
             _productValidator = productValidator;
             _supplierValidator = supplierValidator;
             _manufacturerValidator = manufacturerValidator;
-            _ramValidator = ramValidator;
             _mapper = mapper;
-        }
-
-        public void AddRam(RamDto ramDto)
-        {
-            AddProduct(ramDto, _ramValidator);
         }
 
         private void AddProduct<TDto, TEntity>(TDto dto, Validator<TEntity> validator) where TEntity : Entity
@@ -52,6 +44,14 @@ namespace BusinessLogic.Services
             ramProduct.AdditionalInformationId = characteristics.Id;
 
             _productValidator.Add(ramProduct);
+        }
+
+        public void DeleteProduct(int id)
+        {
+            var product = _productValidator.GetById(id);
+            var characteristics = _characteristicsValidator.GetById(product.AdditionalInformationId);
+            _productValidator.Delete(id);
+            
         }
 
         public void AddSupplier(SupplierDto supplierDto)
