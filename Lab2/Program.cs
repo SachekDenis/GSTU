@@ -59,19 +59,6 @@ namespace Lab2
 
             supplierRepo.Add(supplier);
 
-            var ramDto = new RamDto()
-            {
-                Count = 2,
-                Date = DateTime.Now,
-                Frequency = 900,
-                ManufacturerId = manufacturer.Id,
-                Name = "grx",
-                Price = 100,
-                Timings = "11-11-11",
-                Type = "DDR-4",
-                Volume = 16,
-                SupplierId = supplier.Id
-            };
 
             adminService.DeleteProduct(1);
 

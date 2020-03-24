@@ -11,9 +11,8 @@ namespace BusinessLogic.MapperProfile
     {
         public StoreProfile()
         {
-            CreateMap<RamDto, Supply>();
-            CreateMap<RamDto, Ram>();
-            CreateMap<RamDto, Product>();
+            CreateMap<ProductDto, Supply>();
+            CreateMap<ProductDto, Product>();
 
             CreateMap<OrderDto,Order>();
             CreateMap<ManufacturerDto,Manufacturer>();

@@ -4,9 +4,10 @@ using System.Text;
 
 namespace DataAccesLayer.Models
 {
-    public class Field:Entity
+    public class Field : Entity
     {
-        public string Value { get;set;}
-        public ICollection<CategoryField> CategoryFields {get;set;}
+        public int ProductId { get; set; }
+        public int CharacteristicId { get; set; }
+        string Value { get; set; }
     }
 }

@@ -4,9 +4,8 @@ using System.Text;
 
 namespace DataAccesLayer.Models
 {
-    public class Category:Entity
+    class Category:Entity
     {
-        public string Name { get;set; }
-        public ICollection<CategoryField> CategoryFields { get;set;}
+        public string Name {get;set; }
     }
 }

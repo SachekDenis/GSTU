@@ -30,26 +30,31 @@ namespace BusinessLogic.Services
             _mapper = mapper;
         }
 
-        private void AddProduct<TDto, TEntity>(TDto dto, Validator<TEntity> validator) where TEntity : Entity
+        private void AddProduct(ProductDto dto)
         {
             Supply supply = _mapper.Map<Supply>(dto);
+
             _supplyValidator.Add(supply);
 
-            TEntity characteristics = _mapper.Map<TEntity>(dto);
-            validator.Add(characteristics);
+            Product product = _mapper.Map<Product>(dto);
 
-            Product ramProduct = _mapper.Map<Product>(dto);
+            product.SupplyId = supply.Id;
 
-            ramProduct.SupplyId = supply.Id;
-            ramProduct.AdditionalInformationId = characteristics.Id;
+            foreach(var field in dto.Characteristics)
+            {
+                //Field field = new Field() 
+                //{
+                //     //CharacteristicId = 
+                //     ProductId = product.Id
+                //}
+            }
 
-            _productValidator.Add(ramProduct);
+            _productValidator.Add(product);
         }
 
         public void DeleteProduct(int id)
         {
             var product = _productValidator.GetById(id);
-            var characteristics = _characteristicsValidator.GetById(product.AdditionalInformationId);
             _productValidator.Delete(id);
             
         }

@@ -16,7 +16,7 @@ namespace DataAccesLayer.EntityFramework
         public DbSet<Manufacturer> Manufacturers { get; set; }
         public DbSet<Supply> Supplies { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
-        public DbSet<Category> Categories { get; set; }
+        public DbSet<Characteristic> Categories { get; set; }
         public DbSet<Field> Fields { get; set; }
 
         public StoreContext(DbContextOptions<StoreContext> options) : base(options)
@@ -24,20 +24,5 @@ namespace DataAccesLayer.EntityFramework
             Database.EnsureCreated();
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<CategoryField>()
-                .HasKey(t => new { t.CategoryId, t.FieldId });
-
-            modelBuilder.Entity<CategoryField>()
-                .HasOne(sc => sc.Category)
-                .WithMany(s => s.CategoryFields)
-                .HasForeignKey(sc => sc.CategoryId);
-
-            modelBuilder.Entity<CategoryField>()
-                .HasOne(sc => sc.Field)
-                .WithMany(c => c.CategoryFields)
-                .HasForeignKey(sc => sc.FieldId);
-        }
     }
 }
