@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataAccesLayer.Models
+namespace BusinessLogic.Dto
 {
-    public class Buyer:Entity
+    public class BuyerDto
     {
         public string SecondName { get; set; }
         public string FirstName { get; set; }

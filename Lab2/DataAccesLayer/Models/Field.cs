@@ -8,6 +8,6 @@ namespace DataAccesLayer.Models
     {
         public int ProductId { get; set; }
         public int CharacteristicId { get; set; }
-        string Value { get; set; }
+        public string Value { get; set; }
     }
 }

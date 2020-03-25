@@ -1,4 +1,4 @@
-﻿using DataAccesLayer.EntityFramework;
+﻿using DataAccesLayer.Context;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
@@ -34,13 +34,13 @@ namespace Lab2
                 .AddTransient(typeof(SupplierValidator))
                 .AddTransient(typeof(ProductValidator))
                 .AddTransient(typeof(ManufacturerValidator))
-                .AddTransient(typeof(AdminService))
+                .AddTransient(typeof(ProductService))
                 .BuildServiceProvider();
 
             var manufaturerRepo = services.GetService<IRepository<Manufacturer>>();
             var supplierRepo = services.GetService<IRepository<Supplier>>();
             var supplyRepo = services.GetService<IRepository<Supply>>();
-            var adminService = services.GetService<AdminService>();
+            var adminService = services.GetService<ProductService>();
 
             var manufacturer = new Manufacturer()
             {

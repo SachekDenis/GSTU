@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataAccesLayer.Models
+namespace BusinessLogic.Dto
 {
-    public class Supply:Entity
+    class SupplyDto
     {
         public int SupplierId { get; set; }
         public DateTime Date { get; set; }

@@ -6,7 +6,7 @@ using DataAccesLayer.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
 
-namespace DataAccesLayer.EntityFramework
+namespace DataAccesLayer.Context
 {
     public class StoreContext : DbContext
     {
@@ -16,8 +16,9 @@ namespace DataAccesLayer.EntityFramework
         public DbSet<Manufacturer> Manufacturers { get; set; }
         public DbSet<Supply> Supplies { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
-        public DbSet<Characteristic> Categories { get; set; }
+        public DbSet<Characteristic> Characteristics { get; set; }
         public DbSet<Field> Fields { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         public StoreContext(DbContextOptions<StoreContext> options) : base(options)
         {
