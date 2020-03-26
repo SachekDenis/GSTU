@@ -5,6 +5,7 @@ using System.Text;
 using DataAccesLayer.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
+using Microsoft.Extensions.Logging;
 
 namespace DataAccesLayer.Context
 {
@@ -25,5 +26,14 @@ namespace DataAccesLayer.Context
             Database.EnsureCreated();
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLoggerFactory(FileLoggerFactory);
+        }
+
+        public static readonly ILoggerFactory FileLoggerFactory = LoggerFactory.Create(builder =>
+        {
+            builder.AddFile("Logs/SQL-{Date}.txt");
+        });
     }
 }

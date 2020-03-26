@@ -17,10 +17,10 @@ namespace DataAccesLayer.Repo
             _context = context;
         }
 
-        public void Add(T item)
+        public async void Add(T item)
         {
             _context.Add(item);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
         public async void Delete(int id)

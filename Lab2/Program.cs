@@ -11,6 +11,7 @@ using BusinessLogic.Dto;
 using DataAccesLayer.Models;
 using AutoMapper;
 using BusinessLogic.MapperProfile;
+using Microsoft.Extensions.Logging;
 
 namespace Lab2
 {
@@ -35,12 +36,12 @@ namespace Lab2
                 .AddTransient(typeof(ProductValidator))
                 .AddTransient(typeof(ManufacturerValidator))
                 .AddTransient(typeof(ProductService))
+                .AddLogging(config => config.AddFile("Logs/myapp-{Date}.txt"))
                 .BuildServiceProvider();
 
             var manufaturerRepo = services.GetService<IRepository<Manufacturer>>();
             var supplierRepo = services.GetService<IRepository<Supplier>>();
             var supplyRepo = services.GetService<IRepository<Supply>>();
-            var adminService = services.GetService<ProductService>();
 
             var manufacturer = new Manufacturer()
             {
@@ -60,7 +61,7 @@ namespace Lab2
             supplierRepo.Add(supplier);
 
 
-            adminService.DeleteProduct(1);
+            //adminService.DeleteProduct(1);
 
             Console.WriteLine("Hello World!");
         }
