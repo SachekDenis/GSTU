@@ -12,6 +12,7 @@ using DataAccesLayer.Models;
 using AutoMapper;
 using BusinessLogic.MapperProfile;
 using Microsoft.Extensions.Logging;
+using System.Reflection;
 
 namespace Lab2
 {
@@ -24,24 +25,27 @@ namespace Lab2
             builder.AddJsonFile("appsettings.json");
             var config = builder.Build();
 
+            var assemblyToScan = Assembly.Load("BusinessLogic");
+
             var services = new ServiceCollection()
                 .AddDbContext<StoreContext>(options =>
-                {
-                    options.UseSqlServer(config.GetConnectionString("StoreConnection"));
-                }, ServiceLifetime.Transient)
-                .AddSingleton(typeof(IRepository<>), typeof(StoreRepository<>))
-                .AddTransient(typeof(SupplyValidator))
+                    {
+                        options.UseSqlServer(config.GetConnectionString("StoreConnection"));
+                    }, ServiceLifetime.Transient)
+                .Scan(scan => scan
+                    .FromAssemblies(assemblyToScan)
+                    .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Service")))
+                    .AsSelf()
+                    .WithTransientLifetime())
                 .AddAutoMapper(typeof(StoreProfile))
-                .AddTransient(typeof(SupplierValidator))
-                .AddTransient(typeof(ProductValidator))
-                .AddTransient(typeof(ManufacturerValidator))
-                .AddTransient(typeof(ProductService))
+                .AddSingleton(typeof(IRepository<>), typeof(StoreRepository<>))
                 .AddLogging(config => config.AddFile("Logs/myapp-{Date}.txt"))
                 .BuildServiceProvider();
 
             var manufaturerRepo = services.GetService<IRepository<Manufacturer>>();
             var supplierRepo = services.GetService<IRepository<Supplier>>();
             var supplyRepo = services.GetService<IRepository<Supply>>();
+            var productService = services.GetService<ProductService>();
 
             var manufacturer = new Manufacturer()
             {
@@ -59,6 +63,7 @@ namespace Lab2
             };
 
             supplierRepo.Add(supplier);
+
 
 
             //adminService.DeleteProduct(1);

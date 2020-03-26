@@ -33,7 +33,11 @@ namespace DataAccesLayer.Context
 
         public static readonly ILoggerFactory FileLoggerFactory = LoggerFactory.Create(builder =>
         {
-            builder.AddFile("Logs/SQL-{Date}.txt");
+            builder
+            .AddFilter((category, level) =>
+                category == DbLoggerCategory.Database.Command.Name
+                && level == LogLevel.Information)
+            .AddFile("Logs/SQL-{Date}.txt");
         });
     }
 }

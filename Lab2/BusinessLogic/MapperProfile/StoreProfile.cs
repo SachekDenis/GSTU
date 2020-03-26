@@ -14,12 +14,12 @@ namespace BusinessLogic.MapperProfile
             CreateMap<ProductDto, Supply>();
             CreateMap<ProductDto, Product>();
 
-            CreateMap<OrderDto,Order>();
-            CreateMap<ManufacturerDto,Manufacturer>();
-            CreateMap<SupplierDto,Supplier>();
+            CreateMap<OrderDto, Order>();
+            CreateMap<ManufacturerDto, Manufacturer>();
+            CreateMap<SupplierDto, Supplier>();
             CreateMap<CategoryDto, Category>();
             CreateMap<CharacteristicDto, Characteristic>();
-            CreateMap<Supply, SupplyDto>();
+            CreateMap<SupplyDto, Supply>();
         }
     }
 }
