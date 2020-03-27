@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DataAccesLayer.Models
 {
-    public class Supply:Entity
+    public class Supply : Entity
     {
         public int SupplierId { get; set; }
         public DateTime Date { get; set; }

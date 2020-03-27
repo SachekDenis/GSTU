@@ -1,9 +1,6 @@
 ﻿using DataAccesLayer.Models;
 using DataAccesLayer.Repo;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace BusinessLogic.Validation
 {
@@ -11,7 +8,8 @@ namespace BusinessLogic.Validation
     {
         private readonly IRepository<Product> _products;
         private readonly IRepository<Supplier> _suppliers;
-        public SupplyValidator(IRepository<Supply> items, IRepository<Product> products,IRepository<Supplier> suppliers) : base(items)
+
+        public SupplyValidator(IRepository<Supply> items, IRepository<Product> products, IRepository<Supplier> suppliers) : base(items)
         {
             _products = products;
             _suppliers = suppliers;

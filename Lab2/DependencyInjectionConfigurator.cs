@@ -6,14 +6,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 
 namespace ConsoleApp
 {
-
     public static class DependencyInjectionConfigurator
     {
         public static void Configure(IConfigurationRoot config)
@@ -34,7 +30,5 @@ namespace ConsoleApp
             .AddLogging(config => config.AddFile("Logs/myapp-{Date}.txt"))
             .BuildServiceProvider();
         }
-
-
     }
 }

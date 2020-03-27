@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DataAccesLayer.Models
+﻿namespace DataAccesLayer.Models
 {
     public class Product : Entity
     {
@@ -12,6 +8,5 @@ namespace DataAccesLayer.Models
         public int ManufacturerId { get; set; }
         public int SupplyId { get; set; }
         public int CategoryId { get; set; }
-
     }
 }

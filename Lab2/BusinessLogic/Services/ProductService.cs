@@ -2,9 +2,7 @@
 using BusinessLogic.Dto;
 using BusinessLogic.Validation;
 using DataAccesLayer.Models;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace BusinessLogic.Services
 {
@@ -52,7 +50,7 @@ namespace BusinessLogic.Services
         }
 
         public void DeleteProduct(int id)
-        { 
+        {
             _productValidator.Delete(id);
         }
 
@@ -61,7 +59,7 @@ namespace BusinessLogic.Services
             var product = _mapper.Map<Product>(productDto);
             _productValidator.Update(product);
         }
-        
+
         public IEnumerable<Product> GetAllProducts()
         {
             return _productValidator.GetAll();
