@@ -19,7 +19,7 @@ namespace DataAccesLayer.Repo
 
         public async void Add(T item)
         {
-            _context.Add(item);
+            await _context.Set<T>().AddAsync(item);
             await _context.SaveChangesAsync();
         }
 
@@ -46,7 +46,7 @@ namespace DataAccesLayer.Repo
 
         public async void Update(T item)
         {
-            _context.Update(item);
+            _context.Set<T>().Update(item);
             await _context.SaveChangesAsync();
         }
 
