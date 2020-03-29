@@ -31,7 +31,7 @@ namespace ConsoleApp
             .AddAutoMapper(typeof(StoreProfile))
             .AddScoped(typeof(IRepository<>), typeof(StoreRepository<>))
             .AddScoped(typeof(MainMenuService))
-            .AddLogging(config => config.AddFile("Logs/myapp-{Date}.txt"))
+            .AddLogging(loggingBuilder => loggingBuilder.AddFile("Logs/StoreApp-{Date}.txt"))
             .BuildServiceProvider();
         }
     }

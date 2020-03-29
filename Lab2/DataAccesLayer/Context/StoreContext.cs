@@ -22,12 +22,12 @@ namespace DataAccesLayer.Context
         {
             if (Database.EnsureCreated())
             {
-                DbInitializer.Create(options =>
-                {
-                    options.UseSqlServer(Database.GetDbConnection().ConnectionString);
-                    options.UseFileFolderPacker(System.IO.Path.Combine(Environment.CurrentDirectory, "DbSeed"));
-                })
-                .Seed();
+                //DbInitializer.Create(dbUtilsOptions =>
+                //{
+                //    dbUtilsOptions.UseSqlServer(Database.GetDbConnection().ConnectionString);
+                //    dbUtilsOptions.UseFileFolderPacker(System.IO.Path.Combine(Environment.CurrentDirectory, "DbSeed"));
+                //})
+                //.Seed();
             }
         }
 
@@ -36,7 +36,7 @@ namespace DataAccesLayer.Context
             optionsBuilder.UseLoggerFactory(FileLoggerFactory);
         }
 
-        public static readonly ILoggerFactory FileLoggerFactory = LoggerFactory.Create(builder =>
+        private static readonly ILoggerFactory FileLoggerFactory = LoggerFactory.Create(builder =>
         {
             builder
             .AddFilter((category, level) =>

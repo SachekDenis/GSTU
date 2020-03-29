@@ -46,7 +46,8 @@ namespace DataAccesLayer.Repo
 
         public async Task Update(T item)
         {
-            _context.Set<T>().Update(item);
+            var entry = _context.Set<T>().First(e=>e.Id == item.Id);
+            _context.Entry(entry).CurrentValues.SetValues(item);
             await _context.SaveChangesAsync();
         }
 
