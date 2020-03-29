@@ -3,11 +3,12 @@ using BusinessLogic.Dto;
 using BusinessLogic.Validation;
 using DataAccesLayer.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
-namespace BusinessLogic.Services
+namespace BusinessLogic.Managers
 {
-    internal class SupplyManager
+    internal class SupplyManager:IManager<SupplyDto>
     {
         private readonly IMapper _mapper;
         private readonly Validator<Supply> _validator;
@@ -35,9 +36,9 @@ namespace BusinessLogic.Services
             await _validator.Update(supply);
         }
 
-        public IEnumerable<Supply> GetAll()
+        public IEnumerable<SupplyDto> GetAll()
         {
-            return _validator.GetAll();
+            return _validator.GetAll().Select(item => _mapper.Map<SupplyDto>(item));
         }
     }
 }

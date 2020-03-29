@@ -3,11 +3,12 @@ using BusinessLogic.Dto;
 using BusinessLogic.Validation;
 using DataAccesLayer.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
-namespace BusinessLogic.Services
+namespace BusinessLogic.Managers
 {
-    internal class CharacteristicManager
+    internal class CharacteristicManager:IManager<CharacteristicDto>
     {
         private readonly IMapper _mapper;
         private readonly Validator<Characteristic> _validator;
@@ -35,9 +36,9 @@ namespace BusinessLogic.Services
             await _validator.Update(characteristic);
         }
 
-        public IEnumerable<Characteristic> GetAll()
+        public IEnumerable<CharacteristicDto> GetAll()
         {
-            return _validator.GetAll();
+            return _validator.GetAll().Select(item => _mapper.Map<CharacteristicDto>(item));
         }
     }
 }

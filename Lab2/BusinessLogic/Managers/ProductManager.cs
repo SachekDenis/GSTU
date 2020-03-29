@@ -3,11 +3,12 @@ using BusinessLogic.Dto;
 using BusinessLogic.Validation;
 using DataAccesLayer.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
-namespace BusinessLogic.Services
+namespace BusinessLogic.Managers
 {
-    public class ProductManager
+    public class ProductManager:IManager<ProductDto>
     {
         private readonly SupplyValidator _supplyValidator;
         private readonly ProductValidator _productValidator;
@@ -26,7 +27,7 @@ namespace BusinessLogic.Services
             _mapper = mapper;
         }
 
-        public async Task AddProduct(ProductDto dto)
+        public async Task Add(ProductDto dto)
         {
             var supply = _mapper.Map<Supply>(dto);
 
@@ -50,20 +51,20 @@ namespace BusinessLogic.Services
             await _productValidator.Add(product);
         }
 
-        public async Task DeleteProduct(int id)
+        public async Task Delete(int id)
         {
             await _productValidator.Delete(id);
         }
 
-        public async Task UpdateProduct(ProductDto productDto)
+        public async Task Update(ProductDto productDto)
         {
             var product = _mapper.Map<Product>(productDto);
             await _productValidator.Update(product);
         }
 
-        public IEnumerable<Product> GetAllProducts()
+        public IEnumerable<ProductDto> GetAll()
         {
-            return _productValidator.GetAll();
+            return _productValidator.GetAll().Select(item => _mapper.Map<ProductDto>(item));
         }
     }
 }

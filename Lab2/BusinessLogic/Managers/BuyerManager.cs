@@ -1,13 +1,15 @@
 ﻿using AutoMapper;
 using BusinessLogic.Dto;
+using BusinessLogic.Managers;
 using BusinessLogic.Validation;
 using DataAccesLayer.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
-namespace BusinessLogic.Services
+namespace BusinessLogic.Managers
 {
-    internal class BuyerManager
+    internal class BuyerManager:IManager<BuyerDto>
     {
         private readonly IMapper _mapper;
         private readonly Validator<Buyer> _validator;
@@ -35,9 +37,9 @@ namespace BusinessLogic.Services
             await _validator.Update(buyer);
         }
 
-        public IEnumerable<Buyer> GetAll()
+        public IEnumerable<BuyerDto> GetAll()
         {
-            return _validator.GetAll();
+            return _validator.GetAll().Select(item => _mapper.Map<BuyerDto>(item));
         }
     }
 }

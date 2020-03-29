@@ -4,11 +4,12 @@ using DataAccesLayer.Repo;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace BusinessLogic.Validation
 {
     public abstract class Validator<T>
-        where T : Entity
+        where T : class,IEntity
     {
         protected readonly IRepository<T> _items;
         public Validator(IRepository<T> items)

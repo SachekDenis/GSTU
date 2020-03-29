@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataAccesLayer.Repo
 {
-    public class StoreRepository<T> : IRepository<T> where T : Entity
+    public class StoreRepository<T> : IRepository<T> where T : class,IEntity
     {
         private bool disposed = false;
         private readonly StoreContext _context;
