@@ -1,4 +1,4 @@
-﻿namespace BusinessLogic.Dto
+﻿namespace BusinessLogic.Models
 {
     public class CharacteristicDto
     {

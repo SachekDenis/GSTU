@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLogic.Managers
 {
-    interface IManager<TDto>
+    public interface IManager<TDto>
     {
         Task Add(TDto buyerDto);
         Task Delete(int id);

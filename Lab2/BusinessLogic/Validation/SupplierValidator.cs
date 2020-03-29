@@ -16,7 +16,7 @@ namespace BusinessLogic.Validation
         {
             return !(string.IsNullOrEmpty(item.Name)
                 || string.IsNullOrEmpty(item.Phone)
-                || string.IsNullOrEmpty(item.Adress));
+                || string.IsNullOrEmpty(item.Address));
         }
 
         protected override bool ValidateReferences(Supplier item)

@@ -1,8 +1,7 @@
-﻿namespace BusinessLogic.Dto
+﻿namespace BusinessLogic.Models
 {
     public class CategoryDto
     {
-        public int Id { get; set; }
         public string Name { get; set; }
     }
 }

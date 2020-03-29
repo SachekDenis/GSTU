@@ -1,4 +1,4 @@
-﻿namespace BusinessLogic.Dto
+﻿namespace BusinessLogic.Models
 {
     public class SupplierDto
     {
@@ -7,6 +7,6 @@
 
         public string Phone { get; set; }
 
-        public string Adress { get; set; }
+        public string Address { get; set; }
     }
 }

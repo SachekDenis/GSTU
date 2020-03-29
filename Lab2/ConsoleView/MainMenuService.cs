@@ -1,5 +1,4 @@
-﻿using BusinessLogic.Managers;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 
 namespace ConsoleApp.ConsoleView
@@ -7,10 +6,13 @@ namespace ConsoleApp.ConsoleView
     internal class MainMenuService
     {
         private readonly ManufacturerConsoleService _manufacturerConsoleService;
+        private readonly SupplierConsoleService _supplierConsoleService;
 
-        public MainMenuService(ManufacturerConsoleService manufacturerConsoleService)
+        public MainMenuService(ManufacturerConsoleService manufacturerConsoleService,
+            SupplierConsoleService supplierConsoleService)
         {
             _manufacturerConsoleService = manufacturerConsoleService;
+            _supplierConsoleService = supplierConsoleService;
         }
 
         public async Task StartMainLoop()
@@ -19,7 +21,7 @@ namespace ConsoleApp.ConsoleView
             {
                 Console.Clear();
                 PrintMenu();
-                var menuTab = int.Parse(Console.ReadLine());
+                var menuTab = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
 
                 switch (menuTab)
                 {
@@ -28,13 +30,18 @@ namespace ConsoleApp.ConsoleView
                             await _manufacturerConsoleService.StartConsoleLoop();
                         }
                         break;
+                    case 2:
+                        {
+                            await _supplierConsoleService.StartConsoleLoop();
+                        }
+                        break;
                     default:
                         break;
                 }
             }
         }
 
-        private void PrintMenu()
+        private static void PrintMenu()
         {
             Console.WriteLine("1. Производители");
             Console.WriteLine("2. Поставщики");

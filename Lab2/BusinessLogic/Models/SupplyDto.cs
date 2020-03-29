@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BusinessLogic.Model
+namespace BusinessLogic.Models
 {
     internal class SupplyDto
     {

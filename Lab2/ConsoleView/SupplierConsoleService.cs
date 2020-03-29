@@ -1,18 +1,18 @@
-﻿using BusinessLogic.Managers;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using BusinessLogic.Managers;
 using BusinessLogic.Models;
 
 namespace ConsoleApp.ConsoleView
 {
-    internal class ManufacturerConsoleService
+    public class SupplierConsoleService
     {
-        private readonly ManufacturerManager _manufacturerService;
+        private readonly SupplierManager _supplierManager;
         private readonly ConsolePrinter _printer;
 
-        public ManufacturerConsoleService(ManufacturerManager manufacturerService)
+        public SupplierConsoleService(SupplierManager supplierManager)
         {
-            _manufacturerService = manufacturerService;
+            _supplierManager = supplierManager;
             _printer = new ConsolePrinter();
         }
 
@@ -45,20 +45,20 @@ namespace ConsoleApp.ConsoleView
 
         private void PrintAll()
         {
-            var items = _manufacturerService.GetAll();
+            var items = _supplierManager.GetAll();
             _printer.WriteCollectionAsTable(items);
         }
 
         private async Task Delete()
         {
             int id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
-            await _manufacturerService.Delete(id);
+            await _supplierManager.Delete(id);
         }
 
         private async Task Add()
         {
             var manufacturerDto = CreateModel();
-            await _manufacturerService.Add(manufacturerDto);
+            await _supplierManager.Add(manufacturerDto);
         }
 
         private async Task Update()
@@ -67,28 +67,30 @@ namespace ConsoleApp.ConsoleView
             var manufacturerDto = CreateModel();
             manufacturerDto.Id = id;
 
-            await _manufacturerService.Update(manufacturerDto);
+            await _supplierManager.Update(manufacturerDto);
         }
 
-        private static ManufacturerDto CreateModel()
+        private static SupplierDto CreateModel()
         {
             var name = Console.ReadLine();
-            var country = Console.ReadLine();
+            var address = Console.ReadLine();
+            var phone = Console.ReadLine();
 
-            var manufacturerDto = new ManufacturerDto()
+            var supplierDto = new SupplierDto()
             {
                 Name = name,
-                Country = country,
+                Address = address,
+                Phone = phone
             };
 
-            return manufacturerDto;
+            return supplierDto;
         }
 
         private static void PrintMenu()
         {
-            Console.WriteLine("1. Добавить производителя");
-            Console.WriteLine("2. Удалить производителя");
-            Console.WriteLine("3. Изменить производителя");
+            Console.WriteLine("1. Добавить поставщика");
+            Console.WriteLine("2. Удалить поставщика");
+            Console.WriteLine("3. Изменить поставщика");
         }
     }
 }
