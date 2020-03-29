@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BusinessLogic.Dto
+namespace BusinessLogic.Model
 {
     public class ProductDto
     {

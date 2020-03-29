@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using BusinessLogic.Dto;
 using BusinessLogic.Validation;
 using DataAccesLayer.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using BusinessLogic.Model;
 
 namespace BusinessLogic.Services
 {

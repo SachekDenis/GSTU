@@ -1,4 +1,4 @@
-﻿namespace BusinessLogic.Dto
+﻿namespace BusinessLogic.Model
 {
     public class BuyerDto
     {

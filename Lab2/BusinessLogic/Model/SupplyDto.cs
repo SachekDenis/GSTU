@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace BusinessLogic.Dto
+namespace BusinessLogic.Model
 {
     class SupplyDto
     {

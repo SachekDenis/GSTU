@@ -23,8 +23,8 @@ namespace BusinessLogic.Validation
         protected override bool ValidateProperties(Field item)
         {
             return !(string.IsNullOrEmpty(item.Value)
-                || !_products.GetAll().Result.Any(product => product.Id == item.ProductId)
-                || !_characteristics.GetAll().Result.Any(characteristic => characteristic.Id == item.CharacteristicId));
+                || _products.GetAll().Result.All(product => product.Id != item.ProductId) 
+                || _characteristics.GetAll().Result.All(characteristic => characteristic.Id != item.CharacteristicId));
         }
     }
 }

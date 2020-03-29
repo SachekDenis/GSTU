@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using BusinessLogic.Dto;
 using BusinessLogic.Validation;
 using DataAccesLayer.Models;
 using System.Collections.Generic;
+using BusinessLogic.Model;
 
 namespace BusinessLogic.Services
 {

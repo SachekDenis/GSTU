@@ -11,8 +11,12 @@ namespace BusinessLogic.Validation
     {
         private readonly IRepository<Product> _products;
         private readonly IRepository<Characteristic> _characteristics;
-        public CategoryValidator(IRepository<Category> items) : base(items)
+        public CategoryValidator(IRepository<Category> items,
+            IRepository<Product> products,
+            IRepository<Characteristic> characteristics) : base(items)
         {
+            _products = products;
+            _characteristics = characteristics;
         }
 
         protected override bool ValidateProperties(Category item)

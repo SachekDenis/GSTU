@@ -23,12 +23,12 @@ namespace BusinessLogic.Validation
         protected override bool ValidateProperties(Characteristic item)
         {
             return !(string.IsNullOrEmpty(item.Name)
-                || !_categories.GetAll().Result.Any(category => category.Id == item.CategoryId));
+                || _categories.GetAll().Result.All(category => category.Id != item.CategoryId));
         }
 
         protected override bool ValidateReferences(Characteristic item)
         {
-            return !_fields.GetAll().Result.Any(field => field.CharacteristicId == item.Id);
+            return _fields.GetAll().Result.All(field => field.CharacteristicId != item.Id);
         }
     }
 }

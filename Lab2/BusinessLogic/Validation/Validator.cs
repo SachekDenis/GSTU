@@ -10,8 +10,9 @@ namespace BusinessLogic.Validation
     public abstract class Validator<T>
         where T : Entity
     {
-        protected readonly IRepository<T> _items;
-        public Validator(IRepository<T> items)
+        private readonly IRepository<T> _items;
+
+        protected Validator(IRepository<T> items)
         {
             _items = items;
         }

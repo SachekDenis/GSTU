@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
-using BusinessLogic.Dto;
+using BusinessLogic.Model;
 using DataAccesLayer.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BusinessLogic.MapperProfile
 {

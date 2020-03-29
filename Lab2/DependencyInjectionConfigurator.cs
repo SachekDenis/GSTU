@@ -27,7 +27,7 @@ namespace ConsoleApp
                 .WithTransientLifetime())
             .AddAutoMapper(typeof(StoreProfile))
             .AddSingleton(typeof(IRepository<>), typeof(StoreRepository<>))
-            .AddLogging(config => config.AddFile("Logs/myapp-{Date}.txt"))
+            .AddLogging(loggingBuilder => loggingBuilder.AddFile("Logs/storeApp-{Date}.txt"))
             .BuildServiceProvider();
         }
     }
