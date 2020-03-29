@@ -30,7 +30,7 @@ namespace BusinessLogic.Managers
             await _validator.Delete(id);
         }
 
-        public async Task Update(BuyerDto supplierDto)
+        public async Task Update(SupplierDto supplierDto)
         {
             var supplier = _mapper.Map<Supplier>(supplierDto);
             await _validator.Update(supplier);

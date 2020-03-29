@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLogic.Managers
 {
-    internal class CategoryManager:IManager<BuyerDto>
+    internal class CategoryManager:IManager<CategoryDto>
     {
         private readonly IMapper _mapper;
         private readonly Validator<Category> _validator;
