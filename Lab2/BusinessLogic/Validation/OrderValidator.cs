@@ -9,14 +9,19 @@ namespace BusinessLogic.Validation
         private readonly IRepository<Product> _products;
         private readonly IRepository<Buyer> _buyers;
 
-        public OrderValidator(IRepository<Order> items, IRepository<Product> products, IRepository<Buyer> buyers) : base(items)
-        { }
+        public OrderValidator(IRepository<Order> items,
+            IRepository<Product> products,
+            IRepository<Buyer> buyers) : base(items)
+        {
+            _products = products;
+            _buyers = buyers;
+        }
 
         protected override bool ValidateProperties(Order item)
         {
             return !(item.Count < 0
-                || !_products.GetAll().Result.Where(product => item.ProductId == product.Id).Any()
-                || !_buyers.GetAll().Result.Where(buyer => item.BuyerId == buyer.Id).Any());
+                || !_products.GetAll().Where(product => item.ProductId == product.Id).Any()
+                || !_buyers.GetAll().Where(buyer => item.BuyerId == buyer.Id).Any());
         }
     }
 }

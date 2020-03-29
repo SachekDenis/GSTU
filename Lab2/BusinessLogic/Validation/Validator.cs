@@ -3,12 +3,13 @@ using DataAccesLayer.Models;
 using DataAccesLayer.Repo;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
+using System.Linq;
 
 namespace BusinessLogic.Validation
 {
     public abstract class Validator<T>
-        where T : Entity
+        where T : class,IEntity
     {
         private readonly IRepository<T> _items;
 
@@ -17,7 +18,7 @@ namespace BusinessLogic.Validation
             _items = items;
         }
 
-        public void Add(T item)
+        public async Task Add(T item)
         {
             if (item == null)
             {
@@ -27,12 +28,12 @@ namespace BusinessLogic.Validation
             if (!ValidateProperties(item))
                 throw new ValidationException($"{nameof(T)} has invalid properties");
 
-            _items.Add(item);
+            await _items.Add(item);
         }
 
-        public void Delete(int itemId)
+        public async Task Delete(int itemId)
         {
-            var item = _items.GetById(itemId).Result;
+            var item = await _items.GetById(itemId);
 
             if (item == null)
             {
@@ -42,27 +43,27 @@ namespace BusinessLogic.Validation
             if (!ValidateReferences(item))
                 throw new ValidationException($"{nameof(T)} has references");
 
-            _items.Delete(itemId);
+            await _items.Delete(itemId);
         }
 
         public IEnumerable<T> GetAll()
         {
-            return _items.GetAll().Result;
+            return _items.GetAll();
         }
 
-        public T GetById(int itemId)
+        public async Task<T> GetById(int itemId)
         {
-            return _items.GetById(itemId).Result;
+            return await _items.GetById(itemId);
         }
 
-        public void Update(T item)
+        public async Task Update(T item)
         {
             if (item == null)
             {
                 throw new ArgumentNullException(nameof(item));
             }
 
-            var itemToUpdate = _items.GetById(item.Id).Result;
+            var itemToUpdate = await _items.GetById(item.Id);
 
             if (!ValidateProperties(item))
                 throw new ValidationException($"{nameof(T)} has invalid properties");
@@ -72,7 +73,7 @@ namespace BusinessLogic.Validation
                 throw new ValidationException($"{nameof(T)} with such id doesn't exist");
             }
 
-            _items.Update(item);
+            await _items.Update(item);
         }
 
         protected virtual bool ValidateReferences(T item)

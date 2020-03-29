@@ -1,13 +1,13 @@
 ﻿using DataAccesLayer.Context;
+using DataAccesLayer.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DataAccesLayer.Repo
 {
-    public class StoreRepository<T> : IRepository<T> where T : class
+    public class StoreRepository<T> : IRepository<T> where T : class,IEntity
     {
         private bool disposed = false;
         private readonly StoreContext _context;
@@ -17,13 +17,13 @@ namespace DataAccesLayer.Repo
             _context = context;
         }
 
-        public async void Add(T item)
+        public async Task Add(T item)
         {
             await _context.Set<T>().AddAsync(item);
             await _context.SaveChangesAsync();
         }
 
-        public async void Delete(int id)
+        public async Task Delete(int id)
         {
             var item = await _context.FindAsync<T>(id);
             if (item == null)
@@ -32,19 +32,19 @@ namespace DataAccesLayer.Repo
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<T>> GetAll()
+        public IQueryable<T> GetAll()
         {
-            var items = await _context.Set<T>().ToListAsync();
-            return items;
+            return _context.Set<T>().AsNoTracking();
         }
 
         public async Task<T> GetById(int id)
         {
-            var item = await _context.FindAsync<T>(id);
-            return item;
+            return await _context.Set<T>()
+                         .AsNoTracking()
+                         .FirstOrDefaultAsync(e => e.Id == id);
         }
 
-        public async void Update(T item)
+        public async Task Update(T item)
         {
             _context.Set<T>().Update(item);
             await _context.SaveChangesAsync();
@@ -56,7 +56,7 @@ namespace DataAccesLayer.Repo
             GC.SuppressFinalize(this);
         }
 
-        protected async virtual void Dispose(bool disposing)
+        protected virtual async void Dispose(bool disposing)
         {
             if (!disposed)
             {

@@ -1,9 +1,6 @@
 ﻿using DataAccesLayer.Models;
 using DataAccesLayer.Repo;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace BusinessLogic.Validation
 {
@@ -23,8 +20,8 @@ namespace BusinessLogic.Validation
         protected override bool ValidateProperties(Field item)
         {
             return !(string.IsNullOrEmpty(item.Value)
-                || _products.GetAll().Result.All(product => product.Id != item.ProductId) 
-                || _characteristics.GetAll().Result.All(characteristic => characteristic.Id != item.CharacteristicId));
+                || !_products.GetAll().Any(product => product.Id == item.ProductId)
+                || !_characteristics.GetAll().Any(characteristic => characteristic.Id == item.CharacteristicId));
         }
     }
 }

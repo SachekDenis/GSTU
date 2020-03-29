@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Text;
-using DataAccesLayer.Models;
+﻿using DataAccesLayer.Models;
+using Korzh.DbUtils;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.SqlServer;
 using Microsoft.Extensions.Logging;
+using System;
 
 namespace DataAccesLayer.Context
 {
@@ -23,7 +20,15 @@ namespace DataAccesLayer.Context
 
         public StoreContext(DbContextOptions<StoreContext> options) : base(options)
         {
-            Database.EnsureCreated();
+            if (Database.EnsureCreated())
+            {
+                DbInitializer.Create(options =>
+                {
+                    options.UseSqlServer(Database.GetDbConnection().ConnectionString);
+                    options.UseFileFolderPacker(System.IO.Path.Combine(Environment.CurrentDirectory, "DbSeed"));
+                })
+                .Seed();
+            }
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DataAccesLayer.Models
+﻿namespace DataAccesLayer.Models
 {
-    public class Buyer:Entity
+    public class Buyer : IEntity
     {
+        public int Id { get; set; }
         public string SecondName { get; set; }
         public string FirstName { get; set; }
         public string Address { get; set; }

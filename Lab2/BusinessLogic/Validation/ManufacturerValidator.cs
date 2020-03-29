@@ -1,6 +1,5 @@
 ﻿using DataAccesLayer.Models;
 using DataAccesLayer.Repo;
-using System;
 using System.Linq;
 
 namespace BusinessLogic.Validation
@@ -23,7 +22,7 @@ namespace BusinessLogic.Validation
 
         protected override bool ValidateReferences(Manufacturer item)
         {
-            return _products.GetAll().Result.All(product => product.ManufacturerId != item.Id);
+            return !_products.GetAll().Any(product => product.ManufacturerId == item.Id);
         }
     }
 }

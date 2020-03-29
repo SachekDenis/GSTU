@@ -1,9 +1,6 @@
 ﻿using DataAccesLayer.Models;
 using DataAccesLayer.Repo;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace BusinessLogic.Validation
 {
@@ -11,6 +8,7 @@ namespace BusinessLogic.Validation
     {
         private readonly IRepository<Product> _products;
         private readonly IRepository<Characteristic> _characteristics;
+
         public CategoryValidator(IRepository<Category> items,
             IRepository<Product> products,
             IRepository<Characteristic> characteristics) : base(items)
@@ -26,8 +24,8 @@ namespace BusinessLogic.Validation
 
         protected override bool ValidateReferences(Category item)
         {
-            return !(_products.GetAll().Result.Any(product => product.CategoryId == item.Id)
-                || _characteristics.GetAll().Result.Any(characteristic => characteristic.CategoryId == item.Id));
+            return !(_products.GetAll().Any(product => product.CategoryId == item.Id)
+                || _characteristics.GetAll().Any(characteristic => characteristic.CategoryId == item.Id));
         }
     }
 }
