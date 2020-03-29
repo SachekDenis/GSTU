@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,13 +18,13 @@ namespace DataAccesLayer.Repo
             _context = context;
         }
 
-        public async void Add(T item)
+        public async Task Add(T item)
         {
             await _context.Set<T>().AddAsync(item);
             await _context.SaveChangesAsync();
         }
 
-        public async void Delete(int id)
+        public async Task Delete(int id)
         {
             var item = await _context.FindAsync<T>(id);
             if (item == null)
@@ -32,10 +33,9 @@ namespace DataAccesLayer.Repo
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<T>> GetAll()
+        public IQueryable<T> GetAll()
         {
-            var items = await _context.Set<T>().ToListAsync();
-            return items;
+            return _context.Set<T>().AsNoTracking();
         }
 
         public async Task<T> GetById(int id)
@@ -44,7 +44,7 @@ namespace DataAccesLayer.Repo
             return item;
         }
 
-        public async void Update(T item)
+        public async Task Update(T item)
         {
             _context.Set<T>().Update(item);
             await _context.SaveChangesAsync();

@@ -5,35 +5,36 @@ using DataAccesLayer.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BusinessLogic.Services
 {
-    class CharacteristicService
+    class CharacteristicManager
     {
         private readonly IMapper _mapper;
         private readonly Validator<Characteristic> _validator;
 
-        public CharacteristicService(IMapper mapper, CharacteristicValidator characteristicValidator)
+        public CharacteristicManager(IMapper mapper, CharacteristicValidator characteristicValidator)
         {
             _mapper = mapper;
             _validator = characteristicValidator;
         }
 
-        public void Add(CharacteristicDto characteristicDto)
+        public async Task Add(CharacteristicDto characteristicDto)
         {
             var characteristic = _mapper.Map<Characteristic>(characteristicDto);
-            _validator.Add(characteristic);
+            await _validator.Add(characteristic);
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            _validator.Delete(id);
+            await _validator.Delete(id);
         }
 
-        public void Update(CharacteristicDto characteristicDto)
+        public async Task Update(CharacteristicDto characteristicDto)
         {
             var characteristic = _mapper.Map<Characteristic>(characteristicDto);
-            _validator.Update(characteristic);
+            await _validator.Update(characteristic);
         }
 
         public IEnumerable<Characteristic> GetAll()

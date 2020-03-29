@@ -3,17 +3,18 @@ using BusinessLogic.Dto;
 using BusinessLogic.Validation;
 using DataAccesLayer.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BusinessLogic.Services
 {
-    public class ProductService
+    public class ProductManager
     {
         private readonly SupplyValidator _supplyValidator;
         private readonly ProductValidator _productValidator;
         private readonly FieldValidator _fieldValidator;
         private readonly IMapper _mapper;
 
-        public ProductService(
+        public ProductManager(
             SupplyValidator supplyValidator,
             ProductValidator productValidator,
             FieldValidator fieldValidator,
@@ -25,11 +26,11 @@ namespace BusinessLogic.Services
             _mapper = mapper;
         }
 
-        public void AddProduct(ProductDto dto)
+        public async Task AddProduct(ProductDto dto)
         {
             var supply = _mapper.Map<Supply>(dto);
 
-            _supplyValidator.Add(supply);
+            await _supplyValidator.Add(supply);
 
             var product = _mapper.Map<Product>(dto);
 
@@ -43,21 +44,21 @@ namespace BusinessLogic.Services
                     ProductId = product.Id,
                     Value = characteristic.Value
                 };
-                _fieldValidator.Add(field);
+                await _fieldValidator.Add(field);
             }
 
-            _productValidator.Add(product);
+            await _productValidator.Add(product);
         }
 
-        public void DeleteProduct(int id)
+        public async Task DeleteProduct(int id)
         {
-            _productValidator.Delete(id);
+            await _productValidator.Delete(id);
         }
 
-        public void UpdateProduct(ProductDto productDto)
+        public async Task UpdateProduct(ProductDto productDto)
         {
             var product = _mapper.Map<Product>(productDto);
-            _productValidator.Update(product);
+            await _productValidator.Update(product);
         }
 
         public IEnumerable<Product> GetAllProducts()

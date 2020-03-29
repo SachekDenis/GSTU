@@ -17,12 +17,12 @@ namespace BusinessLogic.Validation
 
         protected override bool ValidateProperties(Supply item)
         {
-            return _suppliers.GetAll().Result.Where(supplier => item.SupplierId == supplier.Id).Any();
+            return _suppliers.GetAll().Where(supplier => item.SupplierId == supplier.Id).Any();
         }
 
         protected override bool ValidateReferences(Supply item)
         {
-            return !_products.GetAll().Result.Where(product => product.SupplyId == item.Id).Any();
+            return !_products.GetAll().Where(product => product.SupplyId == item.Id).Any();
         }
     }
 }

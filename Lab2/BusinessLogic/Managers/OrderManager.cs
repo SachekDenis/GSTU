@@ -5,35 +5,36 @@ using DataAccesLayer.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BusinessLogic.Services
 {
-    class OrderService
+    class OrderManager
     {
         private readonly IMapper _mapper;
         private readonly Validator<Order> _validator;
 
-        public OrderService(IMapper mapper, OrderValidator orderValidator)
+        public OrderManager(IMapper mapper, OrderValidator orderValidator)
         {
             _mapper = mapper;
             _validator = orderValidator;
         }
 
-        public void Add(OrderDto orderDto)
+        public async Task Add(OrderDto orderDto)
         {
             var order = _mapper.Map<Order>(orderDto);
-            _validator.Add(order);
+            await _validator.Add(order);
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            _validator.Delete(id);
+            await _validator.Delete(id);
         }
 
-        public void Update(OrderDto orderDto)
+        public async Task Update(OrderDto orderDto)
         {
             var order = _mapper.Map<Order>(orderDto);
-            _validator.Update(order);
+            await _validator.Update(order);
         }
 
         public IEnumerable<Order> GetAll()

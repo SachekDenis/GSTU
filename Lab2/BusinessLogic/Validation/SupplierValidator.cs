@@ -24,7 +24,7 @@ namespace BusinessLogic.Validation
 
         protected override bool ValidateReferences(Supplier item)
         {
-            return !_supplyes.GetAll().Result.Where(supply => supply.SupplierId == item.Id).Any();
+            return !_supplyes.GetAll().Where(supply => supply.SupplierId == item.Id).Any();
         }
     }
 }

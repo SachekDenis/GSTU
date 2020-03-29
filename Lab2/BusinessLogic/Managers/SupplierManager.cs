@@ -5,35 +5,36 @@ using DataAccesLayer.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BusinessLogic.Services
 {
-    class SupplierService
+    class SupplierManager
     {
         private readonly IMapper _mapper;
         private readonly Validator<Supplier> _validator;
 
-        public SupplierService(IMapper mapper, SupplierValidator supplierValidator)
+        public SupplierManager(IMapper mapper, SupplierValidator supplierValidator)
         {
             _mapper = mapper;
             _validator = supplierValidator;
         }
 
-        public void Add(SupplierDto supplierDto)
+        public async Task Add(SupplierDto supplierDto)
         {
             var supplier = _mapper.Map<Supplier>(supplierDto);
-            _validator.Add(supplier);
+            await _validator.Add(supplier);
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            _validator.Delete(id);
+            await _validator.Delete(id);
         }
 
-        public void Update(BuyerDto supplierDto)
+        public async Task Update(BuyerDto supplierDto)
         {
             var supplier = _mapper.Map<Supplier>(supplierDto);
-            _validator.Update(supplier);
+            await _validator.Update(supplier);
         }
 
         public IEnumerable<Supplier> GetAll()

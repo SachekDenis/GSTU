@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BusinessLogic.MapperProfile;
+using ConsoleApp.ConsoleView;
 using DataAccesLayer.Context;
 using DataAccesLayer.Repo;
 using Microsoft.EntityFrameworkCore;
@@ -12,21 +13,24 @@ namespace ConsoleApp
 {
     public static class DependencyInjectionConfigurator
     {
-        public static void Configure(IConfigurationRoot config)
+        public static ServiceProvider Configure(IConfigurationRoot config)
         {
-            var assemblyToScan = Assembly.Load("BusinessLogic");
-            var services = new ServiceCollection()
+            var businessAssembly = Assembly.Load("BusinessLogic");
+            var consoleAssembly = Assembly.Load("ConsoleApp");
+
+            return new ServiceCollection()
             .AddDbContext<StoreContext>(options =>
-                {
-                    options.UseSqlServer(config.GetConnectionString("StoreConnection"));
-                }, ServiceLifetime.Transient)
+                options.UseSqlServer(config.GetConnectionString("StoreConnection")))
             .Scan(scan => scan
-                .FromAssemblies(assemblyToScan)
-                .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Service")))
+                .FromAssemblies(businessAssembly,consoleAssembly)
+                .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Manager")))
+                .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Validator")))
+                .AddClasses(classes => classes.Where(type => type.Name.EndsWith("ConsoleService")))
                 .AsSelf()
                 .WithTransientLifetime())
             .AddAutoMapper(typeof(StoreProfile))
-            .AddSingleton(typeof(IRepository<>), typeof(StoreRepository<>))
+            .AddScoped(typeof(IRepository<>), typeof(StoreRepository<>))
+            .AddScoped(typeof(MainMenuService))
             .AddLogging(config => config.AddFile("Logs/myapp-{Date}.txt"))
             .BuildServiceProvider();
         }

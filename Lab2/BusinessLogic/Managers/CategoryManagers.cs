@@ -5,35 +5,36 @@ using DataAccesLayer.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BusinessLogic.Services
 {
-    class CategoryService
+    class CategoryManager
     {
         private readonly IMapper _mapper;
         private readonly Validator<Category> _validator;
 
-        public CategoryService(IMapper mapper, CategoryValidator categoryValidator)
+        public CategoryManager(IMapper mapper, CategoryValidator categoryValidator)
         {
             _mapper = mapper;
             _validator = categoryValidator;
         }
 
-        public void Add(CategoryDto categoryDto)
+        public async Task Add(CategoryDto categoryDto)
         {
             var category = _mapper.Map<Category>(categoryDto);
-            _validator.Add(category);
+            await _validator.Add(category);
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            _validator.Delete(id);
+            await _validator.Delete(id);
         }
 
-        public void Update(CategoryDto categoryDto)
+        public async Task Update(CategoryDto categoryDto)
         {
             var category = _mapper.Map<Category>(categoryDto);
-            _validator.Update(category);
+            await _validator.Update(category);
         }
 
         public IEnumerable<Category> GetAll()
