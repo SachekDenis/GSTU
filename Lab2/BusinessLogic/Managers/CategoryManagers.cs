@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using BusinessLogic.Validation;
-using DataAccesLayer.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BusinessLogic.Models;
+using DataAccessLayer.Models;
 
 namespace BusinessLogic.Managers
 {
-    internal class CategoryManager:IManager<CategoryDto>
+    public class CategoryManager:IManager<CategoryDto>
     {
         private readonly IMapper _mapper;
         private readonly Validator<Category> _validator;

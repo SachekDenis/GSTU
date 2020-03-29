@@ -1,6 +1,6 @@
-﻿using DataAccesLayer.Models;
-using DataAccesLayer.Repo;
-using System.Linq;
+﻿using System.Linq;
+using DataAccessLayer.Models;
+using DataAccessLayer.Repo;
 
 namespace BusinessLogic.Validation
 {

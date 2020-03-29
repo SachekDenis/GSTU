@@ -1,18 +1,18 @@
-﻿using BusinessLogic.Managers;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using BusinessLogic.Managers;
 using BusinessLogic.Models;
 
 namespace ConsoleApp.ConsoleView
 {
-    internal class ManufacturerConsoleService
+    public class CategoryConsoleService
     {
-        private readonly ManufacturerManager _manufacturerService;
+        private readonly CategoryManager _categoryManager;
         private readonly ConsolePrinter _printer;
 
-        public ManufacturerConsoleService(ManufacturerManager manufacturerService)
+        public CategoryConsoleService(CategoryManager categoryManager)
         {
-            _manufacturerService = manufacturerService;
+            _categoryManager = categoryManager;
             _printer = new ConsolePrinter();
         }
 
@@ -53,50 +53,48 @@ namespace ConsoleApp.ConsoleView
 
         private void PrintAll()
         {
-            var items = _manufacturerService.GetAll();
+            var items = _categoryManager.GetAll();
             _printer.WriteCollectionAsTable(items);
         }
 
         private async Task Delete()
         {
             int id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
-            await _manufacturerService.Delete(id);
+            await _categoryManager.Delete(id);
         }
 
         private async Task Add()
         {
-            var manufacturerDto = CreateModel();
-            await _manufacturerService.Add(manufacturerDto);
+            var categoryDto = CreateModel();
+            await _categoryManager.Add(categoryDto);
         }
 
         private async Task Update()
         {
             var id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
-            var manufacturerDto = CreateModel();
-            manufacturerDto.Id = id;
+            var categoryDto = CreateModel();
+            categoryDto.Id = id;
 
-            await _manufacturerService.Update(manufacturerDto);
+            await _categoryManager.Update(categoryDto);
         }
 
-        private static ManufacturerDto CreateModel()
+        private static CategoryDto CreateModel()
         {
             var name = Console.ReadLine();
-            var country = Console.ReadLine();
 
-            var manufacturerDto = new ManufacturerDto()
+            var categoryDto = new CategoryDto()
             {
                 Name = name,
-                Country = country,
             };
 
-            return manufacturerDto;
+            return categoryDto;
         }
 
         private static void PrintMenu()
         {
-            Console.WriteLine("1. Добавить производителя");
-            Console.WriteLine("2. Удалить производителя");
-            Console.WriteLine("3. Изменить производителя");
+            Console.WriteLine("1. Добавить категорию");
+            Console.WriteLine("2. Удалить категорию");
+            Console.WriteLine("3. Изменить категорию");
         }
     }
 }

@@ -1,11 +1,11 @@
-﻿using DataAccesLayer.Context;
-using DataAccesLayer.Models;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using DataAccessLayer.Context;
+using DataAccessLayer.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace DataAccesLayer.Repo
+namespace DataAccessLayer.Repo
 {
     public class StoreRepository<T> : IRepository<T> where T : class,IEntity
     {

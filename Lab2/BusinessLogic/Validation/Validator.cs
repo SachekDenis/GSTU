@@ -1,10 +1,10 @@
 ﻿using BusinessLogic.Exception;
-using DataAccesLayer.Models;
-using DataAccesLayer.Repo;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using DataAccessLayer.Models;
+using DataAccessLayer.Repo;
 
 namespace BusinessLogic.Validation
 {

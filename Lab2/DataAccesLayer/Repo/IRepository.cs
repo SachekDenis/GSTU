@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DataAccesLayer.Repo
+namespace DataAccessLayer.Repo
 {
     public interface IRepository<T> : IDisposable where T : class
     {

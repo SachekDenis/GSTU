@@ -1,6 +1,6 @@
-﻿using DataAccesLayer.Models;
-using DataAccesLayer.Repo;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
+using DataAccessLayer.Models;
+using DataAccessLayer.Repo;
 
 namespace BusinessLogic.Validation
 {

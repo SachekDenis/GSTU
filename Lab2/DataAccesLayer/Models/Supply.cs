@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DataAccesLayer.Models
+namespace DataAccessLayer.Models
 {
     public class Supply : IEntity
     {

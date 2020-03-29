@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using BusinessLogic.MapperProfile;
 using ConsoleApp.ConsoleView;
-using DataAccesLayer.Context;
-using DataAccesLayer.Repo;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Reflection;
+using DataAccessLayer.Context;
+using DataAccessLayer.Repo;
 
 namespace ConsoleApp
 {

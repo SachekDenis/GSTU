@@ -1,4 +1,4 @@
-﻿namespace DataAccesLayer.Models
+﻿namespace DataAccessLayer.Models
 {
     public class Product : IEntity
     {
