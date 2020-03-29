@@ -1,12 +1,8 @@
-﻿using DataAccesLayer.Context;
+﻿using ConsoleApp.ConsoleView;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.IO;
-using Korzh.DbUtils.Export;
-using Korzh.DbUtils.SqlServer;
-using ConsoleApp.ConsoleView;
-using BusinessLogic.Services;
 using System.Threading.Tasks;
 
 namespace ConsoleApp
@@ -24,8 +20,6 @@ namespace ConsoleApp
 
             var mainMenu = services.GetService<MainMenuService>();
             await mainMenu.StartMainLoop();
-            
-            Console.WriteLine("Hello World!");
         }
     }
 }

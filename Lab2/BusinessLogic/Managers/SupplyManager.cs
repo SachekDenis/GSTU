@@ -2,14 +2,12 @@
 using BusinessLogic.Dto;
 using BusinessLogic.Validation;
 using DataAccesLayer.Models;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BusinessLogic.Services
 {
-    class SupplyManager
+    internal class SupplyManager
     {
         private readonly IMapper _mapper;
         private readonly Validator<Supply> _validator;

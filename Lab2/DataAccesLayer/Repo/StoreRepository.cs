@@ -1,14 +1,13 @@
 ﻿using DataAccesLayer.Context;
+using DataAccesLayer.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccesLayer.Repo
 {
-    public class StoreRepository<T> : IRepository<T> where T : class
+    public class StoreRepository<T> : IRepository<T> where T : Entity
     {
         private bool disposed = false;
         private readonly StoreContext _context;
@@ -40,8 +39,9 @@ namespace DataAccesLayer.Repo
 
         public async Task<T> GetById(int id)
         {
-            var item = await _context.FindAsync<T>(id);
-            return item;
+            return await _context.Set<T>()
+                         .AsNoTracking()
+                         .FirstOrDefaultAsync(e => e.Id == id);
         }
 
         public async Task Update(T item)
@@ -56,7 +56,7 @@ namespace DataAccesLayer.Repo
             GC.SuppressFinalize(this);
         }
 
-        protected async virtual void Dispose(bool disposing)
+        protected virtual async void Dispose(bool disposing)
         {
             if (!disposed)
             {

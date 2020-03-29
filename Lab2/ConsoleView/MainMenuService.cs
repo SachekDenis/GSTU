@@ -1,20 +1,15 @@
 ﻿using BusinessLogic.Services;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ConsoleApp.ConsoleView
 {
-    class MainMenuService
+    internal class MainMenuService
     {
-        private readonly ProductManager _productService;
         private readonly ManufacturerConsoleService _manufacturerConsoleService;
 
-        public MainMenuService(ProductManager productService, 
-            ManufacturerConsoleService manufacturerConsoleService)
+        public MainMenuService(ManufacturerConsoleService manufacturerConsoleService)
         {
-            _productService = productService;
             _manufacturerConsoleService = manufacturerConsoleService;
         }
 
@@ -41,11 +36,11 @@ namespace ConsoleApp.ConsoleView
 
         private void PrintMenu()
         {
-            Console.WriteLine("1. Добавить производителя");
-            Console.WriteLine("2. Добавить поставщика");
-            Console.WriteLine("3. Добавить характеристику");
-            Console.WriteLine("4. Добавить категорию");
-            Console.WriteLine("5. Добавить товар");
+            Console.WriteLine("1. Производители");
+            Console.WriteLine("2. Поставщики");
+            Console.WriteLine("3. Характеристики");
+            Console.WriteLine("4. Категории");
+            Console.WriteLine("5. Товары");
         }
     }
 }

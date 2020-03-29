@@ -1,13 +1,11 @@
 ﻿using BusinessLogic.Dto;
 using BusinessLogic.Services;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ConsoleApp.ConsoleView
 {
-    class ManufacturerConsoleService
+    internal class ManufacturerConsoleService
     {
         protected readonly ManufacturerManager _manufacturerService;
         private readonly ConsolePrinter _printer;
@@ -20,7 +18,7 @@ namespace ConsoleApp.ConsoleView
 
         public async Task StartConsoleLoop()
         {
-            while(true)
+            while (true)
             {
                 Console.Clear();
                 PrintAll();

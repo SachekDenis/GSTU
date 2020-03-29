@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DataAccesLayer.Models
+﻿namespace DataAccesLayer.Models
 {
-    public class Supplier:Entity
+    public class Supplier : Entity
     {
         public string Name { get; set; }
 

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
-using System.Text;
+﻿using System.Runtime.Serialization;
 
 namespace BusinessLogic.Exception
 {
-    class ValidationException : System.Exception
+    internal class ValidationException : System.Exception
     {
         public ValidationException()
         {

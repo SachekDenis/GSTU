@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BusinessLogic.Dto
 {
-    class SupplyDto
+    internal class SupplyDto
     {
         public int Id { get; set; }
         public int SupplierId { get; set; }

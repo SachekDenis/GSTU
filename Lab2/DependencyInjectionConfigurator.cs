@@ -22,7 +22,7 @@ namespace ConsoleApp
             .AddDbContext<StoreContext>(options =>
                 options.UseSqlServer(config.GetConnectionString("StoreConnection")))
             .Scan(scan => scan
-                .FromAssemblies(businessAssembly,consoleAssembly)
+                .FromAssemblies(businessAssembly, consoleAssembly)
                 .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Manager")))
                 .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Validator")))
                 .AddClasses(classes => classes.Where(type => type.Name.EndsWith("ConsoleService")))

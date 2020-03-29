@@ -1,11 +1,9 @@
 ﻿using ConsoleTables;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ConsoleApp.ConsoleView
 {
-    class ConsolePrinter
+    internal class ConsolePrinter
     {
         public void WriteCollectionAsTable<T>(IEnumerable<T> items)
         {

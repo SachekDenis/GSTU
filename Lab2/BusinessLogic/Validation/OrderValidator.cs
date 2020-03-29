@@ -10,7 +10,7 @@ namespace BusinessLogic.Validation
         private readonly IRepository<Buyer> _buyers;
 
         public OrderValidator(IRepository<Order> items,
-            IRepository<Product> products, 
+            IRepository<Product> products,
             IRepository<Buyer> buyers) : base(items)
         {
             _products = products;
