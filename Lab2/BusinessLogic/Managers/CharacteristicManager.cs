@@ -8,7 +8,7 @@ using DataAccessLayer.Models;
 
 namespace BusinessLogic.Managers
 {
-    internal class CharacteristicManager:IManager<CharacteristicDto>
+    public class CharacteristicManager:IManager<CharacteristicDto>
     {
         private readonly IMapper _mapper;
         private readonly Validator<Characteristic> _validator;

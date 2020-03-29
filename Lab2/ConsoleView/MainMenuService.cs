@@ -8,14 +8,17 @@ namespace ConsoleApp.ConsoleView
         private readonly ManufacturerConsoleService _manufacturerConsoleService;
         private readonly SupplierConsoleService _supplierConsoleService;
         private readonly CategoryConsoleService _categoryConsoleService;
+        private readonly CharacteristicConsoleService _characteristicConsoleService;
 
         public MainMenuService(ManufacturerConsoleService manufacturerConsoleService,
             SupplierConsoleService supplierConsoleService,
-            CategoryConsoleService categoryConsoleService)
+            CategoryConsoleService categoryConsoleService,
+            CharacteristicConsoleService characteristicConsoleService)
         {
             _manufacturerConsoleService = manufacturerConsoleService;
             _supplierConsoleService = supplierConsoleService;
             _categoryConsoleService = categoryConsoleService;
+            _characteristicConsoleService = characteristicConsoleService;
         }
 
         public async Task StartMainLoop()
@@ -36,6 +39,11 @@ namespace ConsoleApp.ConsoleView
                     case 2:
                         {
                             await _supplierConsoleService.StartConsoleLoop();
+                        }
+                        break;
+                    case 3:
+                        {
+                            await _characteristicConsoleService.StartConsoleLoop();
                         }
                         break;
                     case 4:

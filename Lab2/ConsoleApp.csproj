@@ -6,24 +6,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="bin\**" />
     <Compile Remove="BusinessLogic\**" />
     <Compile Remove="DataAccesLayer\**" />
+    <EmbeddedResource Remove="bin\**" />
     <EmbeddedResource Remove="BusinessLogic\**" />
     <EmbeddedResource Remove="DataAccesLayer\**" />
+    <None Remove="bin\**" />
     <None Remove="BusinessLogic\**" />
     <None Remove="DataAccesLayer\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="bin\Debug\netcoreapp3.1\DbSeed\Categories.json" />
-    <Content Include="bin\Debug\netcoreapp3.1\DbSeed\Characteristics.json" />
-    <Content Include="bin\Debug\netcoreapp3.1\DbSeed\Fields.json" />
-    <Content Include="bin\Debug\netcoreapp3.1\DbSeed\Manufacturers.json" />
-    <Content Include="bin\Debug\netcoreapp3.1\DbSeed\Orders.json" />
-    <Content Include="bin\Debug\netcoreapp3.1\DbSeed\Products.json" />
-    <Content Include="bin\Debug\netcoreapp3.1\DbSeed\Suppliers.json" />
-    <Content Include="bin\Debug\netcoreapp3.1\DbSeed\Supplies.json" />
-    <Content Include="bin\Debug\netcoreapp3.1\DbSeed\Users.json" />
   </ItemGroup>
 
   <ItemGroup>
