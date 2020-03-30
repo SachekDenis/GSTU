@@ -13,12 +13,15 @@ namespace ConsoleApp.ConsoleView
         private readonly ProductManager _productManager;
         private readonly CategoryManager _categoryManager;
         private readonly ConsolePrinter _printer;
+        private readonly ProductConsoleService _productConsoleService;
 
         public ProductListConsoleService(ProductManager productManager,
-            CategoryManager categoryManager)
+            CategoryManager categoryManager,
+            ProductConsoleService productConsoleService)
         {
             _productManager = productManager;
             _categoryManager = categoryManager;
+            _productConsoleService = productConsoleService;
             _printer = new ConsolePrinter();
         }
 
@@ -37,7 +40,10 @@ namespace ConsoleApp.ConsoleView
                     switch (menuTab)
                     {
                         case 1:
-                            //await Add();
+                        {
+                            var productId = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+                            await _productConsoleService.StartConsoleLoop(productId);
+                        }
                             break;
                         case 2:
                             return;

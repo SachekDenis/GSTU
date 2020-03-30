@@ -30,6 +30,9 @@ namespace BusinessLogic.MapperProfile
 
             CreateMap<SupplyDto, Supply>();
             CreateMap<Supply, SupplyDto>();
+
+            CreateMap<FieldDto, Field>();
+            CreateMap<Field, FieldDto>();
         }
     }
 }
