@@ -1,6 +1,8 @@
 ﻿using DataAccessLayer.Models;
+using Korzh.DbUtils;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System;
 
 namespace DataAccessLayer.Context
 {
@@ -20,12 +22,12 @@ namespace DataAccessLayer.Context
         {
             if (Database.EnsureCreated())
             {
-                //DbInitializer.Create(dbUtilsOptions =>
-                //{
-                //    dbUtilsOptions.UseSqlServer(Database.GetDbConnection().ConnectionString);
-                //    dbUtilsOptions.UseFileFolderPacker(System.IO.Path.Combine(Environment.CurrentDirectory, "DbSeed"));
-                //})
-                //.Seed();
+                DbInitializer.Create(dbUtilsOptions =>
+                {
+                    dbUtilsOptions.UseSqlServer(Database.GetDbConnection().ConnectionString);
+                    dbUtilsOptions.UseFileFolderPacker(System.IO.Path.Combine(Environment.CurrentDirectory, "DbSeed"));
+                })
+                .Seed();
             }
         }
 

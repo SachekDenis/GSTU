@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DataAccessLayer.Context;
@@ -32,9 +33,9 @@ namespace DataAccessLayer.Repo
             await _context.SaveChangesAsync();
         }
 
-        public IQueryable<T> GetAll()
+        public IEnumerable<T> GetAll()
         {
-            return _context.Set<T>().AsNoTracking();
+            return _context.Set<T>().AsNoTracking().ToList();
         }
 
         public async Task<T> GetById(int id)

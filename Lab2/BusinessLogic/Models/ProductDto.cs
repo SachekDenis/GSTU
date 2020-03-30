@@ -13,6 +13,6 @@ namespace BusinessLogic.Models
         public DateTime Date { get; set; }
         public int SupplierId { get; set; }
         public int CategoryId { get; set; }
-        public Dictionary<int, string> Characteristics { get; set; }
+        public List<FieldDto> Fields { get; set; }
     }
 }

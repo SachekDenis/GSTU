@@ -43,6 +43,8 @@ namespace ConsoleApp.ConsoleView
                         case 3:
                             await Update();
                             break;
+                        case 4:
+                            return;
                         default:
                             break;
                     }
@@ -113,6 +115,7 @@ namespace ConsoleApp.ConsoleView
             Console.WriteLine("1. Добавить характеристику");
             Console.WriteLine("2. Удалить характеристику");
             Console.WriteLine("3. Изменить характеристику");
+            Console.WriteLine("4. Назад");
         }
     }
 }

@@ -9,15 +9,18 @@ namespace ConsoleApp.ConsoleView
         private readonly SupplierConsoleService _supplierConsoleService;
         private readonly CategoryConsoleService _categoryConsoleService;
         private readonly CharacteristicConsoleService _characteristicConsoleService;
+        private readonly ProductListConsoleService _productListConsoleService;
 
         public MainMenuService(ManufacturerConsoleService manufacturerConsoleService,
             SupplierConsoleService supplierConsoleService,
             CategoryConsoleService categoryConsoleService,
-            CharacteristicConsoleService characteristicConsoleService)
+            CharacteristicConsoleService characteristicConsoleService,
+            ProductListConsoleService productListConsoleService)
         {
             _manufacturerConsoleService = manufacturerConsoleService;
             _supplierConsoleService = supplierConsoleService;
             _categoryConsoleService = categoryConsoleService;
+            _productListConsoleService = productListConsoleService;
             _characteristicConsoleService = characteristicConsoleService;
         }
 
@@ -49,6 +52,11 @@ namespace ConsoleApp.ConsoleView
                     case 4:
                         {
                             await _categoryConsoleService.StartConsoleLoop();
+                        }
+                        break;
+                    case 5:
+                        {
+                            await _productListConsoleService.StartConsoleLoop();
                         }
                         break;
                     default:

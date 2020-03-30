@@ -8,7 +8,7 @@ using DataAccessLayer.Models;
 
 namespace BusinessLogic.Managers
 {
-    public class ProductManager:IManager<ProductDto>
+    public class ProductManager : IManager<ProductDto>
     {
         private readonly SupplyValidator _supplyValidator;
         private readonly ProductValidator _productValidator;
@@ -37,16 +37,7 @@ namespace BusinessLogic.Managers
 
             product.SupplyId = supply.Id;
 
-            foreach (var characteristic in dto.Characteristics)
-            {
-                var field = new Field()
-                {
-                    CharacteristicId = characteristic.Key,
-                    ProductId = product.Id,
-                    Value = characteristic.Value
-                };
-                await _fieldValidator.Add(field);
-            }
+            dto.Fields.ForEach(async field => await _fieldValidator.Add(_mapper.Map<Field>(field)));
 
             await _productValidator.Add(product);
         }
@@ -54,17 +45,33 @@ namespace BusinessLogic.Managers
         public async Task Delete(int id)
         {
             await _productValidator.Delete(id);
+            _fieldValidator.GetAll()
+                           .Where(field => field.ProductId == id)
+                           .ToList()
+                           .ForEach(async field => await _fieldValidator.Delete(field.Id));
         }
 
         public async Task Update(ProductDto productDto)
         {
             var product = _mapper.Map<Product>(productDto);
+            _fieldValidator.GetAll()
+                           .Where(field => field.ProductId == product.Id)
+                           .ToList()
+                           .ForEach(async field => await _fieldValidator.Update(field));
             await _productValidator.Update(product);
         }
 
         public IEnumerable<ProductDto> GetAll()
         {
-            return _productValidator.GetAll().Select(item => _mapper.Map<ProductDto>(item));
+            return _productValidator.GetAll().Select(item =>
+            {
+                var productDto = _mapper.Map<ProductDto>(item);
+                productDto.Fields = _fieldValidator.GetAll()
+                                                   .Where(field => field.ProductId == item.Id)
+                                                   .Select(field => _mapper.Map<FieldDto>(field))
+                                                   .ToList();
+                return productDto;
+            });
         }
     }
 }

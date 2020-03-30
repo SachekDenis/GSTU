@@ -39,6 +39,8 @@ namespace ConsoleApp.ConsoleView
                         case 3:
                             await Update();
                             break;
+                        case 4:
+                            return;
                         default:
                             break;
                     }
@@ -59,7 +61,8 @@ namespace ConsoleApp.ConsoleView
 
         private async Task Delete()
         {
-            int id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+            Console.WriteLine("Введите Id категории для удаления");
+            var id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
             await _categoryManager.Delete(id);
         }
 
@@ -71,6 +74,7 @@ namespace ConsoleApp.ConsoleView
 
         private async Task Update()
         {
+            Console.WriteLine("Введите Id категории для обновления");
             var id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
             var categoryDto = CreateModel();
             categoryDto.Id = id;
@@ -80,6 +84,7 @@ namespace ConsoleApp.ConsoleView
 
         private static CategoryDto CreateModel()
         {
+            Console.WriteLine("Введите имя категории");
             var name = Console.ReadLine();
 
             var categoryDto = new CategoryDto()
@@ -95,6 +100,7 @@ namespace ConsoleApp.ConsoleView
             Console.WriteLine("1. Добавить категорию");
             Console.WriteLine("2. Удалить категорию");
             Console.WriteLine("3. Изменить категорию");
+            Console.WriteLine("4. Назад");
         }
     }
 }

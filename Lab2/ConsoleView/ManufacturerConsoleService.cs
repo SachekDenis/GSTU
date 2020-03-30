@@ -39,6 +39,8 @@ namespace ConsoleApp.ConsoleView
                         case 3:
                             await Update();
                             break;
+                        case 4:
+                            return;
                         default:
                             break;
                     }
@@ -59,7 +61,8 @@ namespace ConsoleApp.ConsoleView
 
         private async Task Delete()
         {
-            int id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+            Console.WriteLine("Введите Id для удаления");
+            var id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
             await _manufacturerService.Delete(id);
         }
 
@@ -71,6 +74,7 @@ namespace ConsoleApp.ConsoleView
 
         private async Task Update()
         {
+            Console.WriteLine("Введите Id для обновления");
             var id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
             var manufacturerDto = CreateModel();
             manufacturerDto.Id = id;
@@ -80,7 +84,9 @@ namespace ConsoleApp.ConsoleView
 
         private static ManufacturerDto CreateModel()
         {
+            Console.WriteLine("Введите наименование производителя");
             var name = Console.ReadLine();
+            Console.WriteLine("Введите страну производителя");
             var country = Console.ReadLine();
 
             var manufacturerDto = new ManufacturerDto()
@@ -97,6 +103,7 @@ namespace ConsoleApp.ConsoleView
             Console.WriteLine("1. Добавить производителя");
             Console.WriteLine("2. Удалить производителя");
             Console.WriteLine("3. Изменить производителя");
+            Console.WriteLine("4. Назад");
         }
     }
 }
