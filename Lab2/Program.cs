@@ -9,7 +9,7 @@ namespace ConsoleApp
 {
     internal class Program
     {
-        private static async Task Main(string[] args)
+        private static void Main(string[] args)
         {
             var builder = new ConfigurationBuilder();
             builder.SetBasePath(Directory.GetCurrentDirectory());
@@ -19,7 +19,7 @@ namespace ConsoleApp
             var services = DependencyInjectionConfigurator.Configure(config);
 
             var mainMenu = services.GetService<MainMenuService>();
-            await mainMenu.StartMainLoop();
+             mainMenu.StartMainLoop();
         }
     }
 }

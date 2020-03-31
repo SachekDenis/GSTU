@@ -8,7 +8,7 @@ using DataAccessLayer.Models;
 
 namespace BusinessLogic.Managers
 {
-    internal class OrderManager:IManager<OrderDto>
+    internal class OrderManager : IManager<OrderDto>
     {
         private readonly IMapper _mapper;
         private readonly Validator<Order> _validator;
@@ -19,21 +19,21 @@ namespace BusinessLogic.Managers
             _validator = orderValidator;
         }
 
-        public async Task Add(OrderDto orderDto)
+        public void Add(OrderDto orderDto)
         {
             var order = _mapper.Map<Order>(orderDto);
-            await _validator.Add(order);
+            _validator.Add(order);
         }
 
-        public async Task Delete(int id)
+        public void Delete(int id)
         {
-            await _validator.Delete(id);
+            _validator.Delete(id);
         }
 
-        public async Task Update(OrderDto orderDto)
+        public void Update(OrderDto orderDto)
         {
             var order = _mapper.Map<Order>(orderDto);
-            await _validator.Update(order);
+            _validator.Update(order);
         }
 
         public IEnumerable<OrderDto> GetAll()

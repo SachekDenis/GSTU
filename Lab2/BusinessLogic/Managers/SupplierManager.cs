@@ -8,7 +8,7 @@ using DataAccessLayer.Models;
 
 namespace BusinessLogic.Managers
 {
-    public class SupplierManager:IManager<SupplierDto>
+    public class SupplierManager : IManager<SupplierDto>
     {
         private readonly IMapper _mapper;
         private readonly Validator<Supplier> _validator;
@@ -19,21 +19,21 @@ namespace BusinessLogic.Managers
             _validator = supplierValidator;
         }
 
-        public async Task Add(SupplierDto supplierDto)
+        public void Add(SupplierDto supplierDto)
         {
             var supplier = _mapper.Map<Supplier>(supplierDto);
-            await _validator.Add(supplier);
+            _validator.Add(supplier);
         }
 
-        public async Task Delete(int id)
+        public void Delete(int id)
         {
-            await _validator.Delete(id);
+            _validator.Delete(id);
         }
 
-        public async Task Update(SupplierDto supplierDto)
+        public void Update(SupplierDto supplierDto)
         {
             var supplier = _mapper.Map<Supplier>(supplierDto);
-            await _validator.Update(supplier);
+            _validator.Update(supplier);
         }
 
         public IEnumerable<SupplierDto> GetAll()

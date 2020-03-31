@@ -39,7 +39,7 @@ namespace ConsoleApp.ConsoleView
             _printer = new ConsolePrinter();
         }
 
-        public async Task StartConsoleLoop()
+        public void StartConsoleLoop()
         {
             while (true)
             {
@@ -56,12 +56,12 @@ namespace ConsoleApp.ConsoleView
                         case 1:
                             {
                                 var productId = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
-                                await _productConsoleService.StartConsoleLoop(productId);
+                                 _productConsoleService.StartConsoleLoop(productId);
                             }
                             break;
                         case 2:
                             {
-                                await Add();
+                                 Add();
                             }
                             break;
                         case 3:
@@ -90,7 +90,7 @@ namespace ConsoleApp.ConsoleView
             _printer.WriteCollectionAsTable(items);
         }
 
-        private async Task Add()
+        private void Add()
         {
             _printer.WriteCollectionAsTable(_supplierManager.GetAll());
             Console.WriteLine("Введите Id поставщика");
@@ -101,7 +101,7 @@ namespace ConsoleApp.ConsoleView
                 SupplierId = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException())
             };
 
-            await _supplyManager.Add(supplyDto);
+             _supplyManager.Add(supplyDto);
 
             var product = CreateModel();
             product.SupplyId = supplyDto.Id;
@@ -124,11 +124,11 @@ namespace ConsoleApp.ConsoleView
 
             try
             {
-                await _productManager.Add(product);
+                 _productManager.Add(product);
             }
             catch (ValidationException)
             {
-                await _supplyManager.Delete(supplyDto.Id);
+                 _supplyManager.Delete(supplyDto.Id);
                 throw;
             }
 

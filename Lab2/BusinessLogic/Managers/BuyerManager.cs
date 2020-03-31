@@ -20,21 +20,21 @@ namespace BusinessLogic.Managers
             _validator = buyerValidator;
         }
 
-        public async Task Add(BuyerDto buyerDto)
+        public void Add(BuyerDto buyerDto)
         {
             var buyer = _mapper.Map<Buyer>(buyerDto);
-            await _validator.Add(buyer);
+            _validator.Add(buyer);
         }
 
-        public async Task Delete(int id)
+        public void Delete(int id)
         {
-            await _validator.Delete(id);
+            _validator.Delete(id);
         }
 
-        public async Task Update(BuyerDto buyerDto)
+        public void Update(BuyerDto buyerDto)
         {
             var buyer = _mapper.Map<Buyer>(buyerDto);
-            await _validator.Update(buyer);
+            _validator.Update(buyer);
         }
 
         public IEnumerable<BuyerDto> GetAll()

@@ -16,7 +16,7 @@ namespace ConsoleApp.ConsoleView
             _printer = new ConsolePrinter();
         }
 
-        public async Task StartConsoleLoop()
+        public void StartConsoleLoop()
         {
             while (true)
             {
@@ -29,13 +29,13 @@ namespace ConsoleApp.ConsoleView
                 switch (menuTab)
                 {
                     case 1:
-                        await Add();
+                         Add();
                         break;
                     case 2:
-                        await Delete();
+                         Delete();
                         break;
                     case 3:
-                        await Update();
+                         Update();
                         break;
                     case 4:
                         return;
@@ -51,27 +51,27 @@ namespace ConsoleApp.ConsoleView
             _printer.WriteCollectionAsTable(items);
         }
 
-        private async Task Delete()
+        private void Delete()
         {
             Console.WriteLine("Введите Id поставшика для удаления");
             int id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
-            await _supplierManager.Delete(id);
+             _supplierManager.Delete(id);
         }
 
-        private async Task Add()
+        private void Add()
         {
             var manufacturerDto = CreateModel();
-            await _supplierManager.Add(manufacturerDto);
+             _supplierManager.Add(manufacturerDto);
         }
 
-        private async Task Update()
+        private void Update()
         {
             Console.WriteLine("Введите Id поставшика для обновления");
             var id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
             var manufacturerDto = CreateModel();
             manufacturerDto.Id = id;
 
-            await _supplierManager.Update(manufacturerDto);
+             _supplierManager.Update(manufacturerDto);
         }
 
         private static SupplierDto CreateModel()

@@ -8,7 +8,7 @@ using DataAccessLayer.Models;
 
 namespace BusinessLogic.Managers
 {
-    public class ManufacturerManager:IManager<ManufacturerDto>
+    public class ManufacturerManager : IManager<ManufacturerDto>
     {
         private readonly IMapper _mapper;
         private readonly Validator<Manufacturer> _validator;
@@ -19,21 +19,21 @@ namespace BusinessLogic.Managers
             _validator = manufacturerValidator;
         }
 
-        public async Task Add(ManufacturerDto manufacturerDto)
-        {
-            var manufaturer = _mapper.Map<Manufacturer>(manufacturerDto);
-            await _validator.Add(manufaturer);
-        }
-
-        public async Task Delete(int id)
-        {
-            await _validator.Delete(id);
-        }
-
-        public async Task Update(ManufacturerDto manufacturerDto)
+        public void Add(ManufacturerDto manufacturerDto)
         {
             var manufacturer = _mapper.Map<Manufacturer>(manufacturerDto);
-            await _validator.Update(manufacturer);
+            _validator.Add(manufacturer);
+        }
+
+        public void Delete(int id)
+        {
+            _validator.Delete(id);
+        }
+
+        public void Update(ManufacturerDto manufacturerDto)
+        {
+            var manufacturer = _mapper.Map<Manufacturer>(manufacturerDto);
+            _validator.Update(manufacturer);
         }
 
         public IEnumerable<ManufacturerDto> GetAll()

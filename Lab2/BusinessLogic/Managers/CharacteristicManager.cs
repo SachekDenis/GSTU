@@ -19,21 +19,21 @@ namespace BusinessLogic.Managers
             _validator = characteristicValidator;
         }
 
-        public async Task Add(CharacteristicDto characteristicDto)
+        public void Add(CharacteristicDto characteristicDto)
         {
             var characteristic = _mapper.Map<Characteristic>(characteristicDto);
-            await _validator.Add(characteristic);
+             _validator.Add(characteristic);
         }
 
-        public async Task Delete(int id)
+        public void Delete(int id)
         {
-            await _validator.Delete(id);
+             _validator.Delete(id);
         }
 
-        public async Task Update(CharacteristicDto characteristicDto)
+        public void Update(CharacteristicDto characteristicDto)
         {
             var characteristic = _mapper.Map<Characteristic>(characteristicDto);
-            await _validator.Update(characteristic);
+             _validator.Update(characteristic);
         }
 
         public IEnumerable<CharacteristicDto> GetAll()

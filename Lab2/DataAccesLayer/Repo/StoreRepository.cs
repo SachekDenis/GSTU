@@ -18,19 +18,19 @@ namespace DataAccessLayer.Repo
             _context = context;
         }
 
-        public async Task Add(T item)
+        public void Add(T item)
         {
-            await _context.Set<T>().AddAsync(item);
-            await _context.SaveChangesAsync();
+            _context.Set<T>().Add(item);
+            _context.SaveChanges();
         }
 
-        public async Task Delete(int id)
+        public void Delete(int id)
         {
-            var item = await _context.FindAsync<T>(id);
+            var item = _context.Find<T>(id);
             if (item == null)
                 return;
             _context.Remove(item);
-            await _context.SaveChangesAsync();
+            _context.SaveChangesAsync();
         }
 
         public IEnumerable<T> GetAll()
@@ -38,18 +38,18 @@ namespace DataAccessLayer.Repo
             return _context.Set<T>().AsNoTracking().ToList();
         }
 
-        public async Task<T> GetById(int id)
+        public T GetById(int id)
         {
-            return await _context.Set<T>()
+            return _context.Set<T>()
                          .AsNoTracking()
-                         .FirstOrDefaultAsync(e => e.Id == id);
+                         .FirstOrDefault(e => e.Id == id);
         }
 
-        public async Task Update(T item)
+        public void Update(T item)
         {
             var entry = _context.Set<T>().First(e=>e.Id == item.Id);
             _context.Entry(entry).CurrentValues.SetValues(item);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
         public void Dispose()
@@ -58,13 +58,13 @@ namespace DataAccessLayer.Repo
             GC.SuppressFinalize(this);
         }
 
-        protected virtual async void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (!disposed)
             {
                 if (disposing)
                 {
-                    await _context.DisposeAsync();
+                     _context.Dispose();
                 }
                 disposed = true;
             }

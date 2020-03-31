@@ -7,9 +7,9 @@ namespace BusinessLogic.Managers
 {
     public interface IManager<TDto>
     {
-        Task Add(TDto buyerDto);
-        Task Delete(int id);
-        Task Update(TDto buyerDto);
+        void Add(TDto buyerDto);
+        void Delete(int id);
+        void Update(TDto buyerDto);
         IEnumerable<TDto> GetAll();
     }
 }

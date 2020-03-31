@@ -29,45 +29,46 @@ namespace BusinessLogic.Managers
             _mapper = mapper;
         }
 
-        public async Task Add(ProductDto dto)
+        public void Add(ProductDto dto)
         {
             var product = _mapper.Map<Product>(dto);
 
-            await _productValidator.Add(product);
+            _productValidator.Add(product);
 
             try
             {
-                dto.Fields.ForEach(async fieldDto =>
+                dto.Fields.ForEach(fieldDto =>
                 {
                     var field = _mapper.Map<Field>(fieldDto);
                     field.ProductId = product.Id;
-                    await _fieldValidator.Add(field);
+                    _fieldValidator.Add(field);
                 });
             }
-            catch (ValidationException e)
+            catch (ValidationException)
             {
-                await _productValidator.Delete(product.Id);
+                _productValidator.Delete(product.Id);
                 throw;
             }
         }
 
-        public async Task Delete(int id)
+        public void Delete(int id)
         {
-            await _productValidator.Delete(id);
             _fieldValidator.GetAll()
-                           .Where(field => field.ProductId == id)
-                           .ToList()
-                           .ForEach(async field => await _fieldValidator.Delete(field.Id));
+                .Where(field => field.ProductId == id)
+                .ToList()
+                .ForEach(field => _fieldValidator.Delete(field.Id));
+            _productValidator.Delete(id);
+
         }
 
-        public async Task Update(ProductDto productDto)
+        public void Update(ProductDto productDto)
         {
             var product = _mapper.Map<Product>(productDto);
             _fieldValidator.GetAll()
                            .Where(field => field.ProductId == product.Id)
                            .ToList()
-                           .ForEach(async field => await _fieldValidator.Update(field));
-            await _productValidator.Update(product);
+                           .ForEach(field => _fieldValidator.Update(field));
+            _productValidator.Update(product);
         }
 
         public IEnumerable<ProductDto> GetAll()

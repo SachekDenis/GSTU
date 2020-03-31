@@ -8,7 +8,7 @@ using DataAccessLayer.Models;
 
 namespace BusinessLogic.Managers
 {
-    public class CategoryManager:IManager<CategoryDto>
+    public class CategoryManager : IManager<CategoryDto>
     {
         private readonly IMapper _mapper;
         private readonly Validator<Category> _validator;
@@ -19,21 +19,21 @@ namespace BusinessLogic.Managers
             _validator = categoryValidator;
         }
 
-        public async Task Add(CategoryDto categoryDto)
+        public void Add(CategoryDto categoryDto)
         {
             var category = _mapper.Map<Category>(categoryDto);
-            await _validator.Add(category);
+            _validator.Add(category);
         }
 
-        public async Task Delete(int id)
+        public void Delete(int id)
         {
-            await _validator.Delete(id);
+            _validator.Delete(id);
         }
 
-        public async Task Update(CategoryDto categoryDto)
+        public void Update(CategoryDto categoryDto)
         {
             var category = _mapper.Map<Category>(categoryDto);
-            await _validator.Update(category);
+            _validator.Update(category);
         }
 
         public IEnumerable<CategoryDto> GetAll()

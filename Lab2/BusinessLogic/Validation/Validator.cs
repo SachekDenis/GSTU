@@ -18,7 +18,7 @@ namespace BusinessLogic.Validation
             _items = items;
         }
 
-        public async Task Add(T item)
+        public void Add(T item)
         {
             if (item == null)
             {
@@ -28,12 +28,12 @@ namespace BusinessLogic.Validation
             if (!ValidateProperties(item))
                 throw new ValidationException($"{nameof(T)} has invalid properties");
 
-            await _items.Add(item);
+            _items.Add(item);
         }
 
-        public async Task Delete(int itemId)
+        public void Delete(int itemId)
         {
-            var item = await _items.GetById(itemId);
+            var item = _items.GetById(itemId);
 
             if (item == null)
             {
@@ -43,7 +43,7 @@ namespace BusinessLogic.Validation
             if (!ValidateReferences(item))
                 throw new ValidationException($"{nameof(T)} has references");
 
-            await _items.Delete(itemId);
+            _items.Delete(itemId);
         }
 
         public IEnumerable<T> GetAll()
@@ -51,19 +51,19 @@ namespace BusinessLogic.Validation
             return _items.GetAll();
         }
 
-        public async Task<T> GetById(int itemId)
+        public T GetById(int itemId)
         {
-            return await _items.GetById(itemId);
+            return _items.GetById(itemId);
         }
 
-        public async Task Update(T item)
+        public void Update(T item)
         {
             if (item == null)
             {
                 throw new ArgumentNullException(nameof(item));
             }
 
-            var itemToUpdate = await _items.GetById(item.Id);
+            var itemToUpdate = _items.GetById(item.Id);
 
             if (!ValidateProperties(item))
                 throw new ValidationException($"{nameof(T)} has invalid properties");
@@ -73,7 +73,7 @@ namespace BusinessLogic.Validation
                 throw new ValidationException($"{nameof(T)} with such id doesn't exist");
             }
 
-            await _items.Update(item);
+            _items.Update(item);
         }
 
         protected virtual bool ValidateReferences(T item)

@@ -36,7 +36,7 @@ namespace ConsoleApp.ConsoleView
             _printer = new ConsolePrinter();
         }
 
-        public async Task StartConsoleLoop(int productId)
+        public void StartConsoleLoop(int productId)
         {
             _productId = productId;
             while (true)
@@ -52,7 +52,7 @@ namespace ConsoleApp.ConsoleView
                     switch (menuTab)
                     {
                         case 1:
-                            //await Add();
+                            // Add();
                             break;
                         case 2:
                             return;

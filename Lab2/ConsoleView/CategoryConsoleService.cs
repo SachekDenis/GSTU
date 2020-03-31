@@ -16,7 +16,7 @@ namespace ConsoleApp.ConsoleView
             _printer = new ConsolePrinter();
         }
 
-        public async Task StartConsoleLoop()
+        public void StartConsoleLoop()
         {
             while (true)
             {
@@ -31,13 +31,13 @@ namespace ConsoleApp.ConsoleView
                     switch (menuTab)
                     {
                         case 1:
-                            await Add();
+                             Add();
                             break;
                         case 2:
-                            await Delete();
+                             Delete();
                             break;
                         case 3:
-                            await Update();
+                             Update();
                             break;
                         case 4:
                             return;
@@ -59,27 +59,27 @@ namespace ConsoleApp.ConsoleView
             _printer.WriteCollectionAsTable(items);
         }
 
-        private async Task Delete()
+        private void Delete()
         {
             Console.WriteLine("Введите Id категории для удаления");
             var id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
-            await _categoryManager.Delete(id);
+             _categoryManager.Delete(id);
         }
 
-        private async Task Add()
+        private void Add()
         {
             var categoryDto = CreateModel();
-            await _categoryManager.Add(categoryDto);
+             _categoryManager.Add(categoryDto);
         }
 
-        private async Task Update()
+        private void Update()
         {
             Console.WriteLine("Введите Id категории для обновления");
             var id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
             var categoryDto = CreateModel();
             categoryDto.Id = id;
 
-            await _categoryManager.Update(categoryDto);
+             _categoryManager.Update(categoryDto);
         }
 
         private static CategoryDto CreateModel()

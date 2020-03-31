@@ -24,7 +24,7 @@ namespace ConsoleApp.ConsoleView
             _characteristicConsoleService = characteristicConsoleService;
         }
 
-        public async Task StartMainLoop()
+        public void StartMainLoop()
         {
             while (true)
             {
@@ -36,27 +36,27 @@ namespace ConsoleApp.ConsoleView
                 {
                     case 1:
                         {
-                            await _manufacturerConsoleService.StartConsoleLoop();
+                             _manufacturerConsoleService.StartConsoleLoop();
                         }
                         break;
                     case 2:
                         {
-                            await _supplierConsoleService.StartConsoleLoop();
+                             _supplierConsoleService.StartConsoleLoop();
                         }
                         break;
                     case 3:
                         {
-                            await _characteristicConsoleService.StartConsoleLoop();
+                             _characteristicConsoleService.StartConsoleLoop();
                         }
                         break;
                     case 4:
                         {
-                            await _categoryConsoleService.StartConsoleLoop();
+                             _categoryConsoleService.StartConsoleLoop();
                         }
                         break;
                     case 5:
                         {
-                            await _productListConsoleService.StartConsoleLoop();
+                             _productListConsoleService.StartConsoleLoop();
                         }
                         break;
                     default:

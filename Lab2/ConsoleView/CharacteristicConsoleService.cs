@@ -20,7 +20,7 @@ namespace ConsoleApp.ConsoleView
             _printer = new ConsolePrinter();
         }
 
-        public async Task StartConsoleLoop()
+        public void StartConsoleLoop()
         {
             while (true)
             {
@@ -35,13 +35,13 @@ namespace ConsoleApp.ConsoleView
                     switch (menuTab)
                     {
                         case 1:
-                            await Add();
+                             Add();
                             break;
                         case 2:
-                            await Delete();
+                             Delete();
                             break;
                         case 3:
-                            await Update();
+                             Update();
                             break;
                         case 4:
                             return;
@@ -71,26 +71,26 @@ namespace ConsoleApp.ConsoleView
             _printer.WriteCollectionAsTable(items);
         }
 
-        private async Task Delete()
+        private void Delete()
         {
             int id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
-            await _characteristicManager.Delete(id);
+             _characteristicManager.Delete(id);
         }
 
-        private async Task Add()
+        private void Add()
         {
             var characteristicDto = CreateModel();
-            await _characteristicManager.Add(characteristicDto);
+             _characteristicManager.Add(characteristicDto);
         }
 
-        private async Task Update()
+        private void Update()
         {
             Console.WriteLine("Введите Id характеристики для изменения");
             var id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
             var characteristicDto = CreateModel();
             characteristicDto.Id = id;
 
-            await _characteristicManager.Update(characteristicDto);
+             _characteristicManager.Update(characteristicDto);
         }
 
         private CharacteristicDto CreateModel()
