@@ -87,7 +87,6 @@ namespace ConsoleApp.ConsoleView
         {
             Console.WriteLine("Введите Id характеристики для изменения");
             var id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
-            _printer.WriteCollectionAsTable(_categoryManager.GetAll());
             var characteristicDto = CreateModel();
             characteristicDto.Id = id;
 
@@ -98,6 +97,7 @@ namespace ConsoleApp.ConsoleView
         {
             Console.WriteLine("Введите имя характеристики");
             var name = Console.ReadLine();
+            _printer.WriteCollectionAsTable(_categoryManager.GetAll());
             Console.WriteLine("Введите Id категории");
             var categoryId = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
 

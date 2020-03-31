@@ -2,7 +2,7 @@
 
 namespace BusinessLogic.Models
 {
-    internal class SupplyDto
+    public class SupplyDto
     {
         public int Id { get; set; }
         public int SupplierId { get; set; }

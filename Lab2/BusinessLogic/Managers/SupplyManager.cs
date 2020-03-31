@@ -8,7 +8,7 @@ using DataAccessLayer.Models;
 
 namespace BusinessLogic.Managers
 {
-    internal class SupplyManager:IManager<SupplyDto>
+    public class SupplyManager:IManager<SupplyDto>
     {
         private readonly IMapper _mapper;
         private readonly Validator<Supply> _validator;
