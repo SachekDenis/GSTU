@@ -93,7 +93,7 @@ namespace ConsoleApp.ConsoleView
             await _characteristicManager.Update(characteristicDto);
         }
 
-        private static CharacteristicDto CreateModel()
+        private CharacteristicDto CreateModel()
         {
             Console.WriteLine("Введите имя характеристики");
             var name = Console.ReadLine();

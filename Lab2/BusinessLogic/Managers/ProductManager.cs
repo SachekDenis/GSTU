@@ -1,8 +1,10 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using BusinessLogic.Validation;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BusinessLogic.Exception;
 using BusinessLogic.Models;
 using DataAccessLayer.Models;
 
@@ -29,17 +31,24 @@ namespace BusinessLogic.Managers
 
         public async Task Add(ProductDto dto)
         {
-            var supply = _mapper.Map<Supply>(dto);
-
-            await _supplyValidator.Add(supply);
-
             var product = _mapper.Map<Product>(dto);
 
-            product.SupplyId = supply.Id;
-
-            dto.Fields.ForEach(async field => await _fieldValidator.Add(_mapper.Map<Field>(field)));
-
             await _productValidator.Add(product);
+
+            try
+            {
+                dto.Fields.ForEach(async fieldDto =>
+                {
+                    var field = _mapper.Map<Field>(fieldDto);
+                    field.ProductId = product.Id;
+                    await _fieldValidator.Add(field);
+                });
+            }
+            catch (ValidationException e)
+            {
+                await _productValidator.Delete(product.Id);
+                throw;
+            }
         }
 
         public async Task Delete(int id)

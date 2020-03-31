@@ -10,29 +10,21 @@ namespace BusinessLogic.MapperProfile
         {
             CreateMap<ProductDto, Supply>();
 
-            CreateMap<ProductDto, Product>();
-            CreateMap<Product, ProductDto>();
+            CreateMap<ProductDto, Product>().ReverseMap();
 
-            CreateMap<OrderDto, Order>();
-            CreateMap<Order, OrderDto>();
+            CreateMap<OrderDto, Order>().ReverseMap();
 
-            CreateMap<ManufacturerDto, Manufacturer>();
-            CreateMap<Manufacturer, ManufacturerDto>();
+            CreateMap<ManufacturerDto, Manufacturer>().ReverseMap();
 
-            CreateMap<SupplierDto, Supplier>();
-            CreateMap<Supplier, SupplierDto>();
+            CreateMap<SupplierDto, Supplier>().ReverseMap();
 
-            CreateMap<CategoryDto, Category>();
-            CreateMap<Category, CategoryDto>();
+            CreateMap<CategoryDto, Category>().ReverseMap();
 
-            CreateMap<CharacteristicDto, Characteristic>();
-            CreateMap<Characteristic, CharacteristicDto>();
+            CreateMap<CharacteristicDto, Characteristic>().ReverseMap();
 
-            CreateMap<SupplyDto, Supply>();
-            CreateMap<Supply, SupplyDto>();
+            CreateMap<SupplyDto, Supply>().ReverseMap();
 
-            CreateMap<FieldDto, Field>();
-            CreateMap<Field, FieldDto>();
+            CreateMap<FieldDto, Field>().ReverseMap();
         }
     }
 }

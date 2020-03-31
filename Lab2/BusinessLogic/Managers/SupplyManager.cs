@@ -23,6 +23,7 @@ namespace BusinessLogic.Managers
         {
             var supply = _mapper.Map<Supply>(supplyDto);
             await _validator.Add(supply);
+            supplyDto.Id = supply.Id;
         }
 
         public async Task Delete(int id)
