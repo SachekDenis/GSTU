@@ -1,12 +1,10 @@
-﻿using BusinessLogic.Exception;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Linq;
-using DataAccessLayer.Models;
-using DataAccessLayer.Repo;
+using ComputerStore.BusinessLogicLayer.Exception;
+using ComputerStore.DataAccessLayer.Models;
+using ComputerStore.DataAccessLayer.Repo;
 
-namespace BusinessLogic.Validation
+namespace ComputerStore.BusinessLogicLayer.Validation
 {
     public abstract class Validator<T>
         where T : class,IEntity

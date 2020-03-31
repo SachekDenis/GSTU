@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using BusinessLogic.Models;
-using DataAccessLayer.Models;
+using ComputerStore.BusinessLogicLayer.Models;
+using ComputerStore.DataAccessLayer.Models;
 
-namespace BusinessLogic.MapperProfile
+namespace ComputerStore.BusinessLogicLayer.MapperProfile
 {
     public class StoreProfile : Profile
     {

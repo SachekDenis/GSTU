@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using BusinessLogic.Models;
+using ComputerStore.BusinessLogicLayer.Models;
 
-namespace ConsoleApp.ViewModels
+namespace ComputerStore.ConsoleLayer.ViewModels
 {
     public class ProductViewModel
     {

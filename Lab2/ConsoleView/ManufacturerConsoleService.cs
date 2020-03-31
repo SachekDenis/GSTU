@@ -1,9 +1,8 @@
-﻿using BusinessLogic.Managers;
-using System;
-using System.Threading.Tasks;
-using BusinessLogic.Models;
+﻿using System;
+using ComputerStore.BusinessLogicLayer.Managers;
+using ComputerStore.BusinessLogicLayer.Models;
 
-namespace ConsoleApp.ConsoleView
+namespace ComputerStore.ConsoleLayer.ConsoleView
 {
     internal class ManufacturerConsoleService
     {

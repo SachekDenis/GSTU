@@ -1,4 +1,4 @@
-﻿namespace DataAccessLayer.Models
+﻿namespace ComputerStore.DataAccessLayer.Models
 {
     public class Field : IEntity
     {

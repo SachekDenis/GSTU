@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Threading.Tasks;
 
-namespace ConsoleApp.ConsoleView
+namespace ComputerStore.ConsoleLayer.ConsoleView
 {
     internal class MainMenuService
     {

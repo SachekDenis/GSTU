@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
-using BusinessLogic.Managers;
-using BusinessLogic.Models;
-using ConsoleApp.ViewModels;
+using ComputerStore.BusinessLogicLayer.Managers;
+using ComputerStore.BusinessLogicLayer.Models;
+using ComputerStore.ConsoleLayer.ViewModels;
 
-namespace ConsoleApp.ConsoleView
+namespace ComputerStore.ConsoleLayer.ConsoleView
 {
     public class CharacteristicConsoleService
     {

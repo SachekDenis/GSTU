@@ -1,4 +1,4 @@
-﻿namespace ConsoleApp.ViewModels
+﻿namespace ComputerStore.ConsoleLayer.ViewModels
 {
     public class CharacteristicViewModel
     {

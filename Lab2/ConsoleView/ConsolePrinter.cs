@@ -1,7 +1,7 @@
-﻿using ConsoleTables;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using ConsoleTables;
 
-namespace ConsoleApp.ConsoleView
+namespace ComputerStore.ConsoleLayer.ConsoleView
 {
     internal class ConsolePrinter
     {

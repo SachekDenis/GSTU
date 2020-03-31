@@ -1,14 +1,12 @@
-﻿using BusinessLogic.Managers;
-using ConsoleApp.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BusinessLogic.Models;
+using ComputerStore.BusinessLogicLayer.Managers;
+using ComputerStore.BusinessLogicLayer.Models;
+using ComputerStore.ConsoleLayer.ViewModels;
 
-namespace ConsoleApp.ConsoleView
+namespace ComputerStore.ConsoleLayer.ConsoleView
 {
     class ProductListConsoleService
     {

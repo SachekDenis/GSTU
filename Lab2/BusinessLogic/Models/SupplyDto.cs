@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BusinessLogic.Models
+namespace ComputerStore.BusinessLogicLayer.Models
 {
     public class SupplyDto
     {

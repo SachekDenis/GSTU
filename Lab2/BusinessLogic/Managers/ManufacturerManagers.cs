@@ -1,12 +1,11 @@
-﻿using AutoMapper;
-using BusinessLogic.Validation;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using BusinessLogic.Models;
-using DataAccessLayer.Models;
+using AutoMapper;
+using ComputerStore.BusinessLogicLayer.Models;
+using ComputerStore.BusinessLogicLayer.Validation;
+using ComputerStore.DataAccessLayer.Models;
 
-namespace BusinessLogic.Managers
+namespace ComputerStore.BusinessLogicLayer.Managers
 {
     public class ManufacturerManager : IManager<ManufacturerDto>
     {

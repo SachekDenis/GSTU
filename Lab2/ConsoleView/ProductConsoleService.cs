@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Threading.Tasks;
-using BusinessLogic.Managers;
-using BusinessLogic.Models;
-using ConsoleApp.ViewModels;
+using ComputerStore.BusinessLogicLayer.Managers;
+using ComputerStore.ConsoleLayer.ViewModels;
 
-namespace ConsoleApp.ConsoleView
+namespace ComputerStore.ConsoleLayer.ConsoleView
 {
     public class ProductConsoleService
     {
@@ -99,7 +95,7 @@ namespace ConsoleApp.ConsoleView
 
         private static void PrintMenu()
         {
-            Console.WriteLine("1. Добавить товар");
+            Console.WriteLine("1. Купить");
             Console.WriteLine("2. Назад");
         }
 

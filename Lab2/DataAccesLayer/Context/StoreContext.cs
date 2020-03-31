@@ -1,10 +1,10 @@
-﻿using DataAccessLayer.Models;
+﻿using System;
+using ComputerStore.DataAccessLayer.Models;
 using Korzh.DbUtils;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
 
-namespace DataAccessLayer.Context
+namespace ComputerStore.DataAccessLayer.Context
 {
     public class StoreContext : DbContext
     {

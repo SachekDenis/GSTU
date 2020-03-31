@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using DataAccessLayer.Context;
-using DataAccessLayer.Models;
+using ComputerStore.DataAccessLayer.Context;
+using ComputerStore.DataAccessLayer.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace DataAccessLayer.Repo
+namespace ComputerStore.DataAccessLayer.Repo
 {
     public class StoreRepository<T> : IRepository<T> where T : class,IEntity
     {

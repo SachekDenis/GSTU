@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Threading.Tasks;
-using BusinessLogic.Managers;
-using BusinessLogic.Models;
+using ComputerStore.BusinessLogicLayer.Managers;
+using ComputerStore.BusinessLogicLayer.Models;
 
-namespace ConsoleApp.ConsoleView
+namespace ComputerStore.ConsoleLayer.ConsoleView
 {
     public class SupplierConsoleService
     {

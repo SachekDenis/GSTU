@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace BusinessLogic.Exception
+namespace ComputerStore.BusinessLogicLayer.Exception
 {
     internal class ValidationException : System.Exception
     {

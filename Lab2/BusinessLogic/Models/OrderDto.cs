@@ -1,4 +1,4 @@
-﻿namespace BusinessLogic.Models
+﻿namespace ComputerStore.BusinessLogicLayer.Models
 {
     public class OrderDto
     {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ConsoleApp.ViewModels
+﻿namespace ComputerStore.ConsoleLayer.ViewModels
 {
     class ProductListViewModel
     {

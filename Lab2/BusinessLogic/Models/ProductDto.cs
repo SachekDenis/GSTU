@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace BusinessLogic.Models
+namespace ComputerStore.BusinessLogicLayer.Models
 {
     public class ProductDto
     {

@@ -1,15 +1,15 @@
-﻿using AutoMapper;
-using BusinessLogic.MapperProfile;
-using ConsoleApp.ConsoleView;
+﻿using System.Reflection;
+using AutoMapper;
+using ComputerStore.BusinessLogicLayer.MapperProfile;
+using ComputerStore.ConsoleLayer.ConsoleView;
+using ComputerStore.DataAccessLayer.Context;
+using ComputerStore.DataAccessLayer.Repo;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System.Reflection;
-using DataAccessLayer.Context;
-using DataAccessLayer.Repo;
 
-namespace ConsoleApp
+namespace ComputerStore.ConsoleLayer
 {
     public static class DependencyInjectionConfigurator
     {

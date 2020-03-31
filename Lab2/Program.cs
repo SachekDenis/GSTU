@@ -1,11 +1,9 @@
-﻿using ConsoleApp.ConsoleView;
+﻿using System.IO;
+using ComputerStore.ConsoleLayer.ConsoleView;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.IO;
-using System.Threading.Tasks;
 
-namespace ConsoleApp
+namespace ComputerStore.ConsoleLayer
 {
     internal class Program
     {

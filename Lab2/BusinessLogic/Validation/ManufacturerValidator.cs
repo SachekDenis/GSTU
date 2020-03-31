@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using DataAccessLayer.Models;
-using DataAccessLayer.Repo;
+using ComputerStore.DataAccessLayer.Models;
+using ComputerStore.DataAccessLayer.Repo;
 
-namespace BusinessLogic.Validation
+namespace ComputerStore.BusinessLogicLayer.Validation
 {
     public class ManufacturerValidator : Validator<Manufacturer>
     {
