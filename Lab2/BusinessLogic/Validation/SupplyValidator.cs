@@ -17,12 +17,8 @@ namespace BusinessLogic.Validation
 
         protected override bool ValidateProperties(Supply item)
         {
-            return _suppliers.GetAll().Where(supplier => item.SupplierId == supplier.Id).Any();
-        }
-
-        protected override bool ValidateReferences(Supply item)
-        {
-            return !_products.GetAll().Where(product => product.SupplyId == item.Id).Any();
+            return !(!_suppliers.GetAll().Where(supplier => item.SupplierId == supplier.Id).Any() 
+                     || !_products.GetAll().Where(product => item.ProductId == product.Id).Any());
         }
     }
 }

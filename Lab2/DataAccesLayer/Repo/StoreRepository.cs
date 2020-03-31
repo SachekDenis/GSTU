@@ -30,7 +30,7 @@ namespace DataAccessLayer.Repo
             if (item == null)
                 return;
             _context.Remove(item);
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
         public IEnumerable<T> GetAll()

@@ -56,15 +56,25 @@ namespace ConsoleApp.ConsoleView
                         case 1:
                             {
                                 var productId = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
-                                 _productConsoleService.StartConsoleLoop(productId);
+                                _productConsoleService.StartConsoleLoop(productId);
                             }
                             break;
                         case 2:
                             {
-                                 Add();
+                                Add();
                             }
                             break;
                         case 3:
+                            {
+                                Update();
+                            }
+                            break;
+                        case 4:
+                            {
+                                Delete();
+                            }
+                            break;
+                        case 5:
                             return;
                         default:
                             break;
@@ -87,69 +97,64 @@ namespace ConsoleApp.ConsoleView
                 Category = categories.First(category => category.Id == item.CategoryId).Name,
                 Name = item.Name
             });
+
             _printer.WriteCollectionAsTable(items);
         }
 
         private void Add()
         {
             _printer.WriteCollectionAsTable(_supplierManager.GetAll());
+
             Console.WriteLine("Введите Id поставщика");
 
             var supplyDto = new SupplyDto
             {
                 Date = DateTime.Now,
-                SupplierId = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException())
+                SupplierId = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException()),
             };
 
-             _supplyManager.Add(supplyDto);
-
             var product = CreateModel();
-            product.SupplyId = supplyDto.Id;
-
-            var productCharacteristics = _characteristicManager.GetAll()
-                .Where(characteristicDto => characteristicDto.CategoryId == product.CategoryId).ToList();
-
-            product.Fields = new List<FieldDto>();
-
-            productCharacteristics.ForEach(characteristic =>
-            {
-                Console.WriteLine($"Введите значение характеристики {characteristic.Name}");
-                var value = Console.ReadLine();
-                product.Fields.Add(new FieldDto()
-                {
-                    CharacteristicId = characteristic.Id,
-                    Value = value
-                });
-            });
 
             try
             {
-                 _productManager.Add(product);
+                _productManager.Add(product);
+                supplyDto.ProductId = product.Id;
+                _supplyManager.Add(supplyDto);
             }
             catch (ValidationException)
             {
-                 _supplyManager.Delete(supplyDto.Id);
+                _supplyManager.Delete(supplyDto.Id);
                 throw;
             }
 
 
         }
 
+        private void Delete()
+        {
+            Console.WriteLine("Введите Id для удаления");
+            var id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+            _productManager.Delete(id);
+        }
+
         private ProductDto CreateModel()
         {
             Console.WriteLine("Введите наименование товара");
             var name = Console.ReadLine();
+
             Console.WriteLine("Введите цену товара");
             var price = decimal.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+
             Console.WriteLine("Введите количество товара");
             var count = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
             _printer.WriteCollectionAsTable(_manufacturerManager.GetAll());
+
             Console.WriteLine("Введите Id производителя");
             var manufacturerId = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
             _printer.WriteCollectionAsTable(_categoryManager.GetAll());
+
             Console.WriteLine("Введите Id категории");
             var categoryId = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
-
 
             var productDto = new ProductDto()
             {
@@ -160,14 +165,46 @@ namespace ConsoleApp.ConsoleView
                 CountInStorage = count,
             };
 
+            var productCharacteristics = _characteristicManager.GetAll()
+                .Where(characteristicDto => characteristicDto.CategoryId == productDto.CategoryId).ToList();
+
+            productDto.Fields = new List<FieldDto>();
+
+            productCharacteristics.ForEach(characteristic =>
+            {
+                Console.WriteLine($"Введите значение характеристики {characteristic.Name}");
+                var value = Console.ReadLine();
+                productDto.Fields.Add(new FieldDto()
+                {
+                    CharacteristicId = characteristic.Id,
+                    Value = value
+                });
+            });
+
+
             return productDto;
         }
+
+
+        private void Update()
+        {
+            Console.WriteLine("Введите Id для обновления");
+            var id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+            var productDto = CreateModel();
+            productDto.Id = id;
+            productDto.Fields.ForEach(field => { field.ProductId = productDto.Id; });
+
+            _productManager.Update(productDto);
+        }
+
 
         private static void PrintMenu()
         {
             Console.WriteLine("1. Вывести детали товара");
             Console.WriteLine("2. Добавить товар");
-            Console.WriteLine("3. Назад");
+            Console.WriteLine("3. Обновить товар");
+            Console.WriteLine("4. Удалить товар");
+            Console.WriteLine("5. Назад");
         }
     }
 }

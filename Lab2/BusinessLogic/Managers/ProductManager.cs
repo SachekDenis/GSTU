@@ -35,6 +35,8 @@ namespace BusinessLogic.Managers
 
             _productValidator.Add(product);
 
+            dto.Id = product.Id;
+
             try
             {
                 dto.Fields.ForEach(fieldDto =>
@@ -53,10 +55,15 @@ namespace BusinessLogic.Managers
 
         public void Delete(int id)
         {
+            _supplyValidator.GetAll()
+                .Where(supply => supply.ProductId == id)
+                .ToList()
+                .ForEach(supply => _supplyValidator.Delete(supply.Id));
             _fieldValidator.GetAll()
                 .Where(field => field.ProductId == id)
                 .ToList()
                 .ForEach(field => _fieldValidator.Delete(field.Id));
+
             _productValidator.Delete(id);
 
         }
@@ -64,10 +71,14 @@ namespace BusinessLogic.Managers
         public void Update(ProductDto productDto)
         {
             var product = _mapper.Map<Product>(productDto);
-            _fieldValidator.GetAll()
-                           .Where(field => field.ProductId == product.Id)
-                           .ToList()
-                           .ForEach(field => _fieldValidator.Update(field));
+
+            productDto.Fields.ForEach(fieldDto =>
+                {
+                    fieldDto.Id = _fieldValidator.GetAll().First(field =>
+                        field.ProductId == product.Id && field.CharacteristicId == fieldDto.CharacteristicId).Id;
+                    _fieldValidator.Update(_mapper.Map<Field>(fieldDto));
+                });
+
             _productValidator.Update(product);
         }
 

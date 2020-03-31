@@ -7,12 +7,12 @@ namespace ConsoleApp.ConsoleView
 {
     internal class ManufacturerConsoleService
     {
-        private readonly ManufacturerManager _manufacturerService;
+        private readonly ManufacturerManager _manufacturerManager;
         private readonly ConsolePrinter _printer;
 
-        public ManufacturerConsoleService(ManufacturerManager manufacturerService)
+        public ManufacturerConsoleService(ManufacturerManager manufacturerManager)
         {
-            _manufacturerService = manufacturerService;
+            _manufacturerManager = manufacturerManager;
             _printer = new ConsolePrinter();
         }
 
@@ -55,7 +55,7 @@ namespace ConsoleApp.ConsoleView
 
         private void PrintAll()
         {
-            var items = _manufacturerService.GetAll();
+            var items = _manufacturerManager.GetAll();
             _printer.WriteCollectionAsTable(items);
         }
 
@@ -63,13 +63,13 @@ namespace ConsoleApp.ConsoleView
         {
             Console.WriteLine("Введите Id для удаления");
             var id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
-             _manufacturerService.Delete(id);
+             _manufacturerManager.Delete(id);
         }
 
         private void Add()
         {
             var manufacturerDto = CreateModel();
-             _manufacturerService.Add(manufacturerDto);
+             _manufacturerManager.Add(manufacturerDto);
         }
 
         private void Update()
@@ -79,7 +79,7 @@ namespace ConsoleApp.ConsoleView
             var manufacturerDto = CreateModel();
             manufacturerDto.Id = id;
 
-             _manufacturerService.Update(manufacturerDto);
+             _manufacturerManager.Update(manufacturerDto);
         }
 
         private static ManufacturerDto CreateModel()
