@@ -3,6 +3,7 @@ using System.IO;
 using ComputerStore.DataAccessLayer.Models;
 using Korzh.DbUtils;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace ComputerStore.DataAccessLayer.Context
@@ -19,14 +20,14 @@ namespace ComputerStore.DataAccessLayer.Context
         public DbSet<Field> Fields { get; set; }
         public DbSet<Category> Categories { get; set; }
 
-        public StoreContext(DbContextOptions<StoreContext> options) : base(options)
+        public StoreContext(DbContextOptions<StoreContext> options, IConfigurationRoot configuration) : base(options)
         {
             if (Database.EnsureCreated())
             {
                 DbInitializer.Create(dbUtilsOptions =>
                     {
                         dbUtilsOptions.UseSqlServer(Database.GetDbConnection().ConnectionString);
-                        dbUtilsOptions.UseFileFolderPacker(System.IO.Path.Combine(Environment.CurrentDirectory, "DbSeed"));
+                        dbUtilsOptions.UseFileFolderPacker(configuration.GetSection("SeedFolder").Value);
                     })
                 .Seed();
             }

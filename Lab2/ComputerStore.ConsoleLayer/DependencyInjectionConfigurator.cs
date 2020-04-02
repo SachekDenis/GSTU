@@ -27,6 +27,7 @@ namespace ComputerStore.ConsoleLayer
                 .AddClasses(classes => classes.Where(type => type.Name.EndsWith("ConsoleService")))
                 .AsSelf()
                 .WithTransientLifetime())
+            .AddSingleton(config)
             .AddAutoMapper(typeof(StoreProfile))
             .AddScoped(typeof(IRepository<>), typeof(StoreRepository<>))
             .AddLogging(loggingBuilder => loggingBuilder.AddFile("Logs/StoreApp-{Date}.txt"))
