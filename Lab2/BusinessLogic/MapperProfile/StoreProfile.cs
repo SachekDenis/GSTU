@@ -25,6 +25,8 @@ namespace ComputerStore.BusinessLogicLayer.MapperProfile
             CreateMap<SupplyDto, Supply>().ReverseMap();
 
             CreateMap<FieldDto, Field>().ReverseMap();
+
+            CreateMap<BuyerDto, Buyer>().ReverseMap();
         }
     }
 }

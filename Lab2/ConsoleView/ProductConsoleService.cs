@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
+using ComputerStore.BusinessLogicLayer.Exception;
 using ComputerStore.BusinessLogicLayer.Managers;
+using ComputerStore.BusinessLogicLayer.Models;
 using ComputerStore.ConsoleLayer.ViewModels;
 
 namespace ComputerStore.ConsoleLayer.ConsoleView
@@ -10,25 +12,22 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
         private readonly ProductManager _productManager;
         private readonly ManufacturerManager _manufacturerManager;
         private readonly CharacteristicManager _characteristicManager;
-        private readonly SupplyManager _supplyManager;
-        private readonly SupplierManager _supplierManager;
-        private readonly CategoryManager _categoryManager;
+        private readonly BuyerManager _buyerManager;
+        private readonly OrderManager _orderManager;
         private readonly ConsolePrinter _printer;
         private int _productId;
 
         public ProductConsoleService(ProductManager productManager,
             ManufacturerManager manufacturerManager,
             CharacteristicManager characteristicManager,
-            SupplierManager supplierManager,
-            SupplyManager supplyManager,
-            CategoryManager categoryManager)
+            OrderManager orderManager,
+            BuyerManager buyerManager)
         {
             _productManager = productManager;
             _manufacturerManager = manufacturerManager;
             _characteristicManager = characteristicManager;
-            _supplyManager = supplyManager;
-            _supplierManager = supplierManager;
-            _categoryManager = categoryManager;
+            _orderManager = orderManager;
+            _buyerManager = buyerManager;
             _printer = new ConsolePrinter();
         }
 
@@ -48,7 +47,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
                     switch (menuTab)
                     {
                         case 1:
-                            // Add();
+                            Buy();
                             break;
                         case 2:
                             return;
@@ -62,6 +61,61 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
                     Console.ReadKey();
                 }
             }
+        }
+
+        private void Buy()
+        {
+            Console.WriteLine("Введите имя");
+            var firstName = Console.ReadLine();
+            Console.WriteLine("Введите фамилию");
+            var surname = Console.ReadLine();
+            Console.WriteLine("Введите e-mail");
+            var email = Console.ReadLine();
+            Console.WriteLine("Введите телефон");
+            var phone = Console.ReadLine();
+            Console.WriteLine("Введите адрес");
+            var address = Console.ReadLine();
+            Console.WriteLine("Введите почтовый индекс");
+            var zipCode = Console.ReadLine();
+
+
+            var buyerDto = new BuyerDto()
+            {
+                Address = address,
+                FirstName = firstName,
+                SecondName = surname,
+                Email = email,
+                PhoneNumber = phone,
+                ZipCode = zipCode
+            };
+
+            _buyerManager.Add(buyerDto);
+
+            Console.WriteLine("Введите количество");
+            var count = int.Parse(Console.ReadLine());
+
+            var orderDto = new OrderDto()
+            {
+                ProductId = _productId,
+                BuyerId = buyerDto.Id,
+                Count = count
+            };
+
+            try
+            {
+                var productDto = _productManager.GetAll().Where(productDto => productDto.Id == _productId).First();
+                productDto.CountInStorage -= count;
+
+                _productManager.Update(productDto);
+                _orderManager.Add(orderDto);
+            }
+            catch(ValidationException)
+            {
+                _buyerManager.Delete(buyerDto.Id);
+                throw;
+            }
+
+
         }
 
         private void PrintAll()

@@ -7,7 +7,7 @@ using ComputerStore.DataAccessLayer.Models;
 
 namespace ComputerStore.BusinessLogicLayer.Managers
 {
-    internal class BuyerManager:IManager<BuyerDto>
+    public class BuyerManager:IManager<BuyerDto>
     {
         private readonly IMapper _mapper;
         private readonly Validator<Buyer> _validator;
@@ -22,6 +22,7 @@ namespace ComputerStore.BusinessLogicLayer.Managers
         {
             var buyer = _mapper.Map<Buyer>(buyerDto);
             _validator.Add(buyer);
+            buyerDto.Id = buyer.Id;
         }
 
         public void Delete(int id)

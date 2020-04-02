@@ -53,6 +53,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
                     {
                         case 1:
                             {
+                                Console.WriteLine("Введите Id товара");
                                 var productId = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
                                 _productConsoleService.StartConsoleLoop(productId);
                             }

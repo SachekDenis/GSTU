@@ -15,8 +15,8 @@ namespace ComputerStore.ConsoleLayer
     {
         public static ServiceProvider Configure(IConfigurationRoot config)
         {
-            var businessAssembly = Assembly.Load("BusinessLogic");
-            var consoleAssembly = Assembly.Load("ConsoleApp");
+            var businessAssembly = Assembly.Load("ComputerStore.BusinessLogicLayer");
+            var consoleAssembly = Assembly.Load("ComputerStore.ConsoleLayer");
 
             return new ServiceCollection()
             .AddDbContext<StoreContext>(options =>

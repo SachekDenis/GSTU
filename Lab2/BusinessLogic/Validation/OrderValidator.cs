@@ -4,7 +4,7 @@ using ComputerStore.DataAccessLayer.Repo;
 
 namespace ComputerStore.BusinessLogicLayer.Validation
 {
-    internal class OrderValidator : Validator<Order>
+    public class OrderValidator : Validator<Order>
     {
         private readonly IRepository<Product> _products;
         private readonly IRepository<Buyer> _buyers;

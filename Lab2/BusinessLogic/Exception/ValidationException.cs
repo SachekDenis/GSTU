@@ -2,7 +2,7 @@
 
 namespace ComputerStore.BusinessLogicLayer.Exception
 {
-    internal class ValidationException : System.Exception
+    public class ValidationException : System.Exception
     {
         public ValidationException()
         {

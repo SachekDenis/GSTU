@@ -7,7 +7,7 @@ using ComputerStore.DataAccessLayer.Models;
 
 namespace ComputerStore.BusinessLogicLayer.Managers
 {
-    internal class OrderManager : IManager<OrderDto>
+    public class OrderManager : IManager<OrderDto>
     {
         private readonly IMapper _mapper;
         private readonly Validator<Order> _validator;
@@ -22,6 +22,7 @@ namespace ComputerStore.BusinessLogicLayer.Managers
         {
             var order = _mapper.Map<Order>(orderDto);
             _validator.Add(order);
+            orderDto.Id = order.Id;
         }
 
         public void Delete(int id)
