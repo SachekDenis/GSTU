@@ -8,5 +8,6 @@ namespace ComputerStore.BusinessLogicLayer.Managers
         void Delete(int id);
         void Update(TDto buyerDto);
         IEnumerable<TDto> GetAll();
+        TDto GetById(int id);
     }
 }

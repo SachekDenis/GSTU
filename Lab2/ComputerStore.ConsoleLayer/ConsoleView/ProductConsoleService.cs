@@ -92,7 +92,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             _buyerManager.Add(buyerDto);
 
             Console.WriteLine("Введите количество");
-            var count = int.Parse(Console.ReadLine());
+            var count = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
 
             var orderDto = new OrderDto()
             {
@@ -103,7 +103,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
 
             try
             {
-                var productDto = _productManager.GetAll().Where(productDto => productDto.Id == _productId).First();
+                var productDto = _productManager.GetById(_productId);
                 productDto.CountInStorage -= count;
 
                 _productManager.Update(productDto);
@@ -120,14 +120,15 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
 
         private void PrintAll()
         {
-            var productViewModel = _productManager.GetAll().Where(product => product.Id == _productId).Select(product => new ProductViewModel()
+            var productDto = _productManager.GetById(_productId);
+            var productViewModel =  new ProductViewModel()
             {
-                Count = product.CountInStorage,
-                Fields = product.Fields,
-                Manufacturer = _manufacturerManager.GetAll().First(item => item.Id == product.ManufacturerId).Name,
-                Name = product.Name,
-                Price = product.Price,
-            }).First();
+                Count = productDto.CountInStorage,
+                Fields = productDto.Fields,
+                Manufacturer = _manufacturerManager.GetById(productDto.ManufacturerId).Name,
+                Name = productDto.Name,
+                Price = productDto.Price,
+            };
 
             Console.Write("Имя товара: ");
             Console.WriteLine(productViewModel.Name);
@@ -140,7 +141,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
 
             productViewModel.Fields.ForEach(field =>
             {
-                Console.Write(_characteristicManager.GetAll().First(characteristic => characteristic.Id == field.CharacteristicId).Name);
+                Console.Write(_characteristicManager.GetById(field.CharacteristicId).Name);
                 Console.Write(":");
                 Console.Write(field.Value);
                 Console.WriteLine();

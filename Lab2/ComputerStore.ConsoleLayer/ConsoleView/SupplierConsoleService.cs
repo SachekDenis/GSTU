@@ -52,7 +52,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
 
         private void Delete()
         {
-            Console.WriteLine("Введите Id поставшика для удаления");
+            Console.WriteLine("Введите Id поставщика для удаления");
             int id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
              _supplierManager.Delete(id);
         }
@@ -65,7 +65,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
 
         private void Update()
         {
-            Console.WriteLine("Введите Id поставшика для обновления");
+            Console.WriteLine("Введите Id поставщика для обновления");
             var id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
             var manufacturerDto = CreateModel();
             manufacturerDto.Id = id;

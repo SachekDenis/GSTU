@@ -82,15 +82,22 @@ namespace ComputerStore.BusinessLogicLayer.Managers
 
         public IEnumerable<ProductDto> GetAll()
         {
-            return _productValidator.GetAll().Select(item =>
-            {
-                var productDto = _mapper.Map<ProductDto>(item);
-                productDto.Fields = _fieldValidator.GetAll()
-                                                   .Where(field => field.ProductId == item.Id)
-                                                   .Select(field => _mapper.Map<FieldDto>(field))
-                                                   .ToList();
-                return productDto;
-            });
+            return _productValidator.GetAll().Select(MapProduct);
+        }
+
+        public ProductDto GetById(int id)
+        {
+            return MapProduct(_productValidator.GetById(id));
+        }
+
+        private ProductDto MapProduct(Product product)
+        {
+            var productDto = _mapper.Map<ProductDto>(product);
+            productDto.Fields = _fieldValidator.GetAll()
+                                               .Where(field => field.ProductId == product.Id)
+                                               .Select(field => _mapper.Map<FieldDto>(field))
+                                               .ToList();
+            return productDto;
         }
     }
 }

@@ -63,7 +63,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
                 {
                     CharacteristicId = item.Id,
                     CategoryId = item.CategoryId,
-                    CategoryName = _categoryManager.GetAll().First(category=>category.Id == item.CategoryId).Name,
+                    CategoryName = _categoryManager.GetById(item.CategoryId).Name,
                     CharacteristicName = item.Name
                 }).ToList();
 

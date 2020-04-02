@@ -74,14 +74,8 @@ namespace ComputerStore.BusinessLogicLayer.Validation
             _items.Update(item);
         }
 
-        protected virtual bool ValidateReferences(T item)
-        {
-            return true;
-        }
+        protected abstract bool ValidateReferences(T item);
 
-        protected virtual bool ValidateProperties(T item)
-        {
-            return true;
-        }
+        protected abstract bool ValidateProperties(T item);
     }
 }

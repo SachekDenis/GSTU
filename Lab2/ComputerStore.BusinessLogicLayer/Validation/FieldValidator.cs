@@ -17,6 +17,11 @@ namespace ComputerStore.BusinessLogicLayer.Validation
             _characteristics = characteristics;
         }
 
+        protected override bool ValidateReferences(Field item)
+        {
+            return true;
+        }
+
         protected override bool ValidateProperties(Field item)
         {
             return !(string.IsNullOrEmpty(item.Value)

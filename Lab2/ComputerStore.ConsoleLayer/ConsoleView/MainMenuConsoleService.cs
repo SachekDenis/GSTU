@@ -71,6 +71,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             Console.WriteLine("3. Характеристики");
             Console.WriteLine("4. Категории");
             Console.WriteLine("5. Товары");
+            Console.WriteLine("6. Заказы");
         }
     }
 }

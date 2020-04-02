@@ -39,5 +39,10 @@ namespace ComputerStore.BusinessLogicLayer.Managers
         {
             return _validator.GetAll().Select(item => _mapper.Map<CharacteristicDto>(item));
         }
+
+        public CharacteristicDto GetById(int id)
+        {
+            return _mapper.Map<CharacteristicDto>(_validator.GetById(id));
+        }
     }
 }

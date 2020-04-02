@@ -15,6 +15,11 @@ namespace ComputerStore.BusinessLogicLayer.Validation
             _suppliers = suppliers;
         }
 
+        protected override bool ValidateReferences(Supply item)
+        {
+            return true;
+        }
+
         protected override bool ValidateProperties(Supply item)
         {
             return !(!_suppliers.GetAll().Where(supplier => item.SupplierId == supplier.Id).Any() 

@@ -17,6 +17,11 @@ namespace ComputerStore.BusinessLogicLayer.Validation
             _buyers = buyers;
         }
 
+        protected override bool ValidateReferences(Order item)
+        {
+            return true;
+        }
+
         protected override bool ValidateProperties(Order item)
         {
             return !(item.Count < 0
