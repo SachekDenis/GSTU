@@ -1,0 +1,31 @@
+{
+  "name": "Orders",
+  "schema": {
+    "columns": [
+      {
+        "name": "Id",
+        "type": "System.Int32"
+      },
+      {
+        "name": "ProductId",
+        "type": "System.Int32"
+      },
+      {
+        "name": "BuyerId",
+        "type": "System.Int32"
+      },
+      {
+        "name": "Count",
+        "type": "System.Int32"
+      }
+    ]
+  },
+  "data": [
+    {
+      "Id": 1,
+      "ProductId": 3,
+      "BuyerId": 1,
+      "Count": 2
+    }
+  ]
+}

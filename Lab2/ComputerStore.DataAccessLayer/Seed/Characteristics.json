@@ -1,0 +1,41 @@
+{
+  "name": "Characteristics",
+  "schema": {
+    "columns": [
+      {
+        "name": "Id",
+        "type": "System.Int32"
+      },
+      {
+        "name": "CategoryId",
+        "type": "System.Int32"
+      },
+      {
+        "name": "Name",
+        "type": "System.String"
+      }
+    ]
+  },
+  "data": [
+    {
+      "Id": 1,
+      "CategoryId": 1,
+      "Name": "Частота GPU"
+    },
+    {
+      "Id": 2,
+      "CategoryId": 1,
+      "Name": "Объем видеопамяти"
+    },
+    {
+      "Id": 3,
+      "CategoryId": 2,
+      "Name": "Частота CPU"
+    },
+    {
+      "Id": 4,
+      "CategoryId": 2,
+      "Name": "Количество ядер"
+    }
+  ]
+}
