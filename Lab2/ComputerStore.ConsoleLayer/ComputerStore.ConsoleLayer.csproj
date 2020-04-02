@@ -29,8 +29,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="BusinessLogic\ComputerStore.BusinessLogicLayer.csproj" />
-    <ProjectReference Include="DataAccesLayer\ComputerStore.DataAccessLayer.csproj" />
+    <ProjectReference Include="..\ComputerStore.BusinessLogicLayer\ComputerStore.BusinessLogicLayer.csproj" />
+    <ProjectReference Include="..\ComputerStore.DataAccessLayer\ComputerStore.DataAccessLayer.csproj" />
   </ItemGroup>
 
 </Project>

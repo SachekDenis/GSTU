@@ -16,7 +16,7 @@ namespace ComputerStore.ConsoleLayer
 
             var services = DependencyInjectionConfigurator.Configure(config);
 
-            var mainMenu = services.GetService<MainMenuService>();
+            var mainMenu = services.GetService<MainMenuConsoleService>();
              mainMenu.StartMainLoop();
         }
     }

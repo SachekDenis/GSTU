@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using ComputerStore.DataAccessLayer.Models;
 using Korzh.DbUtils;
 using Microsoft.EntityFrameworkCore;
@@ -23,10 +24,10 @@ namespace ComputerStore.DataAccessLayer.Context
             if (Database.EnsureCreated())
             {
                 DbInitializer.Create(dbUtilsOptions =>
-                {
-                    dbUtilsOptions.UseSqlServer(Database.GetDbConnection().ConnectionString);
-                    dbUtilsOptions.UseFileFolderPacker(System.IO.Path.Combine(Environment.CurrentDirectory, "DbSeed"));
-                })
+                    {
+                        dbUtilsOptions.UseSqlServer(Database.GetDbConnection().ConnectionString);
+                        dbUtilsOptions.UseFileFolderPacker(System.IO.Path.Combine(Environment.CurrentDirectory, "DbSeed"));
+                    })
                 .Seed();
             }
         }

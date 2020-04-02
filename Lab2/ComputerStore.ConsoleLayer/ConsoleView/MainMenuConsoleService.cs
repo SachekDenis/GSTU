@@ -2,7 +2,7 @@
 
 namespace ComputerStore.ConsoleLayer.ConsoleView
 {
-    internal class MainMenuService
+    internal class MainMenuConsoleService
     {
         private readonly ManufacturerConsoleService _manufacturerConsoleService;
         private readonly SupplierConsoleService _supplierConsoleService;
@@ -10,7 +10,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
         private readonly CharacteristicConsoleService _characteristicConsoleService;
         private readonly ProductListConsoleService _productListConsoleService;
 
-        public MainMenuService(ManufacturerConsoleService manufacturerConsoleService,
+        public MainMenuConsoleService(ManufacturerConsoleService manufacturerConsoleService,
             SupplierConsoleService supplierConsoleService,
             CategoryConsoleService categoryConsoleService,
             CharacteristicConsoleService characteristicConsoleService,
