@@ -7,7 +7,7 @@
         "type": "System.Decimal"
       },
       {
-        "name": "CountInStorage",
+        "name": "AmountInStorage",
         "type": "System.Int32"
       },
       {

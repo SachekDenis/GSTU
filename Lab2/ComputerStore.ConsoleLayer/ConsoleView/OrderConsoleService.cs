@@ -53,6 +53,11 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
                             }
                             break;
                         case 3:
+                            {
+                                ChangeStatus();
+                            }
+                            break;
+                        case 4:
                             return;
                         default:
                             break;
@@ -60,7 +65,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
                 }
                 catch (ValidationException e)
                 {
-                    Console.WriteLine($"Ошибка валидации. Сообщение {e.Message}");
+                    Console.WriteLine($"Validation error. Message: {e.Message}");
                     Console.ReadKey();
                 }
                 catch (Exception e)
@@ -73,9 +78,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
 
         private void PrintBuyerInformation()
         {
-            Console.WriteLine("Введите Id заказа");
-
-            var orderId = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+            var orderId = ReadId();
 
             var buyerId = _orderManager.GetById(orderId).BuyerId;
 
@@ -86,13 +89,38 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
 
         private void PrintProductInformation()
         {
-            Console.WriteLine("Введите Id заказа");
-
-            var orderId = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+            var orderId = ReadId();
 
             var productId = _orderManager.GetById(orderId).ProductId;
 
             _productConsoleService.StartConsoleLoop(productId);
+        }
+
+        private void ChangeStatus()
+        {
+            var orderId = ReadId();
+
+            var order = _orderManager.GetById(orderId);
+
+            Console.WriteLine("Enter new status of order");
+            Console.WriteLine("1. Created");
+            Console.WriteLine("2. Executing");
+            Console.WriteLine("3. Completed");
+
+            var newStatus = (OrderStatusDto)(int.Parse(Console.ReadLine())-1);
+
+            order.OrderStatus = newStatus;
+
+            _orderManager.Update(order);
+
+
+        }
+
+        private int ReadId()
+        {
+            Console.WriteLine("Enter Id of order");
+
+            return int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
         }
 
 
@@ -103,7 +131,8 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
                 {
                     ProductName = _productManager.GetById(item.ProductId).Name,
                     BuyerAddress = _buyerManager.GetById(item.BuyerId).Address,
-                    Count = item.Count,
+                    Count = item.Amount,
+                    OrderStatus = item.OrderStatus,
                     Id = item.Id
                 }).ToList();
 
@@ -112,9 +141,10 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
 
         private static void PrintMenu()
         {
-            Console.WriteLine("1. Вывести детали покупателя");
-            Console.WriteLine("2. Вывести детали товара");
-            Console.WriteLine("3. Назад");
+            Console.WriteLine("1. Print details of buyer");
+            Console.WriteLine("2. Print details if product");
+            Console.WriteLine("3. Change order status");
+            Console.WriteLine("4. Back");
         }
     }
 }

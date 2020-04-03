@@ -53,7 +53,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
                     {
                         case 1:
                             {
-                                Console.WriteLine("Введите Id товара");
+                                Console.WriteLine("Enter Id of product");
                                 var productId = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
 
                                 if(_productManager.GetById(productId) == null)
@@ -85,7 +85,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
                 }
                 catch (ValidationException e)
                 {
-                    Console.WriteLine($"Ошибка валидации. Сообщение {e.Message}");
+                    Console.WriteLine($"Validation error. Message: {e.Message}");
                     Console.ReadKey();
                 }
                 catch (Exception e)
@@ -113,7 +113,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
         {
             _printer.WriteCollectionAsTable(_supplierManager.GetAll());
 
-            Console.WriteLine("Введите Id поставщика");
+            Console.WriteLine("Enter Id of manufacturer");
 
             var supplyDto = new SupplyDto
             {
@@ -140,28 +140,28 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
 
         private void Delete()
         {
-            Console.WriteLine("Введите Id для удаления");
+            Console.WriteLine("Enter Id of product to delete");
             var id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
             _productManager.Delete(id);
         }
 
         private ProductDto CreateModel()
         {
-            Console.WriteLine("Введите наименование товара");
+            Console.WriteLine("Enter name of product");
             var name = Console.ReadLine();
 
-            Console.WriteLine("Введите цену товара");
+            Console.WriteLine("Enter price of product");
             var price = decimal.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
 
-            Console.WriteLine("Введите количество товара");
-            var count = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+            Console.WriteLine("Enter amount of product");
+            var amount = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
             _printer.WriteCollectionAsTable(_manufacturerManager.GetAll());
 
-            Console.WriteLine("Введите Id производителя");
+            Console.WriteLine("Enter Id of manufacturer");
             var manufacturerId = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
             _printer.WriteCollectionAsTable(_categoryManager.GetAll());
 
-            Console.WriteLine("Введите Id категории");
+            Console.WriteLine("Enter Id of category");
             var categoryId = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
 
             var productDto = new ProductDto()
@@ -170,7 +170,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
                 Price = price,
                 ManufacturerId = manufacturerId,
                 CategoryId = categoryId,
-                CountInStorage = count,
+                AmountInStorage = amount,
             };
 
             var productCharacteristics = _characteristicManager.GetAll()
@@ -180,7 +180,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
 
             productCharacteristics.ForEach(characteristic =>
             {
-                Console.WriteLine($"Введите значение характеристики {characteristic.Name}");
+                Console.WriteLine($"Enter value of characteristic {characteristic.Name}");
                 var value = Console.ReadLine();
                 productDto.Fields.Add(new FieldDto()
                 {
@@ -196,7 +196,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
 
         private void Update()
         {
-            Console.WriteLine("Введите Id для обновления");
+            Console.WriteLine("Enter Id of product for update");
             var id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
             var productDto = CreateModel();
             productDto.Id = id;
@@ -208,11 +208,11 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
 
         private static void PrintMenu()
         {
-            Console.WriteLine("1. Вывести детали товара");
-            Console.WriteLine("2. Добавить товар");
-            Console.WriteLine("3. Обновить товар");
-            Console.WriteLine("4. Удалить товар");
-            Console.WriteLine("5. Назад");
+            Console.WriteLine("1. Print product details");
+            Console.WriteLine("2. Add product");
+            Console.WriteLine("3. Update product");
+            Console.WriteLine("4. Delete product");
+            Console.WriteLine("5. Back");
         }
     }
 }

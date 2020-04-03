@@ -7,7 +7,7 @@ namespace ComputerStore.ConsoleLayer.ViewModels
     {
         public string Name { get; set; }
         public decimal Price { get; set; }
-        public int Count { get; set; }
+        public int Amount { get; set; }
         public string Manufacturer { get; set; }
         public List<FieldDto> Fields { get; set; }
 

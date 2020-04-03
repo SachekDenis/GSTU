@@ -24,7 +24,7 @@ namespace ComputerStore.BusinessLogicLayer.Validation
 
         protected override bool ValidateProperties(Order item)
         {
-            return !(item.Count < 0
+            return !(item.Amount < 0
                 || !_products.GetAll().Where(product => item.ProductId == product.Id).Any()
                 || !_buyers.GetAll().Where(buyer => item.BuyerId == buyer.Id).Any());
         }

@@ -47,7 +47,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
                 }
                 catch (ValidationException e)
                 {
-                    Console.WriteLine($"Ошибка валидации. Сообщение {e.Message}");
+                    Console.WriteLine($"Validation error. Message: {e.Message}");
                     Console.ReadKey();
                 }
                 catch (Exception e)
@@ -67,7 +67,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
 
         private void Delete()
         {
-            Console.WriteLine("Введите Id поставщика для удаления");
+            Console.WriteLine("Enter Id of supplier to delete");
             int id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
             _supplierManager.Delete(id);
         }
@@ -80,21 +80,21 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
 
         private void Update()
         {
-            Console.WriteLine("Введите Id поставщика для обновления");
+            Console.WriteLine("Enter Id of supplier to delete");
             var id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
-            var manufacturerDto = CreateModel();
-            manufacturerDto.Id = id;
+            var supplierDto = CreateModel();
+            supplierDto.Id = id;
 
-            _supplierManager.Update(manufacturerDto);
+            _supplierManager.Update(supplierDto);
         }
 
         private static SupplierDto CreateModel()
         {
-            Console.WriteLine("Введите наименование поставщика");
+            Console.WriteLine("Enter supplier name");
             var name = Console.ReadLine();
-            Console.WriteLine("Введите адрес поставщика");
+            Console.WriteLine("Enter supplier address");
             var address = Console.ReadLine();
-            Console.WriteLine("Введите телефон поставщика");
+            Console.WriteLine("Enter supplier phone");
             var phone = Console.ReadLine();
 
             var supplierDto = new SupplierDto()
@@ -109,10 +109,10 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
 
         private static void PrintMenu()
         {
-            Console.WriteLine("1. Добавить поставщика");
-            Console.WriteLine("2. Удалить поставщика");
-            Console.WriteLine("3. Изменить поставщика");
-            Console.WriteLine("4. Назад");
+            Console.WriteLine("1. Add supplier");
+            Console.WriteLine("2. Delete supplier");
+            Console.WriteLine("3. Update supplier");
+            Console.WriteLine("4. Back");
         }
     }
 }

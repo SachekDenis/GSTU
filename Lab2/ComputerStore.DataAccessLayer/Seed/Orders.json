@@ -15,8 +15,12 @@
         "type": "System.Int32"
       },
       {
-        "name": "Count",
+        "name": "Amount",
         "type": "System.Int32"
+      },
+      {
+        "name": "OrderStatus",
+        "type": "ComputerStore.DataAccessLayer.Models.OrderStatus"
       }
     ]
   },
@@ -25,7 +29,8 @@
       "Id": 1,
       "ProductId": 3,
       "BuyerId": 1,
-      "Count": 2
+      "Amount": 2,
+      "OrderStatus": 0
     }
   ]
 }

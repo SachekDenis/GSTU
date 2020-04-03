@@ -57,7 +57,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
                 }
                 catch (ValidationException e)
                 {
-                    Console.WriteLine($"Ошибка валидации. Сообщение {e.Message}");
+                    Console.WriteLine($"Validation error. Message: {e.Message}");
                     Console.ReadKey();
                 }
                 catch (Exception e)
@@ -70,17 +70,17 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
 
         private void Buy()
         {
-            Console.WriteLine("Введите имя");
+            Console.WriteLine("Enter name");
             var firstName = Console.ReadLine();
-            Console.WriteLine("Введите фамилию");
+            Console.WriteLine("Enter surname");
             var surname = Console.ReadLine();
-            Console.WriteLine("Введите e-mail");
+            Console.WriteLine("Enter e-mail");
             var email = Console.ReadLine();
-            Console.WriteLine("Введите телефон (Формат: xxxxxxxxxxxx)");
+            Console.WriteLine("Enter phone (Format: xxxxxxxxxxxx)");
             var phone = Console.ReadLine();
-            Console.WriteLine("Введите адрес");
+            Console.WriteLine("Enter address");
             var address = Console.ReadLine();
-            Console.WriteLine("Введите почтовый индекс");
+            Console.WriteLine("Enter zipcode");
             var zipCode = Console.ReadLine();
 
 
@@ -96,20 +96,20 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
 
             _buyerManager.Add(buyerDto);
 
-            Console.WriteLine("Введите количество");
-            var count = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+            Console.WriteLine("Enter amount");
+            var amount = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
 
             var orderDto = new OrderDto()
             {
                 ProductId = _productId,
                 BuyerId = buyerDto.Id,
-                Count = count
+                Amount = amount
             };
 
             try
             {
                 var productDto = _productManager.GetById(_productId);
-                productDto.CountInStorage -= count;
+                productDto.AmountInStorage -= amount;
 
                 _productManager.Update(productDto);
                 _orderManager.Add(orderDto);
@@ -128,20 +128,20 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             var productDto = _productManager.GetById(_productId);
             var productViewModel =  new ProductViewModel()
             {
-                Count = productDto.CountInStorage,
+                Amount = productDto.AmountInStorage,
                 Fields = productDto.Fields,
                 Manufacturer = _manufacturerManager.GetById(productDto.ManufacturerId).Name,
                 Name = productDto.Name,
                 Price = productDto.Price,
             };
 
-            Console.Write("Имя товара: ");
+            Console.Write("Product name: ");
             Console.WriteLine(productViewModel.Name);
-            Console.Write("Цена товара: ");
+            Console.Write("Price: ");
             Console.WriteLine(productViewModel.Price);
-            Console.Write("Количество товара: ");
-            Console.WriteLine(productViewModel.Count);
-            Console.Write("Производитель: ");
+            Console.Write("Amount: ");
+            Console.WriteLine(productViewModel.Amount);
+            Console.Write("Manufacturer: ");
             Console.WriteLine(productViewModel.Manufacturer);
 
             productViewModel.Fields.ForEach(field =>
@@ -155,8 +155,8 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
 
         private static void PrintMenu()
         {
-            Console.WriteLine("1. Купить");
-            Console.WriteLine("2. Назад");
+            Console.WriteLine("1. Buy");
+            Console.WriteLine("2. Back");
         }
 
     }

@@ -51,7 +51,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
                 }
                 catch (ValidationException e)
                 {
-                    Console.WriteLine($"Ошибка валидации. Сообщение {e.Message}");
+                    Console.WriteLine($"Validation error. Message: {e.Message}");
                     Console.ReadKey();
                 }
                 catch (Exception e)
@@ -90,7 +90,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
 
         private void Update()
         {
-            Console.WriteLine("Введите Id характеристики для изменения");
+            Console.WriteLine("Enter Id of characteristic to update");
             var id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
             var characteristicDto = CreateModel();
             characteristicDto.Id = id;
@@ -100,10 +100,10 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
 
         private CharacteristicDto CreateModel()
         {
-            Console.WriteLine("Введите имя характеристики");
+            Console.WriteLine("Enter name of characteristic");
             var name = Console.ReadLine();
             _printer.WriteCollectionAsTable(_categoryManager.GetAll());
-            Console.WriteLine("Введите Id категории");
+            Console.WriteLine("Enter Id of category");
             var categoryId = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
 
             var characteristicDto = new CharacteristicDto
@@ -117,10 +117,10 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
 
         private static void PrintMenu()
         {
-            Console.WriteLine("1. Добавить характеристику");
-            Console.WriteLine("2. Удалить характеристику");
-            Console.WriteLine("3. Изменить характеристику");
-            Console.WriteLine("4. Назад");
+            Console.WriteLine("1. Add characteristic");
+            Console.WriteLine("2. Delete characteristic");
+            Console.WriteLine("3. Update characteristic");
+            Console.WriteLine("4. Back");
         }
     }
 }

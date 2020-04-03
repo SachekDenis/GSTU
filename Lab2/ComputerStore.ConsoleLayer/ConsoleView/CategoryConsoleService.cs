@@ -47,7 +47,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
                 }
                 catch (ValidationException e)
                 {
-                    Console.WriteLine($"Ошибка валидации. Сообщение {e.Message}");
+                    Console.WriteLine($"Validation error. Message: {e.Message}");
                     Console.ReadKey();
                 }
                 catch (Exception e)
@@ -66,7 +66,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
 
         private void Delete()
         {
-            Console.WriteLine("Введите Id категории для удаления");
+            Console.WriteLine("Enter Id of category to delete");
             var id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
              _categoryManager.Delete(id);
         }
@@ -79,7 +79,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
 
         private void Update()
         {
-            Console.WriteLine("Введите Id категории для обновления");
+            Console.WriteLine("Enter Id of category to update");
             var id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
             var categoryDto = CreateModel();
             categoryDto.Id = id;
@@ -89,7 +89,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
 
         private static CategoryDto CreateModel()
         {
-            Console.WriteLine("Введите имя категории");
+            Console.WriteLine("Enter category name");
             var name = Console.ReadLine();
 
             var categoryDto = new CategoryDto()
@@ -102,10 +102,10 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
 
         private static void PrintMenu()
         {
-            Console.WriteLine("1. Добавить категорию");
-            Console.WriteLine("2. Удалить категорию");
-            Console.WriteLine("3. Изменить категорию");
-            Console.WriteLine("4. Назад");
+            Console.WriteLine("1. Add category");
+            Console.WriteLine("2. Delete category");
+            Console.WriteLine("3. Update category");
+            Console.WriteLine("4. Back");
         }
     }
 }

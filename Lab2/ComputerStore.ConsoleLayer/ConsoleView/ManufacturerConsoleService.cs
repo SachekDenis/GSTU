@@ -47,7 +47,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
                 }
                 catch (ValidationException e)
                 {
-                    Console.WriteLine($"Ошибка валидации. Сообщение {e.Message}");
+                    Console.WriteLine($"Validation error. Message: {e.Message}");
                     Console.ReadKey();
                 }
                 catch (Exception e)
@@ -66,7 +66,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
 
         private void Delete()
         {
-            Console.WriteLine("Введите Id для удаления");
+            Console.WriteLine("Enter Id of manufacturer for delete");
             var id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
              _manufacturerManager.Delete(id);
         }
@@ -79,7 +79,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
 
         private void Update()
         {
-            Console.WriteLine("Введите Id для обновления");
+            Console.WriteLine("Enter Id of manufacturer for update");
             var id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
             var manufacturerDto = CreateModel();
             manufacturerDto.Id = id;
@@ -89,9 +89,9 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
 
         private static ManufacturerDto CreateModel()
         {
-            Console.WriteLine("Введите наименование производителя");
+            Console.WriteLine("Enter name of manufacturer");
             var name = Console.ReadLine();
-            Console.WriteLine("Введите страну производителя");
+            Console.WriteLine("Enter country of manufacturer");
             var country = Console.ReadLine();
 
             var manufacturerDto = new ManufacturerDto()
@@ -105,10 +105,10 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
 
         private static void PrintMenu()
         {
-            Console.WriteLine("1. Добавить производителя");
-            Console.WriteLine("2. Удалить производителя");
-            Console.WriteLine("3. Изменить производителя");
-            Console.WriteLine("4. Назад");
+            Console.WriteLine("1. Add manufacturer");
+            Console.WriteLine("2. Delete manufacturer");
+            Console.WriteLine("3. Update manufacturer");
+            Console.WriteLine("4. Back");
         }
     }
 }

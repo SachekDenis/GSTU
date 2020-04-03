@@ -82,12 +82,12 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
 
         private static void PrintMenu()
         {
-            Console.WriteLine("1. Производители");
-            Console.WriteLine("2. Поставщики");
-            Console.WriteLine("3. Характеристики");
-            Console.WriteLine("4. Категории");
-            Console.WriteLine("5. Товары");
-            Console.WriteLine("6. Заказы");
+            Console.WriteLine("1. Manufacturers");
+            Console.WriteLine("2. Suppliers");
+            Console.WriteLine("3. Characteristics");
+            Console.WriteLine("4. Categories");
+            Console.WriteLine("5. Products");
+            Console.WriteLine("6. Orders");
         }
     }
 }
