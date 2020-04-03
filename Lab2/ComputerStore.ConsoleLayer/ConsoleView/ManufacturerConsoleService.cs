@@ -1,4 +1,5 @@
 ﻿using System;
+using ComputerStore.BusinessLogicLayer.Exception;
 using ComputerStore.BusinessLogicLayer.Managers;
 using ComputerStore.BusinessLogicLayer.Models;
 
@@ -43,6 +44,11 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
                         default:
                             break;
                     }
+                }
+                catch (ValidationException e)
+                {
+                    Console.WriteLine($"Ошибка валидации. Сообщение {e.Message}");
+                    Console.ReadKey();
                 }
                 catch (Exception e)
                 {

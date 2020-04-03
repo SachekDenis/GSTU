@@ -9,17 +9,20 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
         private readonly CategoryConsoleService _categoryConsoleService;
         private readonly CharacteristicConsoleService _characteristicConsoleService;
         private readonly ProductListConsoleService _productListConsoleService;
+        private readonly OrderConsoleService _orderConsoleService;
 
         public MainMenuConsoleService(ManufacturerConsoleService manufacturerConsoleService,
             SupplierConsoleService supplierConsoleService,
             CategoryConsoleService categoryConsoleService,
             CharacteristicConsoleService characteristicConsoleService,
-            ProductListConsoleService productListConsoleService)
+            ProductListConsoleService productListConsoleService,
+            OrderConsoleService orderConsoleService)
         {
             _manufacturerConsoleService = manufacturerConsoleService;
             _supplierConsoleService = supplierConsoleService;
             _categoryConsoleService = categoryConsoleService;
             _productListConsoleService = productListConsoleService;
+            _orderConsoleService = orderConsoleService;
             _characteristicConsoleService = characteristicConsoleService;
         }
 
@@ -27,39 +30,52 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
         {
             while (true)
             {
-                Console.Clear();
-                PrintMenu();
-                var menuTab = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
-
-                switch (menuTab)
+                try
                 {
-                    case 1:
-                        {
-                             _manufacturerConsoleService.StartConsoleLoop();
-                        }
-                        break;
-                    case 2:
-                        {
-                             _supplierConsoleService.StartConsoleLoop();
-                        }
-                        break;
-                    case 3:
-                        {
-                             _characteristicConsoleService.StartConsoleLoop();
-                        }
-                        break;
-                    case 4:
-                        {
-                             _categoryConsoleService.StartConsoleLoop();
-                        }
-                        break;
-                    case 5:
-                        {
-                             _productListConsoleService.StartConsoleLoop();
-                        }
-                        break;
-                    default:
-                        break;
+                    Console.Clear();
+                    PrintMenu();
+                    var menuTab = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+
+                    switch (menuTab)
+                    {
+                        case 1:
+                            {
+                                _manufacturerConsoleService.StartConsoleLoop();
+                            }
+                            break;
+                        case 2:
+                            {
+                                _supplierConsoleService.StartConsoleLoop();
+                            }
+                            break;
+                        case 3:
+                            {
+                                _characteristicConsoleService.StartConsoleLoop();
+                            }
+                            break;
+                        case 4:
+                            {
+                                _categoryConsoleService.StartConsoleLoop();
+                            }
+                            break;
+                        case 5:
+                            {
+                                _productListConsoleService.StartConsoleLoop();
+                            }
+                            break;
+                        case 6:
+                            {
+                                _orderConsoleService.StartConsoleLoop();
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    Console.ReadKey();
                 }
             }
         }

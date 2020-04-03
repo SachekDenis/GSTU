@@ -1,4 +1,5 @@
 ﻿using System;
+using ComputerStore.BusinessLogicLayer.Exception;
 using ComputerStore.BusinessLogicLayer.Managers;
 using ComputerStore.BusinessLogicLayer.Models;
 
@@ -19,28 +20,42 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
         {
             while (true)
             {
-                Console.Clear();
-                PrintAll();
-                PrintMenu();
-
-                var menuTab = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
-
-                switch (menuTab)
+                try
                 {
-                    case 1:
-                         Add();
-                        break;
-                    case 2:
-                         Delete();
-                        break;
-                    case 3:
-                         Update();
-                        break;
-                    case 4:
-                        return;
-                    default:
-                        break;
+                    Console.Clear();
+                    PrintAll();
+                    PrintMenu();
+
+                    var menuTab = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+
+                    switch (menuTab)
+                    {
+                        case 1:
+                            Add();
+                            break;
+                        case 2:
+                            Delete();
+                            break;
+                        case 3:
+                            Update();
+                            break;
+                        case 4:
+                            return;
+                        default:
+                            break;
+                    }
                 }
+                catch (ValidationException e)
+                {
+                    Console.WriteLine($"Ошибка валидации. Сообщение {e.Message}");
+                    Console.ReadKey();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    Console.ReadKey();
+                }
+
             }
         }
 
@@ -54,13 +69,13 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
         {
             Console.WriteLine("Введите Id поставщика для удаления");
             int id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
-             _supplierManager.Delete(id);
+            _supplierManager.Delete(id);
         }
 
         private void Add()
         {
             var manufacturerDto = CreateModel();
-             _supplierManager.Add(manufacturerDto);
+            _supplierManager.Add(manufacturerDto);
         }
 
         private void Update()
@@ -70,7 +85,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             var manufacturerDto = CreateModel();
             manufacturerDto.Id = id;
 
-             _supplierManager.Update(manufacturerDto);
+            _supplierManager.Update(manufacturerDto);
         }
 
         private static SupplierDto CreateModel()

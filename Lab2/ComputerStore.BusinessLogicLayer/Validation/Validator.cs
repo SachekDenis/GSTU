@@ -24,7 +24,7 @@ namespace ComputerStore.BusinessLogicLayer.Validation
             }
 
             if (!ValidateProperties(item))
-                throw new ValidationException($"{nameof(T)} has invalid properties");
+                throw new ValidationException($"{typeof(T)} has invalid properties");
 
             _items.Add(item);
         }
@@ -35,11 +35,11 @@ namespace ComputerStore.BusinessLogicLayer.Validation
 
             if (item == null)
             {
-                throw new ValidationException($"{nameof(T)} not found");
+                throw new ValidationException($"{typeof(T)} not found");
             }
 
             if (!ValidateReferences(item))
-                throw new ValidationException($"{nameof(T)} has references");
+                throw new ValidationException($"{typeof(T)} has references");
 
             _items.Delete(itemId);
         }
@@ -64,11 +64,11 @@ namespace ComputerStore.BusinessLogicLayer.Validation
             var itemToUpdate = _items.GetById(item.Id);
 
             if (!ValidateProperties(item))
-                throw new ValidationException($"{nameof(T)} has invalid properties");
+                throw new ValidationException($"{typeof(T)} has invalid properties");
 
             if (itemToUpdate == null)
             {
-                throw new ValidationException($"{nameof(T)} with such id doesn't exist");
+                throw new ValidationException($"{typeof(T)} with such id doesn't exist");
             }
 
             _items.Update(item);

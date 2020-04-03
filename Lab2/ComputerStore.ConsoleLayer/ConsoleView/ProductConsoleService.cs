@@ -55,6 +55,11 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
                             break;
                     }
                 }
+                catch (ValidationException e)
+                {
+                    Console.WriteLine($"Ошибка валидации. Сообщение {e.Message}");
+                    Console.ReadKey();
+                }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
@@ -71,7 +76,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             var surname = Console.ReadLine();
             Console.WriteLine("Введите e-mail");
             var email = Console.ReadLine();
-            Console.WriteLine("Введите телефон");
+            Console.WriteLine("Введите телефон (Формат: xxxxxxxxxxxx)");
             var phone = Console.ReadLine();
             Console.WriteLine("Введите адрес");
             var address = Console.ReadLine();

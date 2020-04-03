@@ -55,6 +55,10 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
                             {
                                 Console.WriteLine("Введите Id товара");
                                 var productId = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+
+                                if(_productManager.GetById(productId) == null)
+                                    throw new InvalidOperationException();
+
                                 _productConsoleService.StartConsoleLoop(productId);
                             }
                             break;
@@ -78,6 +82,11 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
                         default:
                             break;
                     }
+                }
+                catch (ValidationException e)
+                {
+                    Console.WriteLine($"Ошибка валидации. Сообщение {e.Message}");
+                    Console.ReadKey();
                 }
                 catch (Exception e)
                 {
