@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using ConsoleTables;
+﻿using ConsoleTables;
+using System.Collections.Generic;
 
 namespace ComputerStore.ConsoleLayer.ConsoleView
 {

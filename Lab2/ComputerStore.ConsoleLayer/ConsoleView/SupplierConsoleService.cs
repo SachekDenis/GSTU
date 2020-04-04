@@ -1,7 +1,7 @@
-﻿using System;
-using ComputerStore.BusinessLogicLayer.Exception;
+﻿using ComputerStore.BusinessLogicLayer.Exception;
 using ComputerStore.BusinessLogicLayer.Managers;
 using ComputerStore.BusinessLogicLayer.Models;
+using System;
 
 namespace ComputerStore.ConsoleLayer.ConsoleView
 {

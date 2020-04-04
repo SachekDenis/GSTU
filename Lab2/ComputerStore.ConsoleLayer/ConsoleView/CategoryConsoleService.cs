@@ -1,7 +1,7 @@
-﻿using System;
-using ComputerStore.BusinessLogicLayer.Exception;
+﻿using ComputerStore.BusinessLogicLayer.Exception;
 using ComputerStore.BusinessLogicLayer.Managers;
 using ComputerStore.BusinessLogicLayer.Models;
+using System;
 
 namespace ComputerStore.ConsoleLayer.ConsoleView
 {
@@ -31,13 +31,13 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
                     switch (menuTab)
                     {
                         case 1:
-                             Add();
+                            Add();
                             break;
                         case 2:
-                             Delete();
+                            Delete();
                             break;
                         case 3:
-                             Update();
+                            Update();
                             break;
                         case 4:
                             return;
@@ -68,13 +68,13 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
         {
             Console.WriteLine("Enter Id of category to delete");
             var id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
-             _categoryManager.Delete(id);
+            _categoryManager.Delete(id);
         }
 
         private void Add()
         {
             var categoryDto = CreateModel();
-             _categoryManager.Add(categoryDto);
+            _categoryManager.Add(categoryDto);
         }
 
         private void Update()
@@ -84,7 +84,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             var categoryDto = CreateModel();
             categoryDto.Id = id;
 
-             _categoryManager.Update(categoryDto);
+            _categoryManager.Update(categoryDto);
         }
 
         private static CategoryDto CreateModel()

@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using ComputerStore.DataAccessLayer.Context;
+﻿using ComputerStore.DataAccessLayer.Context;
 using ComputerStore.DataAccessLayer.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ComputerStore.DataAccessLayer.Repo
 {
-    public class StoreRepository<T> : IRepository<T> where T : class,IEntity
+    public class StoreRepository<T> : IRepository<T> where T : class, IEntity
     {
         private bool disposed = false;
         private readonly StoreContext _context;
@@ -46,7 +46,7 @@ namespace ComputerStore.DataAccessLayer.Repo
 
         public void Update(T item)
         {
-            var entry = _context.Set<T>().First(e=>e.Id == item.Id);
+            var entry = _context.Set<T>().First(e => e.Id == item.Id);
             _context.Entry(entry).CurrentValues.SetValues(item);
             _context.SaveChanges();
         }
@@ -63,7 +63,7 @@ namespace ComputerStore.DataAccessLayer.Repo
             {
                 if (disposing)
                 {
-                     _context.Dispose();
+                    _context.Dispose();
                 }
                 disposed = true;
             }

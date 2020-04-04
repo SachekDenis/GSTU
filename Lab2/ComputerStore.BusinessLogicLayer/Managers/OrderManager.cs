@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using ComputerStore.BusinessLogicLayer.Models;
 using ComputerStore.BusinessLogicLayer.Validation;
 using ComputerStore.DataAccessLayer.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ComputerStore.BusinessLogicLayer.Managers
 {

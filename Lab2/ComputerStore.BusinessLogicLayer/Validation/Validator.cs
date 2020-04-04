@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using ComputerStore.BusinessLogicLayer.Exception;
+﻿using ComputerStore.BusinessLogicLayer.Exception;
 using ComputerStore.DataAccessLayer.Models;
 using ComputerStore.DataAccessLayer.Repo;
+using System;
+using System.Collections.Generic;
 
 namespace ComputerStore.BusinessLogicLayer.Validation
 {
     public abstract class Validator<T>
-        where T : class,IEntity
+        where T : class, IEntity
     {
         private readonly IRepository<T> _items;
 

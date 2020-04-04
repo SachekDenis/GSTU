@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using ComputerStore.DataAccessLayer.Models;
+﻿using ComputerStore.DataAccessLayer.Models;
 using Korzh.DbUtils;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

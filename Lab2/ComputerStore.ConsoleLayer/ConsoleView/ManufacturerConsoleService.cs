@@ -1,7 +1,7 @@
-﻿using System;
-using ComputerStore.BusinessLogicLayer.Exception;
+﻿using ComputerStore.BusinessLogicLayer.Exception;
 using ComputerStore.BusinessLogicLayer.Managers;
 using ComputerStore.BusinessLogicLayer.Models;
+using System;
 
 namespace ComputerStore.ConsoleLayer.ConsoleView
 {
@@ -31,13 +31,13 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
                     switch (menuTab)
                     {
                         case 1:
-                             Add();
+                            Add();
                             break;
                         case 2:
-                             Delete();
+                            Delete();
                             break;
                         case 3:
-                             Update();
+                            Update();
                             break;
                         case 4:
                             return;
@@ -68,13 +68,13 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
         {
             Console.WriteLine("Enter Id of manufacturer for delete");
             var id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
-             _manufacturerManager.Delete(id);
+            _manufacturerManager.Delete(id);
         }
 
         private void Add()
         {
             var manufacturerDto = CreateModel();
-             _manufacturerManager.Add(manufacturerDto);
+            _manufacturerManager.Add(manufacturerDto);
         }
 
         private void Update()
@@ -84,7 +84,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             var manufacturerDto = CreateModel();
             manufacturerDto.Id = id;
 
-             _manufacturerManager.Update(manufacturerDto);
+            _manufacturerManager.Update(manufacturerDto);
         }
 
         private static ManufacturerDto CreateModel()

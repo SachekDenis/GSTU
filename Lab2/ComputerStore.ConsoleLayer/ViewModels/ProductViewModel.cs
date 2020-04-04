@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using ComputerStore.BusinessLogicLayer.Models;
+﻿using ComputerStore.BusinessLogicLayer.Models;
+using System.Collections.Generic;
 
 namespace ComputerStore.ConsoleLayer.ViewModels
 {

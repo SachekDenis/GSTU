@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using ComputerStore.BusinessLogicLayer.Exception;
+﻿using ComputerStore.BusinessLogicLayer.Exception;
 using ComputerStore.BusinessLogicLayer.Managers;
 using ComputerStore.BusinessLogicLayer.Models;
 using ComputerStore.ConsoleLayer.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ComputerStore.ConsoleLayer.ConsoleView
 {
@@ -56,7 +56,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
                                 Console.WriteLine("Enter Id of product");
                                 var productId = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
 
-                                if(_productManager.GetById(productId) == null)
+                                if (_productManager.GetById(productId) == null)
                                     throw new InvalidOperationException();
 
                                 _productConsoleService.StartConsoleLoop(productId);

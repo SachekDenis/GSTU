@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
-using ComputerStore.BusinessLogicLayer.Exception;
+﻿using ComputerStore.BusinessLogicLayer.Exception;
 using ComputerStore.BusinessLogicLayer.Managers;
 using ComputerStore.BusinessLogicLayer.Models;
 using ComputerStore.ConsoleLayer.ViewModels;
+using System;
+using System.Linq;
 
 namespace ComputerStore.ConsoleLayer.ConsoleView
 {
@@ -35,13 +35,13 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
                     switch (menuTab)
                     {
                         case 1:
-                             Add();
+                            Add();
                             break;
                         case 2:
-                             Delete();
+                            Delete();
                             break;
                         case 3:
-                             Update();
+                            Update();
                             break;
                         case 4:
                             return;
@@ -79,13 +79,13 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
         private void Delete()
         {
             int id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
-             _characteristicManager.Delete(id);
+            _characteristicManager.Delete(id);
         }
 
         private void Add()
         {
             var characteristicDto = CreateModel();
-             _characteristicManager.Add(characteristicDto);
+            _characteristicManager.Add(characteristicDto);
         }
 
         private void Update()
@@ -95,7 +95,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             var characteristicDto = CreateModel();
             characteristicDto.Id = id;
 
-             _characteristicManager.Update(characteristicDto);
+            _characteristicManager.Update(characteristicDto);
         }
 
         private CharacteristicDto CreateModel()

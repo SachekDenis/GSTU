@@ -35,7 +35,7 @@
   "data": [
     {
       "Price": 600.00,
-      "CountInStorage": 2,
+      "AmountInStorage": 2,
       "ManufacturerId": 2,
       "SupplyId": 1,
       "CategoryId": 1,
@@ -44,7 +44,7 @@
     },
     {
       "Price": 700.00,
-      "CountInStorage": 1,
+      "AmountInStorage": 1,
       "ManufacturerId": 1,
       "SupplyId": 2,
       "CategoryId": 2,

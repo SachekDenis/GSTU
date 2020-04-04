@@ -15,11 +15,11 @@
   "data": [
     {
       "Id": 1,
-      "Name": "Видеокарта"
+      "Name": "Graphic card"
     },
     {
       "Id": 2,
-      "Name": "Процессор"
+      "Name": "CPU"
     }
   ]
 }

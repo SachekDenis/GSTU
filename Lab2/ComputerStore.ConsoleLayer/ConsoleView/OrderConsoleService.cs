@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using ComputerStore.BusinessLogicLayer.Exception;
+﻿using ComputerStore.BusinessLogicLayer.Exception;
 using ComputerStore.BusinessLogicLayer.Managers;
 using ComputerStore.BusinessLogicLayer.Models;
 using ComputerStore.ConsoleLayer.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ComputerStore.ConsoleLayer.ConsoleView
 {
@@ -107,7 +107,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             Console.WriteLine("2. Executing");
             Console.WriteLine("3. Completed");
 
-            var newStatus = (OrderStatusDto)(int.Parse(Console.ReadLine())-1);
+            var newStatus = (OrderStatusDto)(int.Parse(Console.ReadLine() ?? throw new InvalidOperationException()) - 1);
 
             order.OrderStatus = newStatus;
 
@@ -142,7 +142,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
         private static void PrintMenu()
         {
             Console.WriteLine("1. Print details of buyer");
-            Console.WriteLine("2. Print details if product");
+            Console.WriteLine("2. Print details of product");
             Console.WriteLine("3. Change order status");
             Console.WriteLine("4. Back");
         }

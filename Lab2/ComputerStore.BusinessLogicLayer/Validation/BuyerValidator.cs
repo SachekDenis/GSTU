@@ -1,6 +1,6 @@
-﻿using System.Text.RegularExpressions;
-using ComputerStore.DataAccessLayer.Models;
+﻿using ComputerStore.DataAccessLayer.Models;
 using ComputerStore.DataAccessLayer.Repo;
+using System.Text.RegularExpressions;
 
 namespace ComputerStore.BusinessLogicLayer.Validation
 {

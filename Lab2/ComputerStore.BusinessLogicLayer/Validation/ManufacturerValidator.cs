@@ -1,6 +1,6 @@
-﻿using System.Linq;
-using ComputerStore.DataAccessLayer.Models;
+﻿using ComputerStore.DataAccessLayer.Models;
 using ComputerStore.DataAccessLayer.Repo;
+using System.Linq;
 
 namespace ComputerStore.BusinessLogicLayer.Validation
 {

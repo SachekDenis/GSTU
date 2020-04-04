@@ -1,9 +1,8 @@
-﻿using System;
-using System.Linq;
-using ComputerStore.BusinessLogicLayer.Exception;
+﻿using ComputerStore.BusinessLogicLayer.Exception;
 using ComputerStore.BusinessLogicLayer.Managers;
 using ComputerStore.BusinessLogicLayer.Models;
 using ComputerStore.ConsoleLayer.ViewModels;
+using System;
 
 namespace ComputerStore.ConsoleLayer.ConsoleView
 {
@@ -114,7 +113,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
                 _productManager.Update(productDto);
                 _orderManager.Add(orderDto);
             }
-            catch(ValidationException)
+            catch (ValidationException)
             {
                 _buyerManager.Delete(buyerDto.Id);
                 throw;
@@ -126,7 +125,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
         private void PrintAll()
         {
             var productDto = _productManager.GetById(_productId);
-            var productViewModel =  new ProductViewModel()
+            var productViewModel = new ProductViewModel()
             {
                 Amount = productDto.AmountInStorage,
                 Fields = productDto.Fields,

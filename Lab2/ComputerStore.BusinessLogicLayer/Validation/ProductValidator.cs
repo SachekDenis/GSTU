@@ -1,6 +1,6 @@
-﻿using System.Linq;
-using ComputerStore.DataAccessLayer.Models;
+﻿using ComputerStore.DataAccessLayer.Models;
 using ComputerStore.DataAccessLayer.Repo;
+using System.Linq;
 
 namespace ComputerStore.BusinessLogicLayer.Validation
 {
@@ -29,8 +29,8 @@ namespace ComputerStore.BusinessLogicLayer.Validation
         protected override bool ValidateProperties(Product item)
         {
             return !(!_manufacturers.GetAll().Where(manufacturer => item.ManufacturerId == manufacturer.Id).Any()
-                     || !_categories.GetAll().Where(category => item.CategoryId == category.Id).Any() 
-                     || item.Price < 0 
+                     || !_categories.GetAll().Where(category => item.CategoryId == category.Id).Any()
+                     || item.Price < 0
                      || string.IsNullOrEmpty(item.Name));
         }
 

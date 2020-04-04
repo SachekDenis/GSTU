@@ -35,9 +35,9 @@
   "data": [
     {
       "Id": 1,
-      "SecondName": "Сачек",
-      "FirstName": "Денис",
-      "Address": "м-он Восточный, д. 102",
+      "SecondName": "Sachek",
+      "FirstName": "Denis",
+      "Address": "Vostochnaya str., h. 102",
       "PhoneNumber": "375445532137",
       "ZipCode": "247023",
       "Email": "sachek.denis@yandex.by"
