@@ -22,8 +22,8 @@ namespace ComputerStore.BusinessLogicLayer.Validation
 
         protected override bool ValidateProperties(Supply item)
         {
-            return !(!_suppliers.GetAll().Where(supplier => item.SupplierId == supplier.Id).Any()
-                     || !_products.GetAll().Where(product => item.ProductId == product.Id).Any());
+            return !(_suppliers.GetAll().Any(supplier => item.SupplierId == supplier.Id)
+                     || _products.GetAll().Any(product => item.ProductId == product.Id));
         }
     }
 }
