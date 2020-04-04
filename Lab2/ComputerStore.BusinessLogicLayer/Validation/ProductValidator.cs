@@ -28,8 +28,8 @@ namespace ComputerStore.BusinessLogicLayer.Validation
 
         protected override bool ValidateProperties(Product item)
         {
-            return !(!_manufacturers.GetAll().Where(manufacturer => item.ManufacturerId == manufacturer.Id).Any()
-                     || !_categories.GetAll().Where(category => item.CategoryId == category.Id).Any()
+            return !(!_manufacturers.GetAll().Any(manufacturer => item.ManufacturerId == manufacturer.Id)
+                     || !_categories.GetAll().Any(category => item.CategoryId == category.Id)
                      || item.Price < 0
                      || string.IsNullOrEmpty(item.Name));
         }
