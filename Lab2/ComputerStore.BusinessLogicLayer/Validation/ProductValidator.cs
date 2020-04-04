@@ -8,20 +8,20 @@ namespace ComputerStore.BusinessLogicLayer.Validation
     {
         private readonly IRepository<Order> _orders;
         private readonly IRepository<Manufacturer> _manufacturers;
-        private readonly IRepository<Supply> _supplyes;
+        private readonly IRepository<Supply> _supplies;
         private readonly IRepository<Category> _categories;
         private readonly IRepository<Field> _fields;
 
         public ProductValidator(IRepository<Product> products,
             IRepository<Order> orders,
             IRepository<Manufacturer> manufacturers,
-            IRepository<Supply> supplyes,
+            IRepository<Supply> supplies,
             IRepository<Category> categories,
             IRepository<Field> fields) : base(products)
         {
             _orders = orders;
             _manufacturers = manufacturers;
-            _supplyes = supplyes;
+            _supplies = supplies;
             _categories = categories;
             _fields = fields;
         }
@@ -38,7 +38,7 @@ namespace ComputerStore.BusinessLogicLayer.Validation
         {
             return !(_orders.GetAll().Any(order => order.ProductId == item.Id)
                 || _fields.GetAll().Any(field => field.ProductId == item.Id)
-                || _supplyes.GetAll().Any(supply => supply.ProductId == item.Id));
+                || _supplies.GetAll().Any(supply => supply.ProductId == item.Id));
         }
 
     }

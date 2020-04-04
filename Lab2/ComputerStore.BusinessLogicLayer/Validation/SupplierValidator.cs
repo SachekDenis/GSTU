@@ -6,10 +6,10 @@ namespace ComputerStore.BusinessLogicLayer.Validation
 {
     public class SupplierValidator : Validator<Supplier>
     {
-        private readonly IRepository<Supply> _supplyes;
-        public SupplierValidator(IRepository<Supplier> items, IRepository<Supply> supplyes) : base(items)
+        private readonly IRepository<Supply> _supplies;
+        public SupplierValidator(IRepository<Supplier> items, IRepository<Supply> supplies) : base(items)
         {
-            _supplyes = supplyes;
+            _supplies = supplies;
         }
 
         protected override bool ValidateProperties(Supplier item)
@@ -21,7 +21,7 @@ namespace ComputerStore.BusinessLogicLayer.Validation
 
         protected override bool ValidateReferences(Supplier item)
         {
-            return !_supplyes.GetAll().Where(supply => supply.SupplierId == item.Id).Any();
+            return !_supplies.GetAll().Any(supply => supply.SupplierId == item.Id);
         }
     }
 }
