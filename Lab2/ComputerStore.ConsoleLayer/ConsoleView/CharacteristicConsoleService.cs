@@ -45,8 +45,6 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
                             break;
                         case 4:
                             return;
-                        default:
-                            break;
                     }
                 }
                 catch (ValidationException e)

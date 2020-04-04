@@ -9,7 +9,7 @@ namespace ComputerStore.DataAccessLayer.Repo
 {
     public class StoreRepository<T> : IRepository<T> where T : class, IEntity
     {
-        private bool disposed = false;
+        private bool _disposed;
         private readonly StoreContext _context;
 
         public StoreRepository(StoreContext context)
@@ -59,13 +59,13 @@ namespace ComputerStore.DataAccessLayer.Repo
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposed)
+            if (!_disposed)
             {
                 if (disposing)
                 {
                     _context.Dispose();
                 }
-                disposed = true;
+                _disposed = true;
             }
         }
     }

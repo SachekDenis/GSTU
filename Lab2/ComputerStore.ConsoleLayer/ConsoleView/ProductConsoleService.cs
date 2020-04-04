@@ -13,7 +13,6 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
         private readonly CharacteristicManager _characteristicManager;
         private readonly BuyerManager _buyerManager;
         private readonly OrderManager _orderManager;
-        private readonly ConsolePrinter _printer;
         private int _productId;
 
         public ProductConsoleService(ProductManager productManager,
@@ -27,7 +26,6 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             _characteristicManager = characteristicManager;
             _orderManager = orderManager;
             _buyerManager = buyerManager;
-            _printer = new ConsolePrinter();
         }
 
         public void StartConsoleLoop(int productId)
@@ -50,8 +48,6 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
                             break;
                         case 2:
                             return;
-                        default:
-                            break;
                     }
                 }
                 catch (ValidationException e)

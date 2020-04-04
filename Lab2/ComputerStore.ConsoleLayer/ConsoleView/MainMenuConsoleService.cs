@@ -68,8 +68,10 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
                                 _orderConsoleService.StartConsoleLoop();
                             }
                             break;
-                        default:
-                            break;
+                        case 7:
+                            {
+                                return;
+                            }
                     }
                 }
                 catch (Exception e)
@@ -88,6 +90,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             Console.WriteLine("4. Categories");
             Console.WriteLine("5. Products");
             Console.WriteLine("6. Orders");
+            Console.WriteLine("7. Exit");
         }
     }
 }
