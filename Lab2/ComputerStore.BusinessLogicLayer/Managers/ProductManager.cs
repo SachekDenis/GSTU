@@ -63,7 +63,6 @@ namespace ComputerStore.BusinessLogicLayer.Managers
                 .ForEach(field => _fieldValidator.Delete(field.Id));
 
             _productValidator.Delete(id);
-
         }
 
         public void Update(ProductDto productDto)

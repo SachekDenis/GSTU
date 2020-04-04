@@ -22,6 +22,7 @@ namespace ComputerStore.BusinessLogicLayer.Managers
         {
             var category = _mapper.Map<Category>(categoryDto);
             _validator.Add(category);
+            categoryDto.Id = category.Id;
         }
 
         public void Delete(int id)

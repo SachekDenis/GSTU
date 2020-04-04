@@ -114,8 +114,6 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
                 _buyerManager.Delete(buyerDto.Id);
                 throw;
             }
-
-
         }
 
         private void PrintAll()
@@ -153,6 +151,5 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             Console.WriteLine("1. Buy");
             Console.WriteLine("2. Back");
         }
-
     }
 }

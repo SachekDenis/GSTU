@@ -44,6 +44,5 @@ namespace ComputerStore.BusinessLogicLayer.Managers
         {
             return _mapper.Map<SupplierDto>(_validator.GetById(id));
         }
-
     }
 }
