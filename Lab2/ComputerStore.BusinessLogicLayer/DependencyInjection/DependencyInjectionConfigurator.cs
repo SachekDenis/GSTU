@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Reflection;
+using AutoMapper;
 using ComputerStore.BusinessLogicLayer.MapperProfile;
 using ComputerStore.DataAccessLayer.Context;
 using ComputerStore.DataAccessLayer.Repo;
@@ -6,9 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System.Reflection;
 
-namespace ComputerStore.ConsoleLayer
+namespace ComputerStore.BusinessLogicLayer.DependencyInjection
 {
     public static class DependencyInjectionConfigurator
     {

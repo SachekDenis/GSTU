@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.IO;
+using ComputerStore.BusinessLogicLayer.DependencyInjection;
 
 namespace ComputerStore.ConsoleLayer
 {
