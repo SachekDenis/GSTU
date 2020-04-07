@@ -1,8 +1,8 @@
-﻿using ComputerStore.ConsoleLayer.ConsoleView;
+﻿using System.IO;
+using ComputerStore.BusinessLogicLayer.DependencyInjection;
+using ComputerStore.ConsoleLayer.ConsoleView;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.IO;
-using ComputerStore.BusinessLogicLayer.DependencyInjection;
 
 namespace ComputerStore.ConsoleLayer
 {
@@ -18,7 +18,7 @@ namespace ComputerStore.ConsoleLayer
             var services = DependencyInjectionConfigurator.Configure(config);
 
             var mainMenu = services.GetService<MainMenuConsoleService>();
-            mainMenu.StartMainLoop();
+            mainMenu.StartConsoleLoop();
         }
     }
 }

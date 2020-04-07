@@ -1,23 +1,22 @@
-﻿using ComputerStore.BusinessLogicLayer.Exception;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using ComputerStore.BusinessLogicLayer.Exception;
 using ComputerStore.BusinessLogicLayer.Managers;
 using ComputerStore.BusinessLogicLayer.Models;
 using ComputerStore.ConsoleLayer.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace ComputerStore.ConsoleLayer.ConsoleView
 {
-    class ProductListConsoleService
+    internal class ProductListConsoleService:IConsoleService
     {
-        private readonly ProductManager _productManager;
-        private readonly ManufacturerManager _manufacturerManager;
-        private readonly CharacteristicManager _characteristicManager;
-        private readonly SupplyManager _supplyManager;
-        private readonly SupplierManager _supplierManager;
         private readonly CategoryManager _categoryManager;
-        private readonly ConsolePrinter _printer;
+        private readonly CharacteristicManager _characteristicManager;
+        private readonly ManufacturerManager _manufacturerManager;
         private readonly ProductConsoleService _productConsoleService;
+        private readonly ProductManager _productManager;
+        private readonly SupplierManager _supplierManager;
+        private readonly SupplyManager _supplyManager;
 
         public ProductListConsoleService(ProductManager productManager,
             CategoryManager categoryManager,
@@ -34,7 +33,6 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             _characteristicManager = characteristicManager;
             _supplyManager = supplyManager;
             _supplierManager = supplierManager;
-            _printer = new ConsolePrinter();
         }
 
         public void StartConsoleLoop()
@@ -52,30 +50,34 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
                     switch (menuTab)
                     {
                         case 1:
+                        {
+                            Console.WriteLine("Enter Id of product");
+                            var productId = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+
+                            if (_productManager.GetById(productId) == null)
                             {
-                                Console.WriteLine("Enter Id of product");
-                                var productId = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
-
-                                if (_productManager.GetById(productId) == null)
-                                    throw new InvalidOperationException();
-
-                                _productConsoleService.StartConsoleLoop(productId);
+                                throw new InvalidOperationException();
                             }
+
+                            _productConsoleService.ProductId = productId;
+
+                            _productConsoleService.StartConsoleLoop();
+                        }
                             break;
                         case 2:
-                            {
-                                Add();
-                            }
+                        {
+                            Add();
+                        }
                             break;
                         case 3:
-                            {
-                                Update();
-                            }
+                        {
+                            Update();
+                        }
                             break;
                         case 4:
-                            {
-                                Delete();
-                            }
+                        {
+                            Delete();
+                        }
                             break;
                         case 5:
                             return;
@@ -97,26 +99,26 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
         private void PrintAll()
         {
             var categories = _categoryManager.GetAll();
-            var items = _productManager.GetAll().Select(item => new ProductListViewModel()
+            var items = _productManager.GetAll().Select(item => new ProductListViewModel
             {
                 Id = item.Id,
                 Category = categories.First(category => category.Id == item.CategoryId).Name,
                 Name = item.Name
             });
 
-            _printer.WriteCollectionAsTable(items);
+            items.WriteCollectionAsTable();
         }
 
         private void Add()
         {
-            _printer.WriteCollectionAsTable(_supplierManager.GetAll());
+            _supplierManager.GetAll().WriteCollectionAsTable();
 
             Console.WriteLine("Enter Id of manufacturer");
 
-            var supplyDto = new SupplyDto
+            var supplyDto = new Supply
             {
                 Date = DateTime.Now,
-                SupplierId = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException()),
+                SupplierId = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException())
             };
 
             var product = CreateModel();
@@ -132,8 +134,6 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
                 _supplyManager.Delete(supplyDto.Id);
                 throw;
             }
-
-
         }
 
         private void Delete()
@@ -143,7 +143,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             _productManager.Delete(id);
         }
 
-        private ProductDto CreateModel()
+        private Product CreateModel()
         {
             Console.WriteLine("Enter name of product");
             var name = Console.ReadLine();
@@ -153,39 +153,41 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
 
             Console.WriteLine("Enter amount of product");
             var amount = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
-            _printer.WriteCollectionAsTable(_manufacturerManager.GetAll());
+            _manufacturerManager.GetAll().WriteCollectionAsTable();
 
             Console.WriteLine("Enter Id of manufacturer");
             var manufacturerId = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
-            _printer.WriteCollectionAsTable(_categoryManager.GetAll());
+            _categoryManager.GetAll().WriteCollectionAsTable();
 
             Console.WriteLine("Enter Id of category");
             var categoryId = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
 
-            var productDto = new ProductDto()
+            var productDto = new Product
             {
                 Name = name,
                 Price = price,
                 ManufacturerId = manufacturerId,
                 CategoryId = categoryId,
-                AmountInStorage = amount,
+                AmountInStorage = amount
             };
 
             var productCharacteristics = _characteristicManager.GetAll()
                 .Where(characteristicDto => characteristicDto.CategoryId == productDto.CategoryId).ToList();
 
-            productDto.Fields = new List<FieldDto>();
+            var fieldList = new List<Field>();
 
             productCharacteristics.ForEach(characteristic =>
             {
                 Console.WriteLine($"Enter value of characteristic {characteristic.Name}");
                 var value = Console.ReadLine();
-                productDto.Fields.Add(new FieldDto()
+                fieldList.Add(new Field
                 {
                     CharacteristicId = characteristic.Id,
                     Value = value
                 });
             });
+
+            productDto.Fields = fieldList;
 
 
             return productDto;
@@ -198,7 +200,12 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             var id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
             var productDto = CreateModel();
             productDto.Id = id;
-            productDto.Fields.ForEach(field => { field.ProductId = productDto.Id; });
+
+            var fieldList = productDto.Fields.ToList();
+
+            fieldList.ForEach(field => { field.ProductId = productDto.Id; });
+
+            productDto.Fields = fieldList;
 
             _productManager.Update(productDto);
         }

@@ -2,14 +2,14 @@
 
 namespace ComputerStore.ConsoleLayer.ConsoleView
 {
-    internal class MainMenuConsoleService
+    internal class MainMenuConsoleService:IConsoleService
     {
-        private readonly ManufacturerConsoleService _manufacturerConsoleService;
-        private readonly SupplierConsoleService _supplierConsoleService;
         private readonly CategoryConsoleService _categoryConsoleService;
         private readonly CharacteristicConsoleService _characteristicConsoleService;
-        private readonly ProductListConsoleService _productListConsoleService;
+        private readonly ManufacturerConsoleService _manufacturerConsoleService;
         private readonly OrderConsoleService _orderConsoleService;
+        private readonly ProductListConsoleService _productListConsoleService;
+        private readonly SupplierConsoleService _supplierConsoleService;
 
         public MainMenuConsoleService(ManufacturerConsoleService manufacturerConsoleService,
             SupplierConsoleService supplierConsoleService,
@@ -26,7 +26,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             _characteristicConsoleService = characteristicConsoleService;
         }
 
-        public void StartMainLoop()
+        public void StartConsoleLoop()
         {
             while (true)
             {
@@ -39,39 +39,39 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
                     switch (menuTab)
                     {
                         case 1:
-                            {
-                                _manufacturerConsoleService.StartConsoleLoop();
-                            }
+                        {
+                            _manufacturerConsoleService.StartConsoleLoop();
+                        }
                             break;
                         case 2:
-                            {
-                                _supplierConsoleService.StartConsoleLoop();
-                            }
+                        {
+                            _supplierConsoleService.StartConsoleLoop();
+                        }
                             break;
                         case 3:
-                            {
-                                _characteristicConsoleService.StartConsoleLoop();
-                            }
+                        {
+                            _characteristicConsoleService.StartConsoleLoop();
+                        }
                             break;
                         case 4:
-                            {
-                                _categoryConsoleService.StartConsoleLoop();
-                            }
+                        {
+                            _categoryConsoleService.StartConsoleLoop();
+                        }
                             break;
                         case 5:
-                            {
-                                _productListConsoleService.StartConsoleLoop();
-                            }
+                        {
+                            _productListConsoleService.StartConsoleLoop();
+                        }
                             break;
                         case 6:
-                            {
-                                _orderConsoleService.StartConsoleLoop();
-                            }
+                        {
+                            _orderConsoleService.StartConsoleLoop();
+                        }
                             break;
                         case 7:
-                            {
-                                return;
-                            }
+                        {
+                            return;
+                        }
                     }
                 }
                 catch (Exception e)

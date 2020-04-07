@@ -18,20 +18,20 @@ namespace ComputerStore.BusinessLogicLayer.DependencyInjection
             var consoleAssembly = Assembly.Load("ComputerStore.ConsoleLayer");
 
             return new ServiceCollection()
-            .AddDbContext<StoreContext>(options =>
-                options.UseSqlServer(config.GetConnectionString("StoreConnection")))
-            .Scan(scan => scan
-                .FromAssemblies(businessAssembly, consoleAssembly)
-                .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Manager")))
-                .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Validator")))
-                .AddClasses(classes => classes.Where(type => type.Name.EndsWith("ConsoleService")))
-                .AsSelf()
-                .WithTransientLifetime())
-            .AddSingleton(config)
-            .AddAutoMapper(typeof(StoreProfile))
-            .AddScoped(typeof(IRepository<>), typeof(StoreRepository<>))
-            .AddLogging(loggingBuilder => loggingBuilder.AddFile("Logs/StoreApp-{Date}.txt"))
-            .BuildServiceProvider();
+                .AddDbContext<StoreContext>(options =>
+                    options.UseSqlServer(config.GetConnectionString("StoreConnection")))
+                .Scan(scan => scan
+                    .FromAssemblies(businessAssembly, consoleAssembly)
+                    .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Manager")))
+                    .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Validator")))
+                    .AddClasses(classes => classes.Where(type => type.Name.EndsWith("ConsoleService")))
+                    .AsSelf()
+                    .WithTransientLifetime())
+                .AddSingleton(config)
+                .AddAutoMapper(typeof(StoreProfile))
+                .AddScoped(typeof(IRepository<>), typeof(StoreRepository<>))
+                .AddLogging(loggingBuilder => loggingBuilder.AddFile("Logs/StoreApp-{Date}.txt"))
+                .BuildServiceProvider();
         }
     }
 }

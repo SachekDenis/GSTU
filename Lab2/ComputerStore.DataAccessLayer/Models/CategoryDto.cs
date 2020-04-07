@@ -1,8 +1,8 @@
 ﻿namespace ComputerStore.DataAccessLayer.Models
 {
-    public class Category : IEntity
+    public class CategoryDto : IEntity
     {
-        public int Id { get; set; }
         public string Name { get; set; }
+        public int Id { get; set; }
     }
 }

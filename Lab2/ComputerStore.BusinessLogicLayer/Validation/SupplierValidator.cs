@@ -1,27 +1,15 @@
-﻿using ComputerStore.DataAccessLayer.Models;
-using ComputerStore.DataAccessLayer.Repo;
-using System.Linq;
+﻿using System.Text.RegularExpressions;
+using ComputerStore.DataAccessLayer.Models;
 
 namespace ComputerStore.BusinessLogicLayer.Validation
 {
-    public class SupplierValidator : Validator<Supplier>
+    public class SupplierValidator : Validator<SupplierDto>
     {
-        private readonly IRepository<Supply> _supplies;
-        public SupplierValidator(IRepository<Supplier> items, IRepository<Supply> supplies) : base(items)
-        {
-            _supplies = supplies;
-        }
-
-        protected override bool ValidateProperties(Supplier item)
+        public override bool Validate(SupplierDto item)
         {
             return !(string.IsNullOrEmpty(item.Name)
-                || string.IsNullOrEmpty(item.Phone)
-                || string.IsNullOrEmpty(item.Address));
-        }
-
-        protected override bool ValidateReferences(Supplier item)
-        {
-            return !_supplies.GetAll().Any(supply => supply.SupplierId == item.Id);
+                     || !Regex.Match(item.Phone, RegexHelper.PhoneRegex).Success
+                     || string.IsNullOrEmpty(item.Address));
         }
     }
 }

@@ -1,23 +1,22 @@
-﻿using ComputerStore.BusinessLogicLayer.Exception;
+﻿using System;
+using System.Linq;
+using ComputerStore.BusinessLogicLayer.Exception;
 using ComputerStore.BusinessLogicLayer.Managers;
 using ComputerStore.BusinessLogicLayer.Models;
 using ComputerStore.ConsoleLayer.ViewModels;
-using System;
-using System.Linq;
 
 namespace ComputerStore.ConsoleLayer.ConsoleView
 {
-    public class CharacteristicConsoleService
+    public class CharacteristicConsoleService:IConsoleService
     {
-        private readonly CharacteristicManager _characteristicManager;
-        private readonly ConsolePrinter _printer;
         private readonly CategoryManager _categoryManager;
+        private readonly CharacteristicManager _characteristicManager;
 
-        public CharacteristicConsoleService(CharacteristicManager characteristicManager, CategoryManager categoryManager)
+        public CharacteristicConsoleService(CharacteristicManager characteristicManager,
+            CategoryManager categoryManager)
         {
             _characteristicManager = characteristicManager;
             _categoryManager = categoryManager;
-            _printer = new ConsolePrinter();
         }
 
         public void StartConsoleLoop()
@@ -71,12 +70,12 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
                     CharacteristicName = item.Name
                 }).ToList();
 
-            _printer.WriteCollectionAsTable(items);
+            items.WriteCollectionAsTable();
         }
 
         private void Delete()
         {
-            int id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+            var id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
             _characteristicManager.Delete(id);
         }
 
@@ -96,15 +95,15 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             _characteristicManager.Update(characteristicDto);
         }
 
-        private CharacteristicDto CreateModel()
+        private Characteristic CreateModel()
         {
             Console.WriteLine("Enter name of characteristic");
             var name = Console.ReadLine();
-            _printer.WriteCollectionAsTable(_categoryManager.GetAll());
+            _categoryManager.GetAll().WriteCollectionAsTable();
             Console.WriteLine("Enter Id of category");
             var categoryId = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
 
-            var characteristicDto = new CharacteristicDto
+            var characteristicDto = new Characteristic
             {
                 CategoryId = categoryId,
                 Name = name

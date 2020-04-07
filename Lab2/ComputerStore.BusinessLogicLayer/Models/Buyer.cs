@@ -1,6 +1,6 @@
 ﻿namespace ComputerStore.BusinessLogicLayer.Models
 {
-    public class BuyerDto
+    public class Buyer
     {
         public int Id { get; set; }
         public string SecondName { get; set; }

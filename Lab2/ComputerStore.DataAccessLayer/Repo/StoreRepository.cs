@@ -1,16 +1,16 @@
-﻿using ComputerStore.DataAccessLayer.Context;
-using ComputerStore.DataAccessLayer.Models;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ComputerStore.DataAccessLayer.Context;
+using ComputerStore.DataAccessLayer.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ComputerStore.DataAccessLayer.Repo
 {
     public class StoreRepository<T> : IRepository<T> where T : class, IEntity
     {
-        private bool _disposed;
         private readonly StoreContext _context;
+        private bool _disposed;
 
         public StoreRepository(StoreContext context)
         {
@@ -27,7 +27,10 @@ namespace ComputerStore.DataAccessLayer.Repo
         {
             var item = _context.Find<T>(id);
             if (item == null)
+            {
                 return;
+            }
+
             _context.Remove(item);
             _context.SaveChanges();
         }
@@ -40,8 +43,8 @@ namespace ComputerStore.DataAccessLayer.Repo
         public T GetById(int id)
         {
             return _context.Set<T>()
-                         .AsNoTracking()
-                         .FirstOrDefault(e => e.Id == id);
+                .AsNoTracking()
+                .FirstOrDefault(e => e.Id == id);
         }
 
         public void Update(T item)
@@ -65,6 +68,7 @@ namespace ComputerStore.DataAccessLayer.Repo
                 {
                     _context.Dispose();
                 }
+
                 _disposed = true;
             }
         }

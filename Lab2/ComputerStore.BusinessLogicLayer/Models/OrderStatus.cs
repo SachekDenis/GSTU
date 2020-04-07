@@ -1,6 +1,6 @@
 ﻿namespace ComputerStore.BusinessLogicLayer.Models
 {
-    public enum OrderStatusDto
+    public enum OrderStatus
     {
         Created,
         Executing,

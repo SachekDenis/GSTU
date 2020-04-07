@@ -1,19 +1,17 @@
-﻿using ComputerStore.BusinessLogicLayer.Exception;
+﻿using System;
+using ComputerStore.BusinessLogicLayer.Exception;
 using ComputerStore.BusinessLogicLayer.Managers;
 using ComputerStore.BusinessLogicLayer.Models;
-using System;
 
 namespace ComputerStore.ConsoleLayer.ConsoleView
 {
-    public class SupplierConsoleService
+    public class SupplierConsoleService:IConsoleService
     {
         private readonly SupplierManager _supplierManager;
-        private readonly ConsolePrinter _printer;
 
         public SupplierConsoleService(SupplierManager supplierManager)
         {
             _supplierManager = supplierManager;
-            _printer = new ConsolePrinter();
         }
 
         public void StartConsoleLoop()
@@ -53,20 +51,19 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
                     Console.WriteLine(e.Message);
                     Console.ReadKey();
                 }
-
             }
         }
 
         private void PrintAll()
         {
             var items = _supplierManager.GetAll();
-            _printer.WriteCollectionAsTable(items);
+            items.WriteCollectionAsTable();
         }
 
         private void Delete()
         {
             Console.WriteLine("Enter Id of supplier to delete");
-            int id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+            var id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
             _supplierManager.Delete(id);
         }
 
@@ -86,7 +83,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             _supplierManager.Update(supplierDto);
         }
 
-        private static SupplierDto CreateModel()
+        private static Supplier CreateModel()
         {
             Console.WriteLine("Enter supplier name");
             var name = Console.ReadLine();
@@ -95,7 +92,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             Console.WriteLine("Enter supplier phone");
             var phone = Console.ReadLine();
 
-            var supplierDto = new SupplierDto()
+            var supplierDto = new Supplier
             {
                 Name = name,
                 Address = address,

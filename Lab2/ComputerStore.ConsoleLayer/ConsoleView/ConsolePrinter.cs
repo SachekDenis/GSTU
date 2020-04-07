@@ -1,11 +1,11 @@
-﻿using ConsoleTables;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using ConsoleTables;
 
 namespace ComputerStore.ConsoleLayer.ConsoleView
 {
-    internal class ConsolePrinter
+    public static class ConsolePrinter
     {
-        public void WriteCollectionAsTable<T>(IEnumerable<T> items)
+        public static void WriteCollectionAsTable<T>(this IEnumerable<T> items)
         {
             ConsoleTable.From(items).Write();
         }

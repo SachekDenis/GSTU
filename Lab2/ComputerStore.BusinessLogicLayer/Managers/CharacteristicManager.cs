@@ -1,48 +1,67 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using System.Linq;
+using AutoMapper;
+using ComputerStore.BusinessLogicLayer.Exception;
 using ComputerStore.BusinessLogicLayer.Models;
 using ComputerStore.BusinessLogicLayer.Validation;
 using ComputerStore.DataAccessLayer.Models;
-using System.Collections.Generic;
-using System.Linq;
+using ComputerStore.DataAccessLayer.Repo;
 
 namespace ComputerStore.BusinessLogicLayer.Managers
 {
-    public class CharacteristicManager : IManager<CharacteristicDto>
+    public class CharacteristicManager : IManager<Characteristic>
     {
+        private readonly IRepository<CharacteristicDto> _items;
         private readonly IMapper _mapper;
-        private readonly Validator<Characteristic> _validator;
+        private readonly Validator<CharacteristicDto> _validator;
 
-        public CharacteristicManager(IMapper mapper, CharacteristicValidator characteristicValidator)
+        public CharacteristicManager(IMapper mapper,
+            CharacteristicValidator characteristicValidator,
+            IRepository<CharacteristicDto> items)
         {
             _mapper = mapper;
             _validator = characteristicValidator;
+            _items = items;
         }
 
-        public void Add(CharacteristicDto characteristicDto)
+        public void Add(Characteristic characteristic)
         {
-            var characteristic = _mapper.Map<Characteristic>(characteristicDto);
-            _validator.Add(characteristic);
+            var characteristicDto = _mapper.Map<CharacteristicDto>(characteristic);
+
+            if (!_validator.Validate(characteristicDto))
+            {
+                throw new ValidationException($"{nameof(characteristicDto)} has invalid data");
+            }
+
+            _items.Add(characteristicDto);
+            characteristic.Id = characteristicDto.Id;
         }
 
         public void Delete(int id)
         {
-            _validator.Delete(id);
+            _items.Delete(id);
         }
 
-        public void Update(CharacteristicDto characteristicDto)
+        public void Update(Characteristic characteristic)
         {
-            var characteristic = _mapper.Map<Characteristic>(characteristicDto);
-            _validator.Update(characteristic);
+            var characteristicDto = _mapper.Map<CharacteristicDto>(characteristic);
+
+            if (!_validator.Validate(characteristicDto))
+            {
+                throw new ValidationException($"{nameof(characteristicDto)} has invalid data");
+            }
+
+            _items.Update(characteristicDto);
         }
 
-        public IEnumerable<CharacteristicDto> GetAll()
+        public IEnumerable<Characteristic> GetAll()
         {
-            return _validator.GetAll().Select(item => _mapper.Map<CharacteristicDto>(item));
+            return _items.GetAll().Select(item => _mapper.Map<Characteristic>(item));
         }
 
-        public CharacteristicDto GetById(int id)
+        public Characteristic GetById(int id)
         {
-            return _mapper.Map<CharacteristicDto>(_validator.GetById(id));
+            return _mapper.Map<Characteristic>(_items.GetById(id));
         }
     }
 }

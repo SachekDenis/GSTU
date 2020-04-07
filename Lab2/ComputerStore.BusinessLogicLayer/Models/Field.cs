@@ -1,6 +1,6 @@
 ﻿namespace ComputerStore.BusinessLogicLayer.Models
 {
-    public class FieldDto
+    public class Field
     {
         public int Id { get; set; }
         public int ProductId { get; set; }

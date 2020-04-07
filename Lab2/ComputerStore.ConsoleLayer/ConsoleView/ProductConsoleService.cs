@@ -1,19 +1,20 @@
-﻿using ComputerStore.BusinessLogicLayer.Exception;
+﻿using System;
+using System.Linq;
+using ComputerStore.BusinessLogicLayer.Exception;
 using ComputerStore.BusinessLogicLayer.Managers;
 using ComputerStore.BusinessLogicLayer.Models;
 using ComputerStore.ConsoleLayer.ViewModels;
-using System;
 
 namespace ComputerStore.ConsoleLayer.ConsoleView
 {
-    public class ProductConsoleService
+    public class ProductConsoleService:IConsoleService
     {
-        private readonly ProductManager _productManager;
-        private readonly ManufacturerManager _manufacturerManager;
-        private readonly CharacteristicManager _characteristicManager;
         private readonly BuyerManager _buyerManager;
+        private readonly CharacteristicManager _characteristicManager;
+        private readonly ManufacturerManager _manufacturerManager;
         private readonly OrderManager _orderManager;
-        private int _productId;
+        private readonly ProductManager _productManager;
+        public int ProductId { get; set; }
 
         public ProductConsoleService(ProductManager productManager,
             ManufacturerManager manufacturerManager,
@@ -28,9 +29,8 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             _buyerManager = buyerManager;
         }
 
-        public void StartConsoleLoop(int productId)
+        public void StartConsoleLoop()
         {
-            _productId = productId;
             while (true)
             {
                 try
@@ -79,7 +79,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             var zipCode = Console.ReadLine();
 
 
-            var buyerDto = new BuyerDto()
+            var buyerDto = new Buyer
             {
                 Address = address,
                 FirstName = firstName,
@@ -94,16 +94,16 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             Console.WriteLine("Enter amount");
             var amount = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
 
-            var orderDto = new OrderDto()
+            var orderDto = new Order
             {
-                ProductId = _productId,
+                ProductId = ProductId,
                 BuyerId = buyerDto.Id,
                 Amount = amount
             };
 
             try
             {
-                var productDto = _productManager.GetById(_productId);
+                var productDto = _productManager.GetById(ProductId);
                 productDto.AmountInStorage -= amount;
 
                 _productManager.Update(productDto);
@@ -118,14 +118,14 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
 
         private void PrintAll()
         {
-            var productDto = _productManager.GetById(_productId);
-            var productViewModel = new ProductViewModel()
+            var productDto = _productManager.GetById(ProductId);
+            var productViewModel = new ProductViewModel
             {
                 Amount = productDto.AmountInStorage,
                 Fields = productDto.Fields,
                 Manufacturer = _manufacturerManager.GetById(productDto.ManufacturerId).Name,
                 Name = productDto.Name,
-                Price = productDto.Price,
+                Price = productDto.Price
             };
 
             Console.Write("Product name: ");
@@ -137,7 +137,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             Console.Write("Manufacturer: ");
             Console.WriteLine(productViewModel.Manufacturer);
 
-            productViewModel.Fields.ForEach(field =>
+            productViewModel.Fields.ToList().ForEach(field =>
             {
                 Console.Write(_characteristicManager.GetById(field.CharacteristicId).Name);
                 Console.Write(":");

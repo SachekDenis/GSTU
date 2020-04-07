@@ -1,31 +1,12 @@
 ﻿using ComputerStore.DataAccessLayer.Models;
-using ComputerStore.DataAccessLayer.Repo;
-using System.Linq;
 
 namespace ComputerStore.BusinessLogicLayer.Validation
 {
-    public class CharacteristicValidator : Validator<Characteristic>
+    public class CharacteristicValidator : Validator<CharacteristicDto>
     {
-        private readonly IRepository<Category> _categories;
-        private readonly IRepository<Field> _fields;
-        public CharacteristicValidator(IRepository<Characteristic> items,
-            IRepository<Category> categories,
-            IRepository<Field> fields
-            ) : base(items)
+        public override bool Validate(CharacteristicDto item)
         {
-            _categories = categories;
-            _fields = fields;
-        }
-
-        protected override bool ValidateProperties(Characteristic item)
-        {
-            return !(string.IsNullOrEmpty(item.Name)
-                || !_categories.GetAll().Any(category => category.Id == item.CategoryId));
-        }
-
-        protected override bool ValidateReferences(Characteristic item)
-        {
-            return !_fields.GetAll().Any(field => field.CharacteristicId == item.Id);
+            return !string.IsNullOrEmpty(item.Name);
         }
     }
 }

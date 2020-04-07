@@ -1,49 +1,67 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using System.Linq;
+using AutoMapper;
+using ComputerStore.BusinessLogicLayer.Exception;
 using ComputerStore.BusinessLogicLayer.Models;
 using ComputerStore.BusinessLogicLayer.Validation;
 using ComputerStore.DataAccessLayer.Models;
-using System.Collections.Generic;
-using System.Linq;
+using ComputerStore.DataAccessLayer.Repo;
 
 namespace ComputerStore.BusinessLogicLayer.Managers
 {
-    public class SupplyManager : IManager<SupplyDto>
+    public class SupplyManager : IManager<Supply>
     {
+        private readonly IRepository<SupplyDto> _items;
         private readonly IMapper _mapper;
-        private readonly Validator<Supply> _validator;
+        private readonly Validator<SupplyDto> _validator;
 
-        public SupplyManager(IMapper mapper, SupplyValidator supplyValidator)
+        public SupplyManager(IMapper mapper,
+            SupplyValidator supplyValidator,
+            IRepository<SupplyDto> items)
         {
             _mapper = mapper;
             _validator = supplyValidator;
+            _items = items;
         }
 
-        public void Add(SupplyDto supplyDto)
+        public void Add(Supply supply)
         {
-            var supply = _mapper.Map<Supply>(supplyDto);
-            _validator.Add(supply);
-            supplyDto.Id = supply.Id;
+            var supplyDto = _mapper.Map<SupplyDto>(supply);
+
+            if (!_validator.Validate(supplyDto))
+            {
+                throw new ValidationException($"{nameof(supplyDto)} has invalid data");
+            }
+
+            _items.Add(supplyDto);
+            supply.Id = supplyDto.Id;
         }
 
         public void Delete(int id)
         {
-            _validator.Delete(id);
+            _items.Delete(id);
         }
 
-        public void Update(SupplyDto supplyDto)
+        public void Update(Supply supply)
         {
-            var supply = _mapper.Map<Supply>(supplyDto);
-            _validator.Update(supply);
+            var supplyDto = _mapper.Map<SupplyDto>(supply);
+
+            if (!_validator.Validate(supplyDto))
+            {
+                throw new ValidationException($"{nameof(supplyDto)} has invalid data");
+            }
+
+            _items.Update(supplyDto);
         }
 
-        public IEnumerable<SupplyDto> GetAll()
+        public IEnumerable<Supply> GetAll()
         {
-            return _validator.GetAll().Select(item => _mapper.Map<SupplyDto>(item));
+            return _items.GetAll().Select(item => _mapper.Map<Supply>(item));
         }
 
-        public SupplyDto GetById(int id)
+        public Supply GetById(int id)
         {
-            return _mapper.Map<SupplyDto>(_validator.GetById(id));
+            return _mapper.Map<Supply>(_items.GetById(id));
         }
     }
 }

@@ -1,19 +1,17 @@
-﻿using ComputerStore.BusinessLogicLayer.Exception;
+﻿using System;
+using ComputerStore.BusinessLogicLayer.Exception;
 using ComputerStore.BusinessLogicLayer.Managers;
 using ComputerStore.BusinessLogicLayer.Models;
-using System;
 
 namespace ComputerStore.ConsoleLayer.ConsoleView
 {
-    internal class ManufacturerConsoleService
+    internal class ManufacturerConsoleService:IConsoleService
     {
         private readonly ManufacturerManager _manufacturerManager;
-        private readonly ConsolePrinter _printer;
 
         public ManufacturerConsoleService(ManufacturerManager manufacturerManager)
         {
             _manufacturerManager = manufacturerManager;
-            _printer = new ConsolePrinter();
         }
 
         public void StartConsoleLoop()
@@ -59,7 +57,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
         private void PrintAll()
         {
             var items = _manufacturerManager.GetAll();
-            _printer.WriteCollectionAsTable(items);
+            items.WriteCollectionAsTable();
         }
 
         private void Delete()
@@ -85,17 +83,17 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             _manufacturerManager.Update(manufacturerDto);
         }
 
-        private static ManufacturerDto CreateModel()
+        private static Manufacturer CreateModel()
         {
             Console.WriteLine("Enter name of manufacturer");
             var name = Console.ReadLine();
             Console.WriteLine("Enter country of manufacturer");
             var country = Console.ReadLine();
 
-            var manufacturerDto = new ManufacturerDto()
+            var manufacturerDto = new Manufacturer
             {
                 Name = name,
-                Country = country,
+                Country = country
             };
 
             return manufacturerDto;

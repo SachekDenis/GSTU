@@ -1,6 +1,6 @@
 ﻿namespace ComputerStore.ConsoleLayer.ViewModels
 {
-    class ProductListViewModel
+    internal class ProductListViewModel
     {
         public int Id { get; set; }
 

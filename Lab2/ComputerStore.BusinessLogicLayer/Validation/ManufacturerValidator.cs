@@ -1,28 +1,13 @@
 ﻿using ComputerStore.DataAccessLayer.Models;
-using ComputerStore.DataAccessLayer.Repo;
-using System.Linq;
 
 namespace ComputerStore.BusinessLogicLayer.Validation
 {
-    public class ManufacturerValidator : Validator<Manufacturer>
+    public class ManufacturerValidator : Validator<ManufacturerDto>
     {
-        private readonly IRepository<Product> _products;
-        public ManufacturerValidator(IRepository<Manufacturer> manufacturers,
-                                     IRepository<Product> products)
-                                     : base(manufacturers)
-        {
-            _products = products;
-        }
-
-        protected override bool ValidateProperties(Manufacturer item)
+        public override bool Validate(ManufacturerDto item)
         {
             return !(string.IsNullOrEmpty(item.Name)
-                || string.IsNullOrEmpty(item.Country));
-        }
-
-        protected override bool ValidateReferences(Manufacturer item)
-        {
-            return !_products.GetAll().Any(product => product.ManufacturerId == item.Id);
+                     || string.IsNullOrEmpty(item.Country));
         }
     }
 }

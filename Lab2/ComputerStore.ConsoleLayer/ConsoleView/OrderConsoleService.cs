@@ -1,20 +1,19 @@
-﻿using ComputerStore.BusinessLogicLayer.Exception;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using ComputerStore.BusinessLogicLayer.Exception;
 using ComputerStore.BusinessLogicLayer.Managers;
 using ComputerStore.BusinessLogicLayer.Models;
 using ComputerStore.ConsoleLayer.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace ComputerStore.ConsoleLayer.ConsoleView
 {
-    public class OrderConsoleService
+    public class OrderConsoleService:IConsoleService
     {
-        private readonly OrderManager _orderManager;
-        private readonly ProductManager _productManager;
-        private readonly ConsolePrinter _printer;
         private readonly BuyerManager _buyerManager;
+        private readonly OrderManager _orderManager;
         private readonly ProductConsoleService _productConsoleService;
+        private readonly ProductManager _productManager;
 
         public OrderConsoleService(OrderManager orderManager,
             ProductManager productManager,
@@ -25,7 +24,6 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             _productManager = productManager;
             _buyerManager = buyerManager;
             _productConsoleService = productConsoleService;
-            _printer = new ConsolePrinter();
         }
 
         public void StartConsoleLoop()
@@ -43,19 +41,19 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
                     switch (menuTab)
                     {
                         case 1:
-                            {
-                                PrintBuyerInformation();
-                            }
+                        {
+                            PrintBuyerInformation();
+                        }
                             break;
                         case 2:
-                            {
-                                PrintProductInformation();
-                            }
+                        {
+                            PrintProductInformation();
+                        }
                             break;
                         case 3:
-                            {
-                                ChangeStatus();
-                            }
+                        {
+                            ChangeStatus();
+                        }
                             break;
                         case 4:
                             return;
@@ -80,7 +78,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
 
             var buyerId = _orderManager.GetById(orderId).BuyerId;
 
-            _printer.WriteCollectionAsTable(new List<BuyerDto> { _buyerManager.GetById(buyerId) });
+            new List<Buyer> {_buyerManager.GetById(buyerId)}.WriteCollectionAsTable();
 
             Console.ReadKey();
         }
@@ -91,7 +89,9 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
 
             var productId = _orderManager.GetById(orderId).ProductId;
 
-            _productConsoleService.StartConsoleLoop(productId);
+            _productConsoleService.ProductId = productId;
+
+            _productConsoleService.StartConsoleLoop();
         }
 
         private void ChangeStatus()
@@ -105,13 +105,11 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             Console.WriteLine("2. Executing");
             Console.WriteLine("3. Completed");
 
-            var newStatus = (OrderStatusDto)(int.Parse(Console.ReadLine() ?? throw new InvalidOperationException()) - 1);
+            var newStatus = (OrderStatus) (int.Parse(Console.ReadLine() ?? throw new InvalidOperationException()) - 1);
 
             order.OrderStatus = newStatus;
 
             _orderManager.Update(order);
-
-
         }
 
         private int ReadId()
@@ -124,7 +122,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
 
         private void PrintAll()
         {
-            var items = _orderManager.GetAll().ToList()
+            var items = _orderManager.GetAll()
                 .Select(item => new OrderViewModel
                 {
                     ProductName = _productManager.GetById(item.ProductId).Name,
@@ -134,7 +132,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
                     Id = item.Id
                 }).ToList();
 
-            _printer.WriteCollectionAsTable(items);
+            items.WriteCollectionAsTable();
         }
 
         private static void PrintMenu()

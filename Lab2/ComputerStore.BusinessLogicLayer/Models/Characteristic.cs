@@ -1,6 +1,6 @@
-﻿namespace ComputerStore.DataAccessLayer.Models
+﻿namespace ComputerStore.BusinessLogicLayer.Models
 {
-    public class Characteristic : IEntity
+    public class Characteristic
     {
         public int Id { get; set; }
         public int CategoryId { get; set; }

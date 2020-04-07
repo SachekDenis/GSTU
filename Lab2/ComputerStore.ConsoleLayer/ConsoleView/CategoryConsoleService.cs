@@ -1,19 +1,17 @@
-﻿using ComputerStore.BusinessLogicLayer.Exception;
+﻿using System;
+using ComputerStore.BusinessLogicLayer.Exception;
 using ComputerStore.BusinessLogicLayer.Managers;
 using ComputerStore.BusinessLogicLayer.Models;
-using System;
 
 namespace ComputerStore.ConsoleLayer.ConsoleView
 {
-    public class CategoryConsoleService
+    public class CategoryConsoleService:IConsoleService
     {
         private readonly CategoryManager _categoryManager;
-        private readonly ConsolePrinter _printer;
 
         public CategoryConsoleService(CategoryManager categoryManager)
         {
             _categoryManager = categoryManager;
-            _printer = new ConsolePrinter();
         }
 
         public void StartConsoleLoop()
@@ -59,7 +57,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
         private void PrintAll()
         {
             var items = _categoryManager.GetAll();
-            _printer.WriteCollectionAsTable(items);
+            items.WriteCollectionAsTable();
         }
 
         private void Delete()
@@ -85,14 +83,14 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             _categoryManager.Update(categoryDto);
         }
 
-        private static CategoryDto CreateModel()
+        private static Category CreateModel()
         {
             Console.WriteLine("Enter category name");
             var name = Console.ReadLine();
 
-            var categoryDto = new CategoryDto()
+            var categoryDto = new Category
             {
-                Name = name,
+                Name = name
             };
 
             return categoryDto;

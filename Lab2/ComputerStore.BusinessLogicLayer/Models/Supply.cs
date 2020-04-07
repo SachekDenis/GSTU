@@ -2,7 +2,7 @@
 
 namespace ComputerStore.BusinessLogicLayer.Models
 {
-    public class SupplyDto
+    public class Supply
     {
         public int Id { get; set; }
         public int SupplierId { get; set; }

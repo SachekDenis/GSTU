@@ -1,6 +1,6 @@
-﻿namespace ComputerStore.DataAccessLayer.Models
+﻿namespace ComputerStore.BusinessLogicLayer.Models
 {
-    public class Order : IEntity
+    public class Order
     {
         public int Id { get; set; }
         public int ProductId { get; set; }

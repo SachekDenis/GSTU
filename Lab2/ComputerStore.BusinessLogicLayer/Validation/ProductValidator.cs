@@ -1,45 +1,15 @@
 ﻿using ComputerStore.DataAccessLayer.Models;
-using ComputerStore.DataAccessLayer.Repo;
-using System.Linq;
 
 namespace ComputerStore.BusinessLogicLayer.Validation
 {
-    public class ProductValidator : Validator<Product>
+    public class ProductValidator : Validator<ProductDto>
     {
-        private readonly IRepository<Order> _orders;
-        private readonly IRepository<Manufacturer> _manufacturers;
-        private readonly IRepository<Supply> _supplies;
-        private readonly IRepository<Category> _categories;
-        private readonly IRepository<Field> _fields;
-
-        public ProductValidator(IRepository<Product> products,
-            IRepository<Order> orders,
-            IRepository<Manufacturer> manufacturers,
-            IRepository<Supply> supplies,
-            IRepository<Category> categories,
-            IRepository<Field> fields) : base(products)
+        public override bool Validate(ProductDto item)
         {
-            _orders = orders;
-            _manufacturers = manufacturers;
-            _supplies = supplies;
-            _categories = categories;
-            _fields = fields;
+            return !(item.Price < 0
+                     || string.IsNullOrEmpty(item.Name)
+                     || item.AmountInStorage < 0
+                );
         }
-
-        protected override bool ValidateProperties(Product item)
-        {
-            return !(!_manufacturers.GetAll().Any(manufacturer => item.ManufacturerId == manufacturer.Id)
-                     || !_categories.GetAll().Any(category => item.CategoryId == category.Id)
-                     || item.Price < 0
-                     || string.IsNullOrEmpty(item.Name));
-        }
-
-        protected override bool ValidateReferences(Product item)
-        {
-            return !(_orders.GetAll().Any(order => order.ProductId == item.Id)
-                || _fields.GetAll().Any(field => field.ProductId == item.Id)
-                || _supplies.GetAll().Any(supply => supply.ProductId == item.Id));
-        }
-
     }
 }

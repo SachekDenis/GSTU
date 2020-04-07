@@ -1,49 +1,65 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using System.Linq;
+using AutoMapper;
+using ComputerStore.BusinessLogicLayer.Exception;
 using ComputerStore.BusinessLogicLayer.Models;
 using ComputerStore.BusinessLogicLayer.Validation;
 using ComputerStore.DataAccessLayer.Models;
-using System.Collections.Generic;
-using System.Linq;
+using ComputerStore.DataAccessLayer.Repo;
 
 namespace ComputerStore.BusinessLogicLayer.Managers
 {
-    public class OrderManager : IManager<OrderDto>
+    public class OrderManager : IManager<Order>
     {
+        private readonly IRepository<OrderDto> _items;
         private readonly IMapper _mapper;
-        private readonly Validator<Order> _validator;
+        private readonly Validator<OrderDto> _validator;
 
-        public OrderManager(IMapper mapper, OrderValidator orderValidator)
+        public OrderManager(IMapper mapper, OrderValidator orderValidator, IRepository<OrderDto> items)
         {
             _mapper = mapper;
             _validator = orderValidator;
+            _items = items;
         }
 
-        public void Add(OrderDto orderDto)
+        public void Add(Order order)
         {
-            var order = _mapper.Map<Order>(orderDto);
-            _validator.Add(order);
-            orderDto.Id = order.Id;
+            var orderDto = _mapper.Map<OrderDto>(order);
+
+            if (!_validator.Validate(orderDto))
+            {
+                throw new ValidationException($"{nameof(order)} has invalid data");
+            }
+
+            _items.Add(orderDto);
+            order.Id = orderDto.Id;
         }
 
         public void Delete(int id)
         {
-            _validator.Delete(id);
+            _items.Delete(id);
         }
 
-        public void Update(OrderDto orderDto)
+        public void Update(Order order)
         {
-            var order = _mapper.Map<Order>(orderDto);
-            _validator.Update(order);
+            var orderDto = _mapper.Map<OrderDto>(order);
+
+            if (!_validator.Validate(orderDto))
+            {
+                throw new ValidationException($"{nameof(orderDto)} has invalid data");
+            }
+
+            _items.Update(orderDto);
         }
 
-        public IEnumerable<OrderDto> GetAll()
+        public IEnumerable<Order> GetAll()
         {
-            return _validator.GetAll().Select(item => _mapper.Map<OrderDto>(item));
+            return _items.GetAll().Select(item => _mapper.Map<Order>(item));
         }
 
-        public OrderDto GetById(int id)
+        public Order GetById(int id)
         {
-            return _mapper.Map<OrderDto>(_validator.GetById(id));
+            return _mapper.Map<Order>(_items.GetById(id));
         }
     }
 }
