@@ -13,7 +13,7 @@ namespace ComputerStore.BusinessLogicLayer.Managers
     {
         private readonly IRepository<CategoryDto> _items;
         private readonly IMapper _mapper;
-        private readonly Validator<CategoryDto> _validator;
+        private readonly IValidator<CategoryDto> _validator;
 
         public CategoryManager(IMapper mapper, CategoryValidator categoryValidator, IRepository<CategoryDto> items)
         {

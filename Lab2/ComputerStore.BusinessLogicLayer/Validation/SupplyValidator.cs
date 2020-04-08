@@ -2,9 +2,9 @@
 
 namespace ComputerStore.BusinessLogicLayer.Validation
 {
-    public class SupplyValidator : Validator<SupplyDto>
+    public class SupplyValidator : IValidator<SupplyDto>
     {
-        public override bool Validate(SupplyDto item)
+        public bool Validate(SupplyDto item)
         {
             return true;
         }

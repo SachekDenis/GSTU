@@ -5,7 +5,7 @@ using ComputerStore.BusinessLogicLayer.Models;
 
 namespace ComputerStore.ConsoleLayer.ConsoleView
 {
-    public class CategoryConsoleService:IConsoleService
+    public class CategoryConsoleService:CrudConsoleService<Category>
     {
         private readonly CategoryManager _categoryManager;
 
@@ -14,7 +14,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             _categoryManager = categoryManager;
         }
 
-        public void StartConsoleLoop()
+        public override void StartConsoleLoop()
         {
             while (true)
             {
@@ -54,26 +54,26 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             }
         }
 
-        private void PrintAll()
+        protected override void PrintAll()
         {
             var items = _categoryManager.GetAll();
             items.WriteCollectionAsTable();
         }
 
-        private void Delete()
+        protected override void Delete()
         {
             Console.WriteLine("Enter Id of category to delete");
             var id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
             _categoryManager.Delete(id);
         }
 
-        private void Add()
+        protected  override void Add()
         {
             var categoryDto = CreateModel();
             _categoryManager.Add(categoryDto);
         }
 
-        private void Update()
+        protected override void Update()
         {
             Console.WriteLine("Enter Id of category to update");
             var id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
@@ -83,7 +83,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             _categoryManager.Update(categoryDto);
         }
 
-        private static Category CreateModel()
+        protected override Category CreateModel()
         {
             Console.WriteLine("Enter category name");
             var name = Console.ReadLine();
@@ -96,7 +96,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             return categoryDto;
         }
 
-        private static void PrintMenu()
+        protected override void PrintMenu()
         {
             Console.WriteLine("1. Add category");
             Console.WriteLine("2. Delete category");

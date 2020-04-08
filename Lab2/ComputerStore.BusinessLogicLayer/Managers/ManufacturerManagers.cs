@@ -13,7 +13,7 @@ namespace ComputerStore.BusinessLogicLayer.Managers
     {
         private readonly IRepository<ManufacturerDto> _items;
         private readonly IMapper _mapper;
-        private readonly Validator<ManufacturerDto> _validator;
+        private readonly IValidator<ManufacturerDto> _validator;
 
         public ManufacturerManager(IMapper mapper,
             ManufacturerValidator manufacturerValidator,

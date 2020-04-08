@@ -5,7 +5,7 @@ using ComputerStore.BusinessLogicLayer.Models;
 
 namespace ComputerStore.ConsoleLayer.ConsoleView
 {
-    internal class ManufacturerConsoleService:IConsoleService
+    internal class ManufacturerConsoleService:CrudConsoleService<Manufacturer>
     {
         private readonly ManufacturerManager _manufacturerManager;
 
@@ -14,7 +14,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             _manufacturerManager = manufacturerManager;
         }
 
-        public void StartConsoleLoop()
+        public override void StartConsoleLoop()
         {
             while (true)
             {
@@ -54,26 +54,26 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             }
         }
 
-        private void PrintAll()
+        protected override void PrintAll()
         {
             var items = _manufacturerManager.GetAll();
             items.WriteCollectionAsTable();
         }
 
-        private void Delete()
+        protected override void Delete()
         {
             Console.WriteLine("Enter Id of manufacturer for delete");
             var id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
             _manufacturerManager.Delete(id);
         }
 
-        private void Add()
+        protected override void Add()
         {
             var manufacturerDto = CreateModel();
             _manufacturerManager.Add(manufacturerDto);
         }
 
-        private void Update()
+        protected override void Update()
         {
             Console.WriteLine("Enter Id of manufacturer for update");
             var id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
@@ -83,7 +83,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             _manufacturerManager.Update(manufacturerDto);
         }
 
-        private static Manufacturer CreateModel()
+        protected override Manufacturer CreateModel()
         {
             Console.WriteLine("Enter name of manufacturer");
             var name = Console.ReadLine();
@@ -99,7 +99,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             return manufacturerDto;
         }
 
-        private static void PrintMenu()
+        protected override void PrintMenu()
         {
             Console.WriteLine("1. Add manufacturer");
             Console.WriteLine("2. Delete manufacturer");

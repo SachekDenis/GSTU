@@ -2,9 +2,9 @@
 
 namespace ComputerStore.BusinessLogicLayer.Validation
 {
-    public class ManufacturerValidator : Validator<ManufacturerDto>
+    public class ManufacturerValidator : IValidator<ManufacturerDto>
     {
-        public override bool Validate(ManufacturerDto item)
+        public bool Validate(ManufacturerDto item)
         {
             return !(string.IsNullOrEmpty(item.Name)
                      || string.IsNullOrEmpty(item.Country));

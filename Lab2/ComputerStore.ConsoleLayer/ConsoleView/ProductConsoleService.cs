@@ -7,7 +7,7 @@ using ComputerStore.ConsoleLayer.ViewModels;
 
 namespace ComputerStore.ConsoleLayer.ConsoleView
 {
-    public class ProductConsoleService:IConsoleService
+    public class ProductConsoleService:BaseConsoleService
     {
         private readonly BuyerManager _buyerManager;
         private readonly CharacteristicManager _characteristicManager;
@@ -29,7 +29,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             _buyerManager = buyerManager;
         }
 
-        public void StartConsoleLoop()
+        public override void StartConsoleLoop()
         {
             while (true)
             {
@@ -116,7 +116,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             }
         }
 
-        private void PrintAll()
+        protected override void PrintAll()
         {
             var productDto = _productManager.GetById(ProductId);
             var productViewModel = new ProductViewModel
@@ -146,7 +146,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             });
         }
 
-        private static void PrintMenu()
+        protected override void PrintMenu()
         {
             Console.WriteLine("1. Buy");
             Console.WriteLine("2. Back");

@@ -8,11 +8,12 @@ namespace ComputerStore.ConsoleLayer
 {
     internal class Program
     {
+        private const string ConfigFileName = "appsettings.json";
         private static void Main(string[] args)
         {
             var builder = new ConfigurationBuilder();
             builder.SetBasePath(Directory.GetCurrentDirectory());
-            builder.AddJsonFile("appsettings.json");
+            builder.AddJsonFile(ConfigFileName);
             var config = builder.Build();
 
             var services = DependencyInjectionConfigurator.Configure(config);

@@ -13,7 +13,7 @@ namespace ComputerStore.BusinessLogicLayer.Managers
     {
         private readonly IRepository<CharacteristicDto> _items;
         private readonly IMapper _mapper;
-        private readonly Validator<CharacteristicDto> _validator;
+        private readonly IValidator<CharacteristicDto> _validator;
 
         public CharacteristicManager(IMapper mapper,
             CharacteristicValidator characteristicValidator,

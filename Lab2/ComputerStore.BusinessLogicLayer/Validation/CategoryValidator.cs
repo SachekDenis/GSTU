@@ -2,9 +2,9 @@
 
 namespace ComputerStore.BusinessLogicLayer.Validation
 {
-    public class CategoryValidator : Validator<CategoryDto>
+    public class CategoryValidator : IValidator<CategoryDto>
     {
-        public override bool Validate(CategoryDto item)
+        public bool Validate(CategoryDto item)
         {
             return !string.IsNullOrEmpty(item.Name);
         }

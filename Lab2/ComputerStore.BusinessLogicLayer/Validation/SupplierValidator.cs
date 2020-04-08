@@ -3,12 +3,12 @@ using ComputerStore.DataAccessLayer.Models;
 
 namespace ComputerStore.BusinessLogicLayer.Validation
 {
-    public class SupplierValidator : Validator<SupplierDto>
+    public class SupplierValidator : IValidator<SupplierDto>
     {
-        public override bool Validate(SupplierDto item)
+        public bool Validate(SupplierDto item)
         {
             return !(string.IsNullOrEmpty(item.Name)
-                     || !Regex.Match(item.Phone, RegexHelper.PhoneRegex).Success
+                     || !Regex.Match(item.Phone, RegexCollection.PhoneRegex).Success
                      || string.IsNullOrEmpty(item.Address));
         }
     }

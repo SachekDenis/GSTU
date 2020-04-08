@@ -5,7 +5,7 @@ using ComputerStore.BusinessLogicLayer.Models;
 
 namespace ComputerStore.ConsoleLayer.ConsoleView
 {
-    public class SupplierConsoleService:IConsoleService
+    public class SupplierConsoleService:CrudConsoleService<Supplier>
     {
         private readonly SupplierManager _supplierManager;
 
@@ -14,7 +14,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             _supplierManager = supplierManager;
         }
 
-        public void StartConsoleLoop()
+        public override void StartConsoleLoop()
         {
             while (true)
             {
@@ -54,26 +54,26 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             }
         }
 
-        private void PrintAll()
+        protected override void PrintAll()
         {
             var items = _supplierManager.GetAll();
             items.WriteCollectionAsTable();
         }
 
-        private void Delete()
+        protected override void Delete()
         {
             Console.WriteLine("Enter Id of supplier to delete");
             var id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
             _supplierManager.Delete(id);
         }
 
-        private void Add()
+        protected override void Add()
         {
             var manufacturerDto = CreateModel();
             _supplierManager.Add(manufacturerDto);
         }
 
-        private void Update()
+        protected override void Update()
         {
             Console.WriteLine("Enter Id of supplier to delete");
             var id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
@@ -83,7 +83,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             _supplierManager.Update(supplierDto);
         }
 
-        private static Supplier CreateModel()
+        protected override Supplier CreateModel()
         {
             Console.WriteLine("Enter supplier name");
             var name = Console.ReadLine();
@@ -102,7 +102,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             return supplierDto;
         }
 
-        private static void PrintMenu()
+        protected override void PrintMenu()
         {
             Console.WriteLine("1. Add supplier");
             Console.WriteLine("2. Delete supplier");

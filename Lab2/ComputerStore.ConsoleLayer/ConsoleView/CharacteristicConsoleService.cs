@@ -7,7 +7,7 @@ using ComputerStore.ConsoleLayer.ViewModels;
 
 namespace ComputerStore.ConsoleLayer.ConsoleView
 {
-    public class CharacteristicConsoleService:IConsoleService
+    public class CharacteristicConsoleService:CrudConsoleService<Characteristic>
     {
         private readonly CategoryManager _categoryManager;
         private readonly CharacteristicManager _characteristicManager;
@@ -19,7 +19,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             _categoryManager = categoryManager;
         }
 
-        public void StartConsoleLoop()
+        public override void StartConsoleLoop()
         {
             while (true)
             {
@@ -59,7 +59,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             }
         }
 
-        private void PrintAll()
+        protected override void PrintAll()
         {
             var items = _characteristicManager.GetAll().ToList()
                 .Select(item => new CharacteristicViewModel
@@ -73,19 +73,19 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             items.WriteCollectionAsTable();
         }
 
-        private void Delete()
+        protected override void Delete()
         {
             var id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
             _characteristicManager.Delete(id);
         }
 
-        private void Add()
+        protected override void Add()
         {
             var characteristicDto = CreateModel();
             _characteristicManager.Add(characteristicDto);
         }
 
-        private void Update()
+        protected override void Update()
         {
             Console.WriteLine("Enter Id of characteristic to update");
             var id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
@@ -95,7 +95,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             _characteristicManager.Update(characteristicDto);
         }
 
-        private Characteristic CreateModel()
+        protected override Characteristic CreateModel()
         {
             Console.WriteLine("Enter name of characteristic");
             var name = Console.ReadLine();
@@ -112,7 +112,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             return characteristicDto;
         }
 
-        private static void PrintMenu()
+        protected override void PrintMenu()
         {
             Console.WriteLine("1. Add characteristic");
             Console.WriteLine("2. Delete characteristic");

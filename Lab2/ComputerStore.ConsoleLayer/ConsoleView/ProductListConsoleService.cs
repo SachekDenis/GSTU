@@ -8,7 +8,7 @@ using ComputerStore.ConsoleLayer.ViewModels;
 
 namespace ComputerStore.ConsoleLayer.ConsoleView
 {
-    internal class ProductListConsoleService:IConsoleService
+    internal class ProductListConsoleService:CrudConsoleService<Product>
     {
         private readonly CategoryManager _categoryManager;
         private readonly CharacteristicManager _characteristicManager;
@@ -35,7 +35,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             _supplierManager = supplierManager;
         }
 
-        public void StartConsoleLoop()
+        public override void StartConsoleLoop()
         {
             while (true)
             {
@@ -96,7 +96,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             }
         }
 
-        private void PrintAll()
+        protected override void PrintAll()
         {
             var categories = _categoryManager.GetAll();
             var items = _productManager.GetAll().Select(item => new ProductListViewModel
@@ -109,7 +109,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             items.WriteCollectionAsTable();
         }
 
-        private void Add()
+        protected override void Add()
         {
             _supplierManager.GetAll().WriteCollectionAsTable();
 
@@ -136,14 +136,14 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             }
         }
 
-        private void Delete()
+        protected override void Delete()
         {
             Console.WriteLine("Enter Id of product to delete");
             var id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
             _productManager.Delete(id);
         }
 
-        private Product CreateModel()
+        protected override Product CreateModel()
         {
             Console.WriteLine("Enter name of product");
             var name = Console.ReadLine();
@@ -194,7 +194,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
         }
 
 
-        private void Update()
+        protected override void Update()
         {
             Console.WriteLine("Enter Id of product for update");
             var id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
@@ -211,7 +211,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
         }
 
 
-        private static void PrintMenu()
+        protected override void PrintMenu()
         {
             Console.WriteLine("1. Print product details");
             Console.WriteLine("2. Add product");

@@ -15,11 +15,11 @@ namespace ComputerStore.BusinessLogicLayer.Managers
         private readonly FieldValidator _fieldValidator;
         private readonly IMapper _mapper;
         private readonly IRepository<ProductDto> _products;
-        private readonly ProductValidator _productValidator;
+        private readonly IValidator<ProductDto> _productValidator;
         private readonly IRepository<SupplyDto> _supplies;
 
         public ProductManager(
-            ProductValidator productValidator,
+            IValidator<ProductDto> productValidator,
             FieldValidator fieldValidator,
             IMapper mapper,
             IRepository<FieldDto> fields,

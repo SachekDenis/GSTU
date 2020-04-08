@@ -16,7 +16,7 @@ namespace ComputerStore.BusinessLogicLayer.DependencyInjection
         {
             var businessAssembly = Assembly.Load("ComputerStore.BusinessLogicLayer");
             var consoleAssembly = Assembly.Load("ComputerStore.ConsoleLayer");
-
+             
             return new ServiceCollection()
                 .AddDbContext<StoreContext>(options =>
                     options.UseSqlServer(config.GetConnectionString("StoreConnection")))

@@ -8,7 +8,7 @@ using ComputerStore.ConsoleLayer.ViewModels;
 
 namespace ComputerStore.ConsoleLayer.ConsoleView
 {
-    public class OrderConsoleService:IConsoleService
+    public class OrderConsoleService:BaseConsoleService
     {
         private readonly BuyerManager _buyerManager;
         private readonly OrderManager _orderManager;
@@ -26,7 +26,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             _productConsoleService = productConsoleService;
         }
 
-        public void StartConsoleLoop()
+        public override void StartConsoleLoop()
         {
             while (true)
             {
@@ -120,7 +120,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
         }
 
 
-        private void PrintAll()
+        protected override void PrintAll()
         {
             var items = _orderManager.GetAll()
                 .Select(item => new OrderViewModel
@@ -135,7 +135,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             items.WriteCollectionAsTable();
         }
 
-        private static void PrintMenu()
+        protected override void PrintMenu()
         {
             Console.WriteLine("1. Print details of buyer");
             Console.WriteLine("2. Print details of product");

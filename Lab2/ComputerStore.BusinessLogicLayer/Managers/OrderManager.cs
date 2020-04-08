@@ -13,7 +13,7 @@ namespace ComputerStore.BusinessLogicLayer.Managers
     {
         private readonly IRepository<OrderDto> _items;
         private readonly IMapper _mapper;
-        private readonly Validator<OrderDto> _validator;
+        private readonly IValidator<OrderDto> _validator;
 
         public OrderManager(IMapper mapper, OrderValidator orderValidator, IRepository<OrderDto> items)
         {

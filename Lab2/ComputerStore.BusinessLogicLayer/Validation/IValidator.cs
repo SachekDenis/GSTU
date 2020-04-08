@@ -2,9 +2,9 @@
 
 namespace ComputerStore.BusinessLogicLayer.Validation
 {
-    public abstract class Validator<T>
+    public interface IValidator<T>
         where T : class, IEntity
     {
-        public abstract bool Validate(T item);
+        bool Validate(T item);
     }
 }
