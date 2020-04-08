@@ -7,14 +7,13 @@ using ComputerStore.ConsoleLayer.ViewModels;
 
 namespace ComputerStore.ConsoleLayer.ConsoleView
 {
-    public class ProductConsoleService:BaseConsoleService
+    public class ProductConsoleService : BaseConsoleService
     {
         private readonly BuyerManager _buyerManager;
         private readonly CharacteristicManager _characteristicManager;
         private readonly ManufacturerManager _manufacturerManager;
         private readonly OrderManager _orderManager;
         private readonly ProductManager _productManager;
-        public int ProductId { get; set; }
 
         public ProductConsoleService(ProductManager productManager,
             ManufacturerManager manufacturerManager,
@@ -28,6 +27,8 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             _orderManager = orderManager;
             _buyerManager = buyerManager;
         }
+
+        public int ProductId { get; set; }
 
         public override void StartConsoleLoop()
         {

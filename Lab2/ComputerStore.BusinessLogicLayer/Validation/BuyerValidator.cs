@@ -1,11 +1,11 @@
 ﻿using System.Text.RegularExpressions;
-using ComputerStore.DataAccessLayer.Models;
+using ComputerStore.BusinessLogicLayer.Models;
 
 namespace ComputerStore.BusinessLogicLayer.Validation
 {
-    public class BuyerValidator : IValidator<BuyerDto>
+    public class BuyerValidator : IValidator<Buyer>
     {
-        public bool Validate(BuyerDto item)
+        public bool Validate(Buyer item)
         {
             return !(string.IsNullOrEmpty(item.FirstName)
                      || string.IsNullOrEmpty(item.SecondName)

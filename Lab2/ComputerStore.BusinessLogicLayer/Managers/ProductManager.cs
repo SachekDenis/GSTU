@@ -12,15 +12,15 @@ namespace ComputerStore.BusinessLogicLayer.Managers
     public class ProductManager : IManager<Product>
     {
         private readonly IRepository<FieldDto> _fields;
-        private readonly IValidator<FieldDto> _fieldValidator;
+        private readonly IValidator<Field> _fieldValidator;
         private readonly IMapper _mapper;
         private readonly IRepository<ProductDto> _products;
-        private readonly IValidator<ProductDto> _productValidator;
+        private readonly IValidator<Product> _productValidator;
         private readonly IRepository<SupplyDto> _supplies;
 
         public ProductManager(
-            IValidator<ProductDto> productValidator,
-            IValidator<FieldDto> fieldValidator,
+            IValidator<Product> productValidator,
+            IValidator<Field> fieldValidator,
             IMapper mapper,
             IRepository<FieldDto> fields,
             IRepository<ProductDto> products,
@@ -38,9 +38,9 @@ namespace ComputerStore.BusinessLogicLayer.Managers
         {
             var productDto = _mapper.Map<ProductDto>(product);
 
-            if (!_productValidator.Validate(productDto))
+            if (!_productValidator.Validate(product))
             {
-                throw new ValidationException($"{nameof(productDto)} has invalid data");
+                throw new ValidationException($"{nameof(product)} has invalid data");
             }
 
             _products.Add(productDto);
@@ -52,9 +52,9 @@ namespace ComputerStore.BusinessLogicLayer.Managers
                     var fieldDto = _mapper.Map<FieldDto>(field);
                     fieldDto.ProductId = productDto.Id;
 
-                    if (!_fieldValidator.Validate(fieldDto))
+                    if (!_fieldValidator.Validate(field))
                     {
-                        throw new ValidationException($"{nameof(fieldDto)} has invalid data");
+                        throw new ValidationException($"{nameof(field)} has invalid data");
                     }
 
                     _fields.Add(fieldDto);
@@ -87,7 +87,7 @@ namespace ComputerStore.BusinessLogicLayer.Managers
         {
             var productDto = _mapper.Map<ProductDto>(product);
 
-            if (!_productValidator.Validate(productDto))
+            if (!_productValidator.Validate(product))
             {
                 throw new ValidationException($"{nameof(product)} has invalid data");
             }
@@ -101,9 +101,9 @@ namespace ComputerStore.BusinessLogicLayer.Managers
 
                 var fieldDto = _mapper.Map<FieldDto>(field);
 
-                if (!_fieldValidator.Validate(fieldDto))
+                if (!_fieldValidator.Validate(field))
                 {
-                    throw new ValidationException($"{nameof(fieldDto)} has invalid data");
+                    throw new ValidationException($"{nameof(field)} has invalid data");
                 }
 
                 _fields.Update(fieldDto);

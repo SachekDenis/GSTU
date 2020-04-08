@@ -2,7 +2,7 @@
 
 namespace ComputerStore.ConsoleLayer.ConsoleView
 {
-    internal class MainMenuConsoleService:IConsoleService
+    internal class MainMenuConsoleService : IConsoleService
     {
         private readonly CategoryConsoleService _categoryConsoleService;
         private readonly CharacteristicConsoleService _characteristicConsoleService;

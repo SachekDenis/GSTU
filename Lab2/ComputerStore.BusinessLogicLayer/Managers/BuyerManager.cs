@@ -13,9 +13,9 @@ namespace ComputerStore.BusinessLogicLayer.Managers
     {
         private readonly IRepository<BuyerDto> _items;
         private readonly IMapper _mapper;
-        private readonly IValidator<BuyerDto> _validator;
+        private readonly IValidator<Buyer> _validator;
 
-        public BuyerManager(IMapper mapper, IValidator<BuyerDto> buyerValidator, IRepository<BuyerDto> items)
+        public BuyerManager(IMapper mapper, IValidator<Buyer> buyerValidator, IRepository<BuyerDto> items)
         {
             _mapper = mapper;
             _validator = buyerValidator;
@@ -26,9 +26,9 @@ namespace ComputerStore.BusinessLogicLayer.Managers
         {
             var buyerDto = _mapper.Map<BuyerDto>(buyer);
 
-            if (!_validator.Validate(buyerDto))
+            if (!_validator.Validate(buyer))
             {
-                throw new ValidationException($"{nameof(buyerDto)} has invalid data");
+                throw new ValidationException($"{nameof(buyer)} has invalid data");
             }
 
             _items.Add(buyerDto);
@@ -44,9 +44,9 @@ namespace ComputerStore.BusinessLogicLayer.Managers
         {
             var buyerDto = _mapper.Map<BuyerDto>(buyer);
 
-            if (!_validator.Validate(buyerDto))
+            if (!_validator.Validate(buyer))
             {
-                throw new ValidationException($"{nameof(buyerDto)} has invalid data");
+                throw new ValidationException($"{nameof(buyer)} has invalid data");
             }
 
             _items.Update(buyerDto);

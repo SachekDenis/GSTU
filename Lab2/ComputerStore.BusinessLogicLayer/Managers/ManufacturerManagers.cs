@@ -13,10 +13,10 @@ namespace ComputerStore.BusinessLogicLayer.Managers
     {
         private readonly IRepository<ManufacturerDto> _items;
         private readonly IMapper _mapper;
-        private readonly IValidator<ManufacturerDto> _validator;
+        private readonly IValidator<Manufacturer> _validator;
 
         public ManufacturerManager(IMapper mapper,
-            IValidator<ManufacturerDto> manufacturerValidator,
+            IValidator<Manufacturer> manufacturerValidator,
             IRepository<ManufacturerDto> items)
         {
             _mapper = mapper;
@@ -28,9 +28,9 @@ namespace ComputerStore.BusinessLogicLayer.Managers
         {
             var manufacturerDto = _mapper.Map<ManufacturerDto>(manufacturer);
 
-            if (!_validator.Validate(manufacturerDto))
+            if (!_validator.Validate(manufacturer))
             {
-                throw new ValidationException($"{nameof(manufacturerDto)} has invalid data");
+                throw new ValidationException($"{nameof(manufacturer)} has invalid data");
             }
 
             _items.Add(manufacturerDto);
@@ -46,9 +46,9 @@ namespace ComputerStore.BusinessLogicLayer.Managers
         {
             var manufacturerDto = _mapper.Map<ManufacturerDto>(manufacturer);
 
-            if (!_validator.Validate(manufacturerDto))
+            if (!_validator.Validate(manufacturer))
             {
-                throw new ValidationException($"{nameof(manufacturerDto)} has invalid data");
+                throw new ValidationException($"{nameof(manufacturer)} has invalid data");
             }
 
             _items.Update(manufacturerDto);

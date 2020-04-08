@@ -9,6 +9,7 @@ namespace ComputerStore.ConsoleLayer
     internal class Program
     {
         private const string ConfigFileName = "appsettings.json";
+
         private static void Main(string[] args)
         {
             var builder = new ConfigurationBuilder();

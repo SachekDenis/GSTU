@@ -13,10 +13,10 @@ namespace ComputerStore.BusinessLogicLayer.Managers
     {
         private readonly IRepository<CategoryDto> _items;
         private readonly IMapper _mapper;
-        private readonly IValidator<CategoryDto> _validator;
+        private readonly IValidator<Category> _validator;
 
-        public CategoryManager(IMapper mapper, 
-            IValidator<CategoryDto> categoryValidator,
+        public CategoryManager(IMapper mapper,
+            IValidator<Category> categoryValidator,
             IRepository<CategoryDto> items)
         {
             _mapper = mapper;
@@ -28,9 +28,9 @@ namespace ComputerStore.BusinessLogicLayer.Managers
         {
             var categoryDto = _mapper.Map<CategoryDto>(category);
 
-            if (!_validator.Validate(categoryDto))
+            if (!_validator.Validate(category))
             {
-                throw new ValidationException($"{nameof(categoryDto)} has invalid data");
+                throw new ValidationException($"{nameof(category)} has invalid data");
             }
 
             _items.Add(categoryDto);
@@ -47,9 +47,9 @@ namespace ComputerStore.BusinessLogicLayer.Managers
         {
             var categoryDto = _mapper.Map<CategoryDto>(category);
 
-            if (!_validator.Validate(categoryDto))
+            if (!_validator.Validate(category))
             {
-                throw new ValidationException($"{nameof(categoryDto)} has invalid data");
+                throw new ValidationException($"{nameof(category)} has invalid data");
             }
 
             _items.Update(categoryDto);

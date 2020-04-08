@@ -1,10 +1,10 @@
-﻿using ComputerStore.DataAccessLayer.Models;
+﻿using ComputerStore.BusinessLogicLayer.Models;
 
 namespace ComputerStore.BusinessLogicLayer.Validation
 {
-    public class SupplyValidator : IValidator<SupplyDto>
+    public class SupplyValidator : IValidator<Supply>
     {
-        public bool Validate(SupplyDto item)
+        public bool Validate(Supply item)
         {
             return true;
         }

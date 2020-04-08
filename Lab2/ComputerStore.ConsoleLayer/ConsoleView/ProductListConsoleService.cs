@@ -8,7 +8,7 @@ using ComputerStore.ConsoleLayer.ViewModels;
 
 namespace ComputerStore.ConsoleLayer.ConsoleView
 {
-    internal class ProductListConsoleService:CrudConsoleService<Product>
+    internal class ProductListConsoleService : CrudConsoleService<Product>
     {
         private readonly CategoryManager _categoryManager;
         private readonly CharacteristicManager _characteristicManager;

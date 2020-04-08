@@ -8,7 +8,7 @@ using ComputerStore.ConsoleLayer.ViewModels;
 
 namespace ComputerStore.ConsoleLayer.ConsoleView
 {
-    public class OrderConsoleService:BaseConsoleService
+    public class OrderConsoleService : BaseConsoleService
     {
         private readonly BuyerManager _buyerManager;
         private readonly OrderManager _orderManager;

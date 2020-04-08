@@ -13,9 +13,9 @@ namespace ComputerStore.BusinessLogicLayer.Managers
     {
         private readonly IRepository<OrderDto> _items;
         private readonly IMapper _mapper;
-        private readonly IValidator<OrderDto> _validator;
+        private readonly IValidator<Order> _validator;
 
-        public OrderManager(IMapper mapper, IValidator<OrderDto> orderValidator, IRepository<OrderDto> items)
+        public OrderManager(IMapper mapper, IValidator<Order> orderValidator, IRepository<OrderDto> items)
         {
             _mapper = mapper;
             _validator = orderValidator;
@@ -26,7 +26,7 @@ namespace ComputerStore.BusinessLogicLayer.Managers
         {
             var orderDto = _mapper.Map<OrderDto>(order);
 
-            if (!_validator.Validate(orderDto))
+            if (!_validator.Validate(order))
             {
                 throw new ValidationException($"{nameof(order)} has invalid data");
             }
@@ -44,9 +44,9 @@ namespace ComputerStore.BusinessLogicLayer.Managers
         {
             var orderDto = _mapper.Map<OrderDto>(order);
 
-            if (!_validator.Validate(orderDto))
+            if (!_validator.Validate(order))
             {
-                throw new ValidationException($"{nameof(orderDto)} has invalid data");
+                throw new ValidationException($"{nameof(order)} has invalid data");
             }
 
             _items.Update(orderDto);

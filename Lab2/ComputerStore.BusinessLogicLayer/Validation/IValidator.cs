@@ -1,9 +1,7 @@
-﻿using ComputerStore.DataAccessLayer.Models;
-
-namespace ComputerStore.BusinessLogicLayer.Validation
+﻿namespace ComputerStore.BusinessLogicLayer.Validation
 {
     public interface IValidator<T>
-        where T : class, IEntity
+        where T : class
     {
         bool Validate(T item);
     }

@@ -7,7 +7,7 @@ using ComputerStore.ConsoleLayer.ViewModels;
 
 namespace ComputerStore.ConsoleLayer.ConsoleView
 {
-    public class CharacteristicConsoleService:CrudConsoleService<Characteristic>
+    public class CharacteristicConsoleService : CrudConsoleService<Characteristic>
     {
         private readonly CategoryManager _categoryManager;
         private readonly CharacteristicManager _characteristicManager;

@@ -1,10 +1,10 @@
-﻿using ComputerStore.DataAccessLayer.Models;
+﻿using ComputerStore.BusinessLogicLayer.Models;
 
 namespace ComputerStore.BusinessLogicLayer.Validation
 {
-    public class CategoryValidator : IValidator<CategoryDto>
+    public class CategoryValidator : IValidator<Category>
     {
-        public bool Validate(CategoryDto item)
+        public bool Validate(Category item)
         {
             return !string.IsNullOrEmpty(item.Name);
         }

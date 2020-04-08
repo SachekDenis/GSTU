@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ComputerStore.ConsoleLayer.ConsoleView
+﻿namespace ComputerStore.ConsoleLayer.ConsoleView
 {
-    public abstract class CrudConsoleService<T>:BaseConsoleService
+    public abstract class CrudConsoleService<T> : BaseConsoleService
     {
         protected abstract void Add();
         protected abstract void Delete();

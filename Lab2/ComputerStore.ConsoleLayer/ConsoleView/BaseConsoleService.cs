@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ComputerStore.ConsoleLayer.ConsoleView
+﻿namespace ComputerStore.ConsoleLayer.ConsoleView
 {
     public abstract class BaseConsoleService : IConsoleService
     {

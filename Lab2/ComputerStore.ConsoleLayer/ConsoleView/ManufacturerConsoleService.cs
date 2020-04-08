@@ -5,7 +5,7 @@ using ComputerStore.BusinessLogicLayer.Models;
 
 namespace ComputerStore.ConsoleLayer.ConsoleView
 {
-    internal class ManufacturerConsoleService:CrudConsoleService<Manufacturer>
+    internal class ManufacturerConsoleService : CrudConsoleService<Manufacturer>
     {
         private readonly ManufacturerManager _manufacturerManager;
 

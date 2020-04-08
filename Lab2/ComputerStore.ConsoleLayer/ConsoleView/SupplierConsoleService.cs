@@ -5,7 +5,7 @@ using ComputerStore.BusinessLogicLayer.Models;
 
 namespace ComputerStore.ConsoleLayer.ConsoleView
 {
-    public class SupplierConsoleService:CrudConsoleService<Supplier>
+    public class SupplierConsoleService : CrudConsoleService<Supplier>
     {
         private readonly SupplierManager _supplierManager;
 

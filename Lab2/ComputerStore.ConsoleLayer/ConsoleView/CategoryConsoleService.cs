@@ -5,7 +5,7 @@ using ComputerStore.BusinessLogicLayer.Models;
 
 namespace ComputerStore.ConsoleLayer.ConsoleView
 {
-    public class CategoryConsoleService:CrudConsoleService<Category>
+    public class CategoryConsoleService : CrudConsoleService<Category>
     {
         private readonly CategoryManager _categoryManager;
 
@@ -67,7 +67,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             _categoryManager.Delete(id);
         }
 
-        protected  override void Add()
+        protected override void Add()
         {
             var categoryDto = CreateModel();
             _categoryManager.Add(categoryDto);

@@ -13,10 +13,10 @@ namespace ComputerStore.BusinessLogicLayer.Managers
     {
         private readonly IRepository<CharacteristicDto> _items;
         private readonly IMapper _mapper;
-        private readonly IValidator<CharacteristicDto> _validator;
+        private readonly IValidator<Characteristic> _validator;
 
         public CharacteristicManager(IMapper mapper,
-            IValidator<CharacteristicDto> characteristicValidator,
+            IValidator<Characteristic> characteristicValidator,
             IRepository<CharacteristicDto> items)
         {
             _mapper = mapper;
@@ -28,9 +28,9 @@ namespace ComputerStore.BusinessLogicLayer.Managers
         {
             var characteristicDto = _mapper.Map<CharacteristicDto>(characteristic);
 
-            if (!_validator.Validate(characteristicDto))
+            if (!_validator.Validate(characteristic))
             {
-                throw new ValidationException($"{nameof(characteristicDto)} has invalid data");
+                throw new ValidationException($"{nameof(characteristic)} has invalid data");
             }
 
             _items.Add(characteristicDto);
@@ -46,9 +46,9 @@ namespace ComputerStore.BusinessLogicLayer.Managers
         {
             var characteristicDto = _mapper.Map<CharacteristicDto>(characteristic);
 
-            if (!_validator.Validate(characteristicDto))
+            if (!_validator.Validate(characteristic))
             {
-                throw new ValidationException($"{nameof(characteristicDto)} has invalid data");
+                throw new ValidationException($"{nameof(characteristic)} has invalid data");
             }
 
             _items.Update(characteristicDto);

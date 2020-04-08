@@ -13,10 +13,10 @@ namespace ComputerStore.BusinessLogicLayer.Managers
     {
         private readonly IRepository<SupplyDto> _items;
         private readonly IMapper _mapper;
-        private readonly IValidator<SupplyDto> _validator;
+        private readonly IValidator<Supply> _validator;
 
         public SupplyManager(IMapper mapper,
-            IValidator<SupplyDto> supplyValidator,
+            IValidator<Supply> supplyValidator,
             IRepository<SupplyDto> items)
         {
             _mapper = mapper;
@@ -28,9 +28,9 @@ namespace ComputerStore.BusinessLogicLayer.Managers
         {
             var supplyDto = _mapper.Map<SupplyDto>(supply);
 
-            if (!_validator.Validate(supplyDto))
+            if (!_validator.Validate(supply))
             {
-                throw new ValidationException($"{nameof(supplyDto)} has invalid data");
+                throw new ValidationException($"{nameof(supply)} has invalid data");
             }
 
             _items.Add(supplyDto);
@@ -46,9 +46,9 @@ namespace ComputerStore.BusinessLogicLayer.Managers
         {
             var supplyDto = _mapper.Map<SupplyDto>(supply);
 
-            if (!_validator.Validate(supplyDto))
+            if (!_validator.Validate(supply))
             {
-                throw new ValidationException($"{nameof(supplyDto)} has invalid data");
+                throw new ValidationException($"{nameof(supply)} has invalid data");
             }
 
             _items.Update(supplyDto);

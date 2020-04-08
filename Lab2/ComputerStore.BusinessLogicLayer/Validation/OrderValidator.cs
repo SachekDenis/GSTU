@@ -1,10 +1,10 @@
-﻿using ComputerStore.DataAccessLayer.Models;
+﻿using ComputerStore.BusinessLogicLayer.Models;
 
 namespace ComputerStore.BusinessLogicLayer.Validation
 {
-    public class OrderValidator : IValidator<OrderDto>
+    public class OrderValidator : IValidator<Order>
     {
-        public bool Validate(OrderDto item)
+        public bool Validate(Order item)
         {
             return !(item.Amount < 0);
         }

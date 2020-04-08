@@ -16,7 +16,7 @@ namespace ComputerStore.BusinessLogicLayer.DependencyInjection
         {
             var businessAssembly = Assembly.Load("ComputerStore.BusinessLogicLayer");
             var consoleAssembly = Assembly.Load("ComputerStore.ConsoleLayer");
-             
+
             return new ServiceCollection()
                 .AddDbContext<StoreContext>(options =>
                     options.UseSqlServer(config.GetConnectionString("StoreConnection")))
@@ -26,7 +26,7 @@ namespace ComputerStore.BusinessLogicLayer.DependencyInjection
                     .AddClasses(classes => classes.Where(type => type.Name.EndsWith("ConsoleService")))
                     .AsSelf()
                     .WithTransientLifetime())
-                .Scan(scan=> scan
+                .Scan(scan => scan
                     .FromAssemblies(businessAssembly)
                     .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Validator")))
                     .AsImplementedInterfaces()
