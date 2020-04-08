@@ -16,7 +16,7 @@ namespace ComputerStore.BusinessLogicLayer.Managers
         private readonly IValidator<ManufacturerDto> _validator;
 
         public ManufacturerManager(IMapper mapper,
-            ManufacturerValidator manufacturerValidator,
+            IValidator<ManufacturerDto> manufacturerValidator,
             IRepository<ManufacturerDto> items)
         {
             _mapper = mapper;

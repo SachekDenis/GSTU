@@ -15,7 +15,7 @@ namespace ComputerStore.BusinessLogicLayer.Managers
         private readonly IMapper _mapper;
         private readonly IValidator<OrderDto> _validator;
 
-        public OrderManager(IMapper mapper, OrderValidator orderValidator, IRepository<OrderDto> items)
+        public OrderManager(IMapper mapper, IValidator<OrderDto> orderValidator, IRepository<OrderDto> items)
         {
             _mapper = mapper;
             _validator = orderValidator;

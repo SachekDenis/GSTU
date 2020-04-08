@@ -23,9 +23,13 @@ namespace ComputerStore.BusinessLogicLayer.DependencyInjection
                 .Scan(scan => scan
                     .FromAssemblies(businessAssembly, consoleAssembly)
                     .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Manager")))
-                    .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Validator")))
                     .AddClasses(classes => classes.Where(type => type.Name.EndsWith("ConsoleService")))
                     .AsSelf()
+                    .WithTransientLifetime())
+                .Scan(scan=> scan
+                    .FromAssemblies(businessAssembly)
+                    .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Validator")))
+                    .AsImplementedInterfaces()
                     .WithTransientLifetime())
                 .AddSingleton(config)
                 .AddAutoMapper(typeof(StoreProfile))

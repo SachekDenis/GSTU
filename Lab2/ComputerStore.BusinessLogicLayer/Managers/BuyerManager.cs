@@ -15,7 +15,7 @@ namespace ComputerStore.BusinessLogicLayer.Managers
         private readonly IMapper _mapper;
         private readonly IValidator<BuyerDto> _validator;
 
-        public BuyerManager(IMapper mapper, BuyerValidator buyerValidator, IRepository<BuyerDto> items)
+        public BuyerManager(IMapper mapper, IValidator<BuyerDto> buyerValidator, IRepository<BuyerDto> items)
         {
             _mapper = mapper;
             _validator = buyerValidator;

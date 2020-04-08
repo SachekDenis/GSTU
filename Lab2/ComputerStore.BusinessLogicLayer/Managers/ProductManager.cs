@@ -12,7 +12,7 @@ namespace ComputerStore.BusinessLogicLayer.Managers
     public class ProductManager : IManager<Product>
     {
         private readonly IRepository<FieldDto> _fields;
-        private readonly FieldValidator _fieldValidator;
+        private readonly IValidator<FieldDto> _fieldValidator;
         private readonly IMapper _mapper;
         private readonly IRepository<ProductDto> _products;
         private readonly IValidator<ProductDto> _productValidator;
@@ -20,7 +20,7 @@ namespace ComputerStore.BusinessLogicLayer.Managers
 
         public ProductManager(
             IValidator<ProductDto> productValidator,
-            FieldValidator fieldValidator,
+            IValidator<FieldDto> fieldValidator,
             IMapper mapper,
             IRepository<FieldDto> fields,
             IRepository<ProductDto> products,
