@@ -2,9 +2,8 @@
 
 namespace ComputerStore.ConsoleLayer.ConsoleView
 {
-    public interface IConsoleService
+    public interface IPrintConsoleService
     {
-        Task StartConsoleLoop();
-        void PrintMenu();
+        Task PrintAll();
     }
 }

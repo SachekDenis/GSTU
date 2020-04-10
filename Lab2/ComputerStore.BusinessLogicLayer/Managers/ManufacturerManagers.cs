@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using ComputerStore.BusinessLogicLayer.Exception;
 using ComputerStore.BusinessLogicLayer.Models;
@@ -24,7 +25,7 @@ namespace ComputerStore.BusinessLogicLayer.Managers
             _items = items;
         }
 
-        public void Add(Manufacturer manufacturer)
+        public async Task Add(Manufacturer manufacturer)
         {
             var manufacturerDto = _mapper.Map<ManufacturerDto>(manufacturer);
 
@@ -33,16 +34,16 @@ namespace ComputerStore.BusinessLogicLayer.Managers
                 throw new ValidationException($"{nameof(manufacturer)} has invalid data");
             }
 
-            _items.Add(manufacturerDto);
+            await _items.Add(manufacturerDto);
             manufacturer.Id = manufacturerDto.Id;
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            _items.Delete(id);
+            await _items.Delete(id);
         }
 
-        public void Update(Manufacturer manufacturer)
+        public async Task Update(Manufacturer manufacturer)
         {
             var manufacturerDto = _mapper.Map<ManufacturerDto>(manufacturer);
 
@@ -51,17 +52,17 @@ namespace ComputerStore.BusinessLogicLayer.Managers
                 throw new ValidationException($"{nameof(manufacturer)} has invalid data");
             }
 
-            _items.Update(manufacturerDto);
+            await _items.Update(manufacturerDto);
         }
 
-        public IEnumerable<Manufacturer> GetAll()
+        public async Task<IEnumerable<Manufacturer>> GetAll()
         {
-            return _items.GetAll().Select(item => _mapper.Map<Manufacturer>(item));
+            return (await _items.GetAll()).Select(item => _mapper.Map<Manufacturer>(item));
         }
 
-        public Manufacturer GetById(int id)
+        public async Task<Manufacturer> GetById(int id)
         {
-            return _mapper.Map<Manufacturer>(_items.GetById(id));
+            return _mapper.Map<Manufacturer>(await _items.GetById(id));
         }
     }
 }

@@ -6,18 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="bin\**" />
-    <Compile Remove="BusinessLogic\**" />
-    <Compile Remove="DataAccesLayer\**" />
-    <EmbeddedResource Remove="bin\**" />
-    <EmbeddedResource Remove="BusinessLogic\**" />
-    <EmbeddedResource Remove="DataAccesLayer\**" />
-    <None Remove="bin\**" />
-    <None Remove="BusinessLogic\**" />
-    <None Remove="DataAccesLayer\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="ConsoleTables" Version="2.4.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.2" />
   </ItemGroup>

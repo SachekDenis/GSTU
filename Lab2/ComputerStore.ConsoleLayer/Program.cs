@@ -1,6 +1,7 @@
 ﻿using System.IO;
+using System.Threading.Tasks;
 using ComputerStore.BusinessLogicLayer.DependencyInjection;
-using ComputerStore.ConsoleLayer.ConsoleView;
+using ComputerStore.ConsoleLayer.ConsoleView.BaseConsoleServices;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,7 +11,7 @@ namespace ComputerStore.ConsoleLayer
     {
         private const string ConfigFileName = "appsettings.json";
 
-        private static void Main(string[] args)
+        private static async Task Main(string[] args)
         {
             var builder = new ConfigurationBuilder();
             builder.SetBasePath(Directory.GetCurrentDirectory());
@@ -19,8 +20,8 @@ namespace ComputerStore.ConsoleLayer
 
             var services = DependencyInjectionConfigurator.Configure(config);
 
-            var mainMenu = services.GetService<MainMenuConsoleService>();
-            mainMenu.StartConsoleLoop();
+            var mainMenu = services.GetService<MainMenuBaseConsoleService>();
+            await mainMenu.StartConsoleLoop();
         }
     }
 }

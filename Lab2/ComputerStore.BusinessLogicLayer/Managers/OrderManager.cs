@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using ComputerStore.BusinessLogicLayer.Exception;
 using ComputerStore.BusinessLogicLayer.Models;
@@ -22,7 +23,7 @@ namespace ComputerStore.BusinessLogicLayer.Managers
             _items = items;
         }
 
-        public void Add(Order order)
+        public async Task Add(Order order)
         {
             var orderDto = _mapper.Map<OrderDto>(order);
 
@@ -31,16 +32,16 @@ namespace ComputerStore.BusinessLogicLayer.Managers
                 throw new ValidationException($"{nameof(order)} has invalid data");
             }
 
-            _items.Add(orderDto);
+            await _items.Add(orderDto);
             order.Id = orderDto.Id;
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            _items.Delete(id);
+            await _items.Delete(id);
         }
 
-        public void Update(Order order)
+        public async Task Update(Order order)
         {
             var orderDto = _mapper.Map<OrderDto>(order);
 
@@ -49,17 +50,17 @@ namespace ComputerStore.BusinessLogicLayer.Managers
                 throw new ValidationException($"{nameof(order)} has invalid data");
             }
 
-            _items.Update(orderDto);
+            await _items.Update(orderDto);
         }
 
-        public IEnumerable<Order> GetAll()
+        public async Task<IEnumerable<Order>> GetAll()
         {
-            return _items.GetAll().Select(item => _mapper.Map<Order>(item));
+            return (await _items.GetAll()).Select(item => _mapper.Map<Order>(item));
         }
 
-        public Order GetById(int id)
+        public async Task<Order> GetById(int id)
         {
-            return _mapper.Map<Order>(_items.GetById(id));
+            return _mapper.Map<Order>(await _items.GetById(id));
         }
     }
 }

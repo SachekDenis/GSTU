@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using ComputerStore.BusinessLogicLayer.Exception;
 using ComputerStore.BusinessLogicLayer.Models;
@@ -22,7 +23,7 @@ namespace ComputerStore.BusinessLogicLayer.Managers
             _items = items;
         }
 
-        public void Add(Buyer buyer)
+        public async Task Add(Buyer buyer)
         {
             var buyerDto = _mapper.Map<BuyerDto>(buyer);
 
@@ -31,16 +32,16 @@ namespace ComputerStore.BusinessLogicLayer.Managers
                 throw new ValidationException($"{nameof(buyer)} has invalid data");
             }
 
-            _items.Add(buyerDto);
+            await _items.Add(buyerDto);
             buyer.Id = buyerDto.Id;
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            _items.Delete(id);
+            await _items.Delete(id);
         }
 
-        public void Update(Buyer buyer)
+        public async Task Update(Buyer buyer)
         {
             var buyerDto = _mapper.Map<BuyerDto>(buyer);
 
@@ -49,17 +50,17 @@ namespace ComputerStore.BusinessLogicLayer.Managers
                 throw new ValidationException($"{nameof(buyer)} has invalid data");
             }
 
-            _items.Update(buyerDto);
+            await _items.Update(buyerDto);
         }
 
-        public IEnumerable<Buyer> GetAll()
+        public async Task<IEnumerable<Buyer>> GetAll()
         {
-            return _items.GetAll().Select(item => _mapper.Map<Buyer>(item));
+            return (await _items.GetAll()).Select(item => _mapper.Map<Buyer>(item));
         }
 
-        public Buyer GetById(int id)
+        public async Task<Buyer> GetById(int id)
         {
-            return _mapper.Map<Buyer>(_items.GetById(id));
+            return _mapper.Map<Buyer>(await _items.GetById(id));
         }
     }
 }

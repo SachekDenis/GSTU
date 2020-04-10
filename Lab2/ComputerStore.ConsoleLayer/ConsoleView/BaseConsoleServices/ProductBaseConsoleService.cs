@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using ComputerStore.BusinessLogicLayer.Exception;
 using ComputerStore.BusinessLogicLayer.Managers;
 using ComputerStore.BusinessLogicLayer.Models;
 using ComputerStore.ConsoleLayer.ViewModels;
 
-namespace ComputerStore.ConsoleLayer.ConsoleView
+namespace ComputerStore.ConsoleLayer.ConsoleView.BaseConsoleServices
 {
-    public class ProductConsoleService : BaseConsoleService
+    public class ProductBaseConsoleService : IConsoleService
     {
         private readonly BuyerManager _buyerManager;
         private readonly CharacteristicManager _characteristicManager;
@@ -15,29 +16,29 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
         private readonly OrderManager _orderManager;
         private readonly ProductManager _productManager;
 
-        public ProductConsoleService(ProductManager productManager,
-            ManufacturerManager manufacturerManager,
-            CharacteristicManager characteristicManager,
+        public ProductBaseConsoleService(ProductManager productManager,
             OrderManager orderManager,
-            BuyerManager buyerManager)
+            BuyerManager buyerManager,
+            ManufacturerManager manufacturerManager,
+            CharacteristicManager characteristicManager)
         {
             _productManager = productManager;
-            _manufacturerManager = manufacturerManager;
-            _characteristicManager = characteristicManager;
             _orderManager = orderManager;
             _buyerManager = buyerManager;
+            _manufacturerManager = manufacturerManager;
+            _characteristicManager = characteristicManager;
         }
 
         public int ProductId { get; set; }
 
-        public override void StartConsoleLoop()
+        public async Task StartConsoleLoop()
         {
             while (true)
             {
                 try
                 {
                     Console.Clear();
-                    PrintAll();
+                    await PrintProductDetails();
                     PrintMenu();
 
                     var menuTab = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
@@ -45,7 +46,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
                     switch (menuTab)
                     {
                         case 1:
-                            Buy();
+                            await Buy();
                             break;
                         case 2:
                             return;
@@ -64,7 +65,13 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             }
         }
 
-        private void Buy()
+        public void PrintMenu()
+        {
+            Console.WriteLine("1. Buy");
+            Console.WriteLine("2. Back");
+        }
+
+        private async Task Buy()
         {
             Console.WriteLine("Enter name");
             var firstName = Console.ReadLine();
@@ -90,7 +97,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
                 ZipCode = zipCode
             };
 
-            _buyerManager.Add(buyerDto);
+            await _buyerManager.Add(buyerDto);
 
             Console.WriteLine("Enter amount");
             var amount = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
@@ -104,27 +111,27 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
 
             try
             {
-                var productDto = _productManager.GetById(ProductId);
+                var productDto = await _productManager.GetById(ProductId);
                 productDto.AmountInStorage -= amount;
 
-                _productManager.Update(productDto);
-                _orderManager.Add(orderDto);
+                await _productManager.Update(productDto);
+                await _orderManager.Add(orderDto);
             }
             catch (ValidationException)
             {
-                _buyerManager.Delete(buyerDto.Id);
+                await _buyerManager.Delete(buyerDto.Id);
                 throw;
             }
         }
 
-        protected override void PrintAll()
+        private async Task PrintProductDetails()
         {
-            var productDto = _productManager.GetById(ProductId);
+            var productDto = await _productManager.GetById(ProductId);
             var productViewModel = new ProductViewModel
             {
                 Amount = productDto.AmountInStorage,
                 Fields = productDto.Fields,
-                Manufacturer = _manufacturerManager.GetById(productDto.ManufacturerId).Name,
+                Manufacturer = (await _manufacturerManager.GetById(productDto.ManufacturerId)).Name,
                 Name = productDto.Name,
                 Price = productDto.Price
             };
@@ -138,19 +145,16 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             Console.Write("Manufacturer: ");
             Console.WriteLine(productViewModel.Manufacturer);
 
+            var characteristics = await _characteristicManager.GetAll();
+
             productViewModel.Fields.ToList().ForEach(field =>
             {
-                Console.Write(_characteristicManager.GetById(field.CharacteristicId).Name);
+                Console.Write(characteristics.First(characteristic => characteristic.Id == field.CharacteristicId)
+                    .Name);
                 Console.Write(":");
                 Console.Write(field.Value);
                 Console.WriteLine();
             });
-        }
-
-        protected override void PrintMenu()
-        {
-            Console.WriteLine("1. Buy");
-            Console.WriteLine("2. Back");
         }
     }
 }

@@ -1,39 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 using ComputerStore.BusinessLogicLayer.Exception;
 using ComputerStore.BusinessLogicLayer.Managers;
 using ComputerStore.BusinessLogicLayer.Models;
-using ComputerStore.ConsoleLayer.ViewModels;
+using ComputerStore.ConsoleLayer.ConsoleView.PrintConsoleServices;
 
-namespace ComputerStore.ConsoleLayer.ConsoleView
+namespace ComputerStore.ConsoleLayer.ConsoleView.BaseConsoleServices
 {
-    public class OrderConsoleService : BaseConsoleService
+    public class OrderBaseConsoleService : IConsoleService
     {
         private readonly BuyerManager _buyerManager;
         private readonly OrderManager _orderManager;
-        private readonly ProductConsoleService _productConsoleService;
-        private readonly ProductManager _productManager;
+        private readonly IPrintConsoleService _printOrderService;
+        private readonly ProductBaseConsoleService _productConsoleService;
 
-        public OrderConsoleService(OrderManager orderManager,
-            ProductManager productManager,
+        public OrderBaseConsoleService(OrderManager orderManager,
             BuyerManager buyerManager,
-            ProductConsoleService productConsoleService)
+            ProductBaseConsoleService productConsoleService,
+            OrderPrintConsoleService printOrderService)
         {
             _orderManager = orderManager;
-            _productManager = productManager;
             _buyerManager = buyerManager;
             _productConsoleService = productConsoleService;
+            _printOrderService = printOrderService;
         }
 
-        public override void StartConsoleLoop()
+        public async Task StartConsoleLoop()
         {
             while (true)
             {
                 try
                 {
                     Console.Clear();
-                    PrintAll();
+                    await _printOrderService.PrintAll();
                     PrintMenu();
 
                     var menuTab = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
@@ -42,17 +42,17 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
                     {
                         case 1:
                         {
-                            PrintBuyerInformation();
+                            await PrintBuyerInformation();
                         }
                             break;
                         case 2:
                         {
-                            PrintProductInformation();
+                            await PrintProductInformation();
                         }
                             break;
                         case 3:
                         {
-                            ChangeStatus();
+                            await ChangeStatus();
                         }
                             break;
                         case 4:
@@ -72,33 +72,41 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             }
         }
 
-        private void PrintBuyerInformation()
+        public void PrintMenu()
+        {
+            Console.WriteLine("1. Print details of buyer");
+            Console.WriteLine("2. Print details of product");
+            Console.WriteLine("3. Change order status");
+            Console.WriteLine("4. Back");
+        }
+
+        private async Task PrintBuyerInformation()
         {
             var orderId = ReadId();
 
-            var buyerId = _orderManager.GetById(orderId).BuyerId;
+            var buyerId = (await _orderManager.GetById(orderId)).BuyerId;
 
-            new List<Buyer> {_buyerManager.GetById(buyerId)}.WriteCollectionAsTable();
+            new List<Buyer> {await _buyerManager.GetById(buyerId)}.WriteCollectionAsTable();
 
             Console.ReadKey();
         }
 
-        private void PrintProductInformation()
+        private async Task PrintProductInformation()
         {
             var orderId = ReadId();
 
-            var productId = _orderManager.GetById(orderId).ProductId;
+            var productId = (await _orderManager.GetById(orderId)).ProductId;
 
             _productConsoleService.ProductId = productId;
 
-            _productConsoleService.StartConsoleLoop();
+            await _productConsoleService.StartConsoleLoop();
         }
 
-        private void ChangeStatus()
+        private async Task ChangeStatus()
         {
             var orderId = ReadId();
 
-            var order = _orderManager.GetById(orderId);
+            var order = await _orderManager.GetById(orderId);
 
             Console.WriteLine("Enter new status of order");
             Console.WriteLine("1. Created");
@@ -109,7 +117,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
 
             order.OrderStatus = newStatus;
 
-            _orderManager.Update(order);
+            await _orderManager.Update(order);
         }
 
         private int ReadId()
@@ -117,30 +125,6 @@ namespace ComputerStore.ConsoleLayer.ConsoleView
             Console.WriteLine("Enter Id of order");
 
             return int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
-        }
-
-
-        protected override void PrintAll()
-        {
-            var items = _orderManager.GetAll()
-                .Select(item => new OrderViewModel
-                {
-                    ProductName = _productManager.GetById(item.ProductId).Name,
-                    BuyerAddress = _buyerManager.GetById(item.BuyerId).Address,
-                    Count = item.Amount,
-                    OrderStatus = item.OrderStatus,
-                    Id = item.Id
-                }).ToList();
-
-            items.WriteCollectionAsTable();
-        }
-
-        protected override void PrintMenu()
-        {
-            Console.WriteLine("1. Print details of buyer");
-            Console.WriteLine("2. Print details of product");
-            Console.WriteLine("3. Change order status");
-            Console.WriteLine("4. Back");
         }
     }
 }

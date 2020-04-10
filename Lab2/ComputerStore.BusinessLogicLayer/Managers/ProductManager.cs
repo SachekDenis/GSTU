@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using ComputerStore.BusinessLogicLayer.Exception;
 using ComputerStore.BusinessLogicLayer.Models;
@@ -34,7 +35,7 @@ namespace ComputerStore.BusinessLogicLayer.Managers
             _supplies = supplies;
         }
 
-        public void Add(Product product)
+        public async Task Add(Product product)
         {
             var productDto = _mapper.Map<ProductDto>(product);
 
@@ -43,7 +44,7 @@ namespace ComputerStore.BusinessLogicLayer.Managers
                 throw new ValidationException($"{nameof(product)} has invalid data");
             }
 
-            _products.Add(productDto);
+            await _products.Add(productDto);
 
             try
             {
@@ -62,28 +63,29 @@ namespace ComputerStore.BusinessLogicLayer.Managers
             }
             catch (ValidationException)
             {
-                _products.Delete(productDto.Id);
+                await _products.Delete(productDto.Id);
                 throw;
             }
 
             product.Id = productDto.Id;
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            _supplies.GetAll()
-                .Where(supplyDto => supplyDto.ProductId == id)
-                .ToList()
-                .ForEach(supplyDto => _supplies.Delete(supplyDto.Id));
-            _fields.GetAll()
-                .Where(fieldDto => fieldDto.ProductId == id)
-                .ToList()
-                .ForEach(fieldDto => _fields.Delete(fieldDto.Id));
+            foreach (var supplyDto in (await _supplies.GetAll()).Where(supplyDto => supplyDto.ProductId == id))
+            {
+                await _supplies.Delete(supplyDto.Id);
+            }
 
-            _products.Delete(id);
+            foreach (var fieldDto in (await _fields.GetAll()).Where(fieldDto => fieldDto.ProductId == id))
+            {
+                await _fields.Delete(fieldDto.Id);
+            }
+
+            await _products.Delete(id);
         }
 
-        public void Update(Product product)
+        public async Task Update(Product product)
         {
             var productDto = _mapper.Map<ProductDto>(product);
 
@@ -94,9 +96,9 @@ namespace ComputerStore.BusinessLogicLayer.Managers
 
             var fieldList = product.Fields.ToList();
 
-            fieldList.ForEach(field =>
+            fieldList.ForEach(async field =>
             {
-                field.Id = _fields.GetAll().First(fieldDto =>
+                field.Id = (await _fields.GetAll()).First(fieldDto =>
                     fieldDto.ProductId == product.Id && fieldDto.CharacteristicId == field.CharacteristicId).Id;
 
                 var fieldDto = _mapper.Map<FieldDto>(field);
@@ -106,28 +108,30 @@ namespace ComputerStore.BusinessLogicLayer.Managers
                     throw new ValidationException($"{nameof(field)} has invalid data");
                 }
 
-                _fields.Update(fieldDto);
+                await _fields.Update(fieldDto);
             });
 
             product.Fields = fieldList;
 
-            _products.Update(productDto);
+            await _products.Update(productDto);
         }
 
-        public IEnumerable<Product> GetAll()
+        public async Task<IEnumerable<Product>> GetAll()
         {
-            return _products.GetAll().Select(MapProduct);
+            var fields = await _fields.GetAll();
+            return (await _products.GetAll()).Select(item => MapProduct(item, fields));
         }
 
-        public Product GetById(int id)
+        public async Task<Product> GetById(int id)
         {
-            return MapProduct(_products.GetById(id));
+            var fields = await _fields.GetAll();
+            return MapProduct(await _products.GetById(id), fields);
         }
 
-        private Product MapProduct(ProductDto productDto)
+        private Product MapProduct(ProductDto productDto, IEnumerable<FieldDto> fields)
         {
             var product = _mapper.Map<Product>(productDto);
-            product.Fields = _fields.GetAll()
+            product.Fields = fields
                 .Where(fieldDto => fieldDto.ProductId == product.Id)
                 .Select(fieldDto => _mapper.Map<Field>(fieldDto))
                 .ToList();

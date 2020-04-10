@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using ComputerStore.BusinessLogicLayer.Exception;
 using ComputerStore.BusinessLogicLayer.Models;
@@ -24,7 +25,7 @@ namespace ComputerStore.BusinessLogicLayer.Managers
             _items = items;
         }
 
-        public void Add(Characteristic characteristic)
+        public async Task Add(Characteristic characteristic)
         {
             var characteristicDto = _mapper.Map<CharacteristicDto>(characteristic);
 
@@ -33,16 +34,16 @@ namespace ComputerStore.BusinessLogicLayer.Managers
                 throw new ValidationException($"{nameof(characteristic)} has invalid data");
             }
 
-            _items.Add(characteristicDto);
+            await _items.Add(characteristicDto);
             characteristic.Id = characteristicDto.Id;
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            _items.Delete(id);
+            await _items.Delete(id);
         }
 
-        public void Update(Characteristic characteristic)
+        public async Task Update(Characteristic characteristic)
         {
             var characteristicDto = _mapper.Map<CharacteristicDto>(characteristic);
 
@@ -51,17 +52,17 @@ namespace ComputerStore.BusinessLogicLayer.Managers
                 throw new ValidationException($"{nameof(characteristic)} has invalid data");
             }
 
-            _items.Update(characteristicDto);
+            await _items.Update(characteristicDto);
         }
 
-        public IEnumerable<Characteristic> GetAll()
+        public async Task<IEnumerable<Characteristic>> GetAll()
         {
-            return _items.GetAll().Select(item => _mapper.Map<Characteristic>(item));
+            return (await _items.GetAll()).Select(item => _mapper.Map<Characteristic>(item));
         }
 
-        public Characteristic GetById(int id)
+        public async Task<Characteristic> GetById(int id)
         {
-            return _mapper.Map<Characteristic>(_items.GetById(id));
+            return _mapper.Map<Characteristic>(await _items.GetById(id));
         }
     }
 }

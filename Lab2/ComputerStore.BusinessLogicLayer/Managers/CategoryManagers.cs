@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using ComputerStore.BusinessLogicLayer.Exception;
 using ComputerStore.BusinessLogicLayer.Models;
@@ -24,7 +25,7 @@ namespace ComputerStore.BusinessLogicLayer.Managers
             _items = items;
         }
 
-        public void Add(Category category)
+        public async Task Add(Category category)
         {
             var categoryDto = _mapper.Map<CategoryDto>(category);
 
@@ -33,17 +34,17 @@ namespace ComputerStore.BusinessLogicLayer.Managers
                 throw new ValidationException($"{nameof(category)} has invalid data");
             }
 
-            _items.Add(categoryDto);
+            await _items.Add(categoryDto);
 
             category.Id = categoryDto.Id;
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            _items.Delete(id);
+            await _items.Delete(id);
         }
 
-        public void Update(Category category)
+        public async Task Update(Category category)
         {
             var categoryDto = _mapper.Map<CategoryDto>(category);
 
@@ -52,17 +53,17 @@ namespace ComputerStore.BusinessLogicLayer.Managers
                 throw new ValidationException($"{nameof(category)} has invalid data");
             }
 
-            _items.Update(categoryDto);
+            await _items.Update(categoryDto);
         }
 
-        public IEnumerable<Category> GetAll()
+        public async Task<IEnumerable<Category>> GetAll()
         {
-            return _items.GetAll().Select(item => _mapper.Map<Category>(item));
+            return (await _items.GetAll()).Select(item => _mapper.Map<Category>(item));
         }
 
-        public Category GetById(int id)
+        public async Task<Category> GetById(int id)
         {
-            return _mapper.Map<Category>(_items.GetById(id));
+            return _mapper.Map<Category>(await _items.GetById(id));
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using ComputerStore.BusinessLogicLayer.Exception;
 using ComputerStore.BusinessLogicLayer.Models;
@@ -24,7 +25,7 @@ namespace ComputerStore.BusinessLogicLayer.Managers
             _items = items;
         }
 
-        public void Add(Supply supply)
+        public async Task Add(Supply supply)
         {
             var supplyDto = _mapper.Map<SupplyDto>(supply);
 
@@ -33,16 +34,16 @@ namespace ComputerStore.BusinessLogicLayer.Managers
                 throw new ValidationException($"{nameof(supply)} has invalid data");
             }
 
-            _items.Add(supplyDto);
+            await _items.Add(supplyDto);
             supply.Id = supplyDto.Id;
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            _items.Delete(id);
+            await _items.Delete(id);
         }
 
-        public void Update(Supply supply)
+        public async Task Update(Supply supply)
         {
             var supplyDto = _mapper.Map<SupplyDto>(supply);
 
@@ -51,17 +52,17 @@ namespace ComputerStore.BusinessLogicLayer.Managers
                 throw new ValidationException($"{nameof(supply)} has invalid data");
             }
 
-            _items.Update(supplyDto);
+            await _items.Update(supplyDto);
         }
 
-        public IEnumerable<Supply> GetAll()
+        public async Task<IEnumerable<Supply>> GetAll()
         {
-            return _items.GetAll().Select(item => _mapper.Map<Supply>(item));
+            return (await _items.GetAll()).Select(item => _mapper.Map<Supply>(item));
         }
 
-        public Supply GetById(int id)
+        public async Task<Supply> GetById(int id)
         {
-            return _mapper.Map<Supply>(_items.GetById(id));
+            return _mapper.Map<Supply>(await _items.GetById(id));
         }
     }
 }

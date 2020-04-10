@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ComputerStore.BusinessLogicLayer.Managers
 {
-    public interface IManager<TDto>
+    public interface IManager<T>
     {
-        void Add(TDto buyerDto);
-        void Delete(int id);
-        void Update(TDto buyerDto);
-        IEnumerable<TDto> GetAll();
-        TDto GetById(int id);
+        Task Add(T buyerDto);
+        Task Delete(int id);
+        Task Update(T buyerDto);
+        Task<IEnumerable<T>> GetAll();
+        Task<T> GetById(int id);
     }
 }

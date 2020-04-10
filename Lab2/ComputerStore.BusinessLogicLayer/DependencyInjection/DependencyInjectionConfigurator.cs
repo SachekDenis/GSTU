@@ -19,21 +19,24 @@ namespace ComputerStore.BusinessLogicLayer.DependencyInjection
 
             return new ServiceCollection()
                 .AddDbContext<StoreContext>(options =>
-                    options.UseSqlServer(config.GetConnectionString("StoreConnection")))
+                    options.UseSqlServer(config.GetConnectionString("StoreConnection")), ServiceLifetime.Transient)
                 .Scan(scan => scan
                     .FromAssemblies(businessAssembly, consoleAssembly)
                     .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Manager")))
-                    .AddClasses(classes => classes.Where(type => type.Name.EndsWith("ConsoleService")))
+                    .AddClasses(classes => classes.Where(type => type.Name.EndsWith("BaseConsoleService")))
+                    .AddClasses(classes => classes.Where(type => type.Name.EndsWith("PrintConsoleService")))
                     .AsSelf()
                     .WithTransientLifetime())
                 .Scan(scan => scan
-                    .FromAssemblies(businessAssembly)
+                    .FromAssemblies(businessAssembly, consoleAssembly)
                     .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Validator")))
+                    .AsImplementedInterfaces()
+                    .AddClasses(classes => classes.Where(type => type.Name.EndsWith("CrudConsoleService")))
                     .AsImplementedInterfaces()
                     .WithTransientLifetime())
                 .AddSingleton(config)
                 .AddAutoMapper(typeof(StoreProfile))
-                .AddScoped(typeof(IRepository<>), typeof(StoreRepository<>))
+                .AddTransient(typeof(IRepository<>), typeof(StoreRepository<>))
                 .AddLogging(loggingBuilder => loggingBuilder.AddFile("Logs/StoreApp-{Date}.txt"))
                 .BuildServiceProvider();
         }
