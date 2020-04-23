@@ -1,4 +1,4 @@
-﻿namespace ComputerStore.BusinessLogicLayer.Validation
+﻿namespace ComputerStore.BusinessLogicLayer.Validation.RegexStorage
 {
     public static class RegexCollection
     {

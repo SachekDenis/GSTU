@@ -1,5 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using ComputerStore.BusinessLogicLayer.Models;
+using ComputerStore.BusinessLogicLayer.Validation.RegexStorage;
 
 namespace ComputerStore.BusinessLogicLayer.Validation
 {
