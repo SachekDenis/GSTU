@@ -1,0 +1,41 @@
+{
+  "name": "Characteristics",
+  "schema": {
+    "columns": [
+      {
+        "name": "Id",
+        "type": "System.Int32"
+      },
+      {
+        "name": "CategoryId",
+        "type": "System.Int32"
+      },
+      {
+        "name": "Name",
+        "type": "System.String"
+      }
+    ]
+  },
+  "data": [
+    {
+      "Id": 1,
+      "CategoryId": 1,
+      "Name": "GPU frequency"
+    },
+    {
+      "Id": 2,
+      "CategoryId": 1,
+      "Name": "VRAM size"
+    },
+    {
+      "Id": 3,
+      "CategoryId": 2,
+      "Name": "CPU frequency"
+    },
+    {
+      "Id": 4,
+      "CategoryId": 2,
+      "Name": "Number of cores"
+    }
+  ]
+}
