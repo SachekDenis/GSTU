@@ -17,8 +17,8 @@ namespace ComputerStore.BusinessLogicLayer.Managers
         private readonly IValidator<Supply> _validator;
 
         public SupplyManager(IMapper mapper,
-            IValidator<Supply> supplyValidator,
-            IRepository<SupplyDto> items)
+                             IValidator<Supply> supplyValidator,
+                             IRepository<SupplyDto> items)
         {
             _mapper = mapper;
             _validator = supplyValidator;

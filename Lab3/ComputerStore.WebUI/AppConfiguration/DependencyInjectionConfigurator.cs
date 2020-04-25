@@ -18,17 +18,17 @@ namespace ComputerStore.WebUI.AppConfiguration
 
             services
                 .AddDbContext<StoreContext>(options =>
-                    options.UseSqlServer(config.GetConnectionString("StoreConnection")))
+                                                options.UseSqlServer(config.GetConnectionString("StoreConnection")))
                 .Scan(scan => scan
-                    .FromAssemblies(businessAssembly)
-                    .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Manager")))
-                    .AsSelf()
-                    .WithTransientLifetime())
+                              .FromAssemblies(businessAssembly)
+                              .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Manager")))
+                              .AsSelf()
+                              .WithTransientLifetime())
                 .Scan(scan => scan
-                    .FromAssemblies(businessAssembly)
-                    .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Validator")))
-                    .AsImplementedInterfaces()
-                    .WithTransientLifetime())
+                              .FromAssemblies(businessAssembly)
+                              .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Validator")))
+                              .AsImplementedInterfaces()
+                              .WithTransientLifetime())
                 .AddAutoMapper(typeof(StoreProfile))
                 .AddScoped(typeof(IRepository<>), typeof(StoreRepository<>))
                 .AddLogging(loggingBuilder => loggingBuilder.AddFile("Logs/StoreApp-{Date}.txt"));

@@ -11,7 +11,7 @@ namespace ComputerStore.BusinessLogicLayer.Validation
                      || item.AmountInStorage < 0
                      || item.Price < 0
                      || item.Fields == null
-                );
+                    );
         }
     }
 }

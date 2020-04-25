@@ -41,8 +41,8 @@ namespace ComputerStore.DataAccessLayer.Repo
         public async Task<T> GetById(int id)
         {
             return await _context.Set<T>()
-                .AsNoTracking()
-                .FirstOrDefaultAsync(e => e.Id == id);
+                                 .AsNoTracking()
+                                 .FirstOrDefaultAsync(e => e.Id == id);
         }
 
         public async Task Update(T item)

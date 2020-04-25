@@ -17,8 +17,8 @@ namespace ComputerStore.BusinessLogicLayer.Managers
         private readonly IValidator<Category> _validator;
 
         public CategoryManager(IMapper mapper,
-            IValidator<Category> categoryValidator,
-            IRepository<CategoryDto> items)
+                               IValidator<Category> categoryValidator,
+                               IRepository<CategoryDto> items)
         {
             _mapper = mapper;
             _validator = categoryValidator;

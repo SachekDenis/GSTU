@@ -49,17 +49,18 @@ namespace ComputerStore.BusinessLogicLayer.Managers
             try
             {
                 product.Fields.ToList().ForEach(field =>
-                {
-                    var fieldDto = _mapper.Map<FieldDto>(field);
-                    fieldDto.ProductId = productDto.Id;
+                                                {
+                                                    var fieldDto = _mapper.Map<FieldDto>(field);
+                                                    fieldDto.ProductId = productDto.Id;
 
-                    if (!_fieldValidator.Validate(field))
-                    {
-                        throw new ValidationException($"{nameof(field)} has invalid data");
-                    }
+                                                    if (!_fieldValidator.Validate(field))
+                                                    {
+                                                        throw new
+                                                            ValidationException($"{nameof(field)} has invalid data");
+                                                    }
 
-                    _fields.Add(fieldDto);
-                });
+                                                    _fields.Add(fieldDto);
+                                                });
             }
             catch (ValidationException)
             {
@@ -97,19 +98,21 @@ namespace ComputerStore.BusinessLogicLayer.Managers
             var fieldList = product.Fields.ToList();
 
             fieldList.ForEach(async field =>
-            {
-                field.Id = (await _fields.GetAll()).First(fieldDto =>
-                    fieldDto.ProductId == product.Id && fieldDto.CharacteristicId == field.CharacteristicId).Id;
+                              {
+                                  field.Id = (await _fields.GetAll()).First(fieldDto =>
+                                                                                fieldDto.ProductId == product.Id &&
+                                                                                fieldDto.CharacteristicId ==
+                                                                                field.CharacteristicId).Id;
 
-                var fieldDto = _mapper.Map<FieldDto>(field);
+                                  var fieldDto = _mapper.Map<FieldDto>(field);
 
-                if (!_fieldValidator.Validate(field))
-                {
-                    throw new ValidationException($"{nameof(field)} has invalid data");
-                }
+                                  if (!_fieldValidator.Validate(field))
+                                  {
+                                      throw new ValidationException($"{nameof(field)} has invalid data");
+                                  }
 
-                await _fields.Update(fieldDto);
-            });
+                                  await _fields.Update(fieldDto);
+                              });
 
             product.Fields = fieldList;
 
@@ -132,9 +135,9 @@ namespace ComputerStore.BusinessLogicLayer.Managers
         {
             var product = _mapper.Map<Product>(productDto);
             product.Fields = fields
-                .Where(fieldDto => fieldDto.ProductId == product.Id)
-                .Select(fieldDto => _mapper.Map<Field>(fieldDto))
-                .ToList();
+                             .Where(fieldDto => fieldDto.ProductId == product.Id)
+                             .Select(fieldDto => _mapper.Map<Field>(fieldDto))
+                             .ToList();
             return product;
         }
     }

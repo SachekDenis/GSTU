@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using ComputerStore.BusinessLogicLayer.Validation;
 using ComputerStore.BusinessLogicLayer.Validation.RegexStorage;
 
 namespace ComputerStore.BusinessLogicLayer.Models

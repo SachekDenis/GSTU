@@ -1,5 +1,3 @@
-using System;
-
 namespace ComputerStore.WebUI.Models
 {
     public class ErrorViewModel
