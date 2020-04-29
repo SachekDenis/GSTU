@@ -50,7 +50,7 @@ namespace ComputerStore.WebUI.Controllers
         }
 
         private IEnumerable<FieldViewModel> CreateFieldViewModels(Product product,
-                                                                             IEnumerable<Characteristic> characteristics)
+                                                                  IEnumerable<Characteristic> characteristics)
         {
             return product.Fields.Select(field => new FieldViewModel
                                                   {
@@ -181,8 +181,21 @@ namespace ComputerStore.WebUI.Controllers
             var manufacturers = await _manufacturerManager.GetAll();
             var characteristics = await _characteristicManager.GetAll();
             var product = await _productManager.GetById(id);
-            var productViewModel = CreateProductViewModel(product,categories,manufacturers);
+            var productViewModel = CreateProductViewModel(product, categories, manufacturers);
             productViewModel.Fields = CreateFieldViewModels(product, characteristics);
+
+            var emptyFields = characteristics
+                              .Where(characteristic =>
+                                         characteristic.CategoryId == product.CategoryId &&
+                                         !productViewModel.Fields.Any(field => field.CharacteristicId == characteristic.Id))
+                              .Select(characteristic => new FieldViewModel
+                                                        {
+                                                            CharacteristicId = characteristic.Id,
+                                                            CharacteristicName = characteristic.Name
+                                                        })
+                              .ToList();
+
+            productViewModel.Fields = productViewModel.Fields.Union(emptyFields).ToList();
 
             return View(productViewModel);
         }
@@ -218,7 +231,7 @@ namespace ComputerStore.WebUI.Controllers
             var categories = await _categoryManager.GetAll();
             var manufacturers = await _manufacturerManager.GetAll();
             var product = await _productManager.GetById(id);
-            var productViewModel = CreateProductViewModel(product,categories,manufacturers);
+            var productViewModel = CreateProductViewModel(product, categories, manufacturers);
             return View(productViewModel);
         }
 
