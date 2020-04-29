@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using ComputerStore.BusinessLogicLayer.Models;
 
-namespace ComputerStore.BusinessLogicLayer.Models
+namespace ComputerStore.WebUI.Models
 {
-    public class Product
+    public class ProductViewModel
     {
         [Required]
         public int Id { get; set; }
@@ -12,7 +13,7 @@ namespace ComputerStore.BusinessLogicLayer.Models
         public string Name { get; set; }
 
         [Required]
-        [Range(typeof(decimal),"5.0", "99999.0")]
+        [Range(0.0, double.MaxValue)]
         public decimal Price { get; set; }
 
         [Required]
@@ -23,9 +24,15 @@ namespace ComputerStore.BusinessLogicLayer.Models
         public int ManufacturerId { get; set; }
 
         [Required]
+        public string ManufacturerName { get; set; }
+
+        [Required]
         public int CategoryId { get; set; }
 
         [Required]
-        public IEnumerable<Field> Fields { get; set; }
+        public string CategoryName { get; set; }
+
+        [Required]
+        public IEnumerable<FieldViewModel> Fields { get; set; }
     }
 }

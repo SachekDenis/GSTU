@@ -23,7 +23,7 @@ namespace ComputerStore.WebUI.AppConfiguration
                               .FromAssemblies(businessAssembly)
                               .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Manager")))
                               .AsSelf()
-                              .WithTransientLifetime())
+                              .WithScopedLifetime())
                 .Scan(scan => scan
                               .FromAssemblies(businessAssembly)
                               .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Validator")))

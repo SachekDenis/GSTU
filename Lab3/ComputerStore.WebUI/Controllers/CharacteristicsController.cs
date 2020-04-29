@@ -58,8 +58,11 @@ namespace ComputerStore.WebUI.Controllers
         // GET: Characteristics/Create
         public async Task<ActionResult> Create()
         {
-            ViewBag.Categories = new SelectList(await _categoryManager.GetAll(), "Id", "Name");
-            return View();
+            var characteristicViewModel = new CharacteristicViewModel
+                                          {
+                                              CategoriesSelectList = new SelectList(await _categoryManager.GetAll(), "Id", "Name")
+                                          };
+            return View(characteristicViewModel);
         }
 
         // POST: Characteristics/Create
@@ -79,7 +82,7 @@ namespace ComputerStore.WebUI.Controllers
             }
             catch
             {
-                ViewBag.Categories = new SelectList(await _categoryManager.GetAll(), "Id", "Name");
+                characteristicViewModel.CategoriesSelectList = new SelectList(await _categoryManager.GetAll(), "Id", "Name");
                 return View(characteristicViewModel);
             }
         }
@@ -87,9 +90,9 @@ namespace ComputerStore.WebUI.Controllers
         // GET: Characteristics/Edit/5
         public async Task<ActionResult> Edit(int id)
         {
-            ViewBag.Categories = new SelectList(await _categoryManager.GetAll(), "Id", "Name");
             var categories = await _categoryManager.GetAll();
             var characteristicViewModel = CreateCharacteristicViewModel(await _characteristicManager.GetById(id), categories);
+            characteristicViewModel.CategoriesSelectList = new SelectList(await _categoryManager.GetAll(), "Id", "Name");
             return View(characteristicViewModel);
         }
 
@@ -111,7 +114,7 @@ namespace ComputerStore.WebUI.Controllers
             }
             catch
             {
-                ViewBag.Categories = new SelectList(await _categoryManager.GetAll(), "Id", "Name");
+                characteristicViewModel.CategoriesSelectList = new SelectList(await _categoryManager.GetAll(), "Id", "Name");
                 return View(characteristicViewModel);
             }
         }

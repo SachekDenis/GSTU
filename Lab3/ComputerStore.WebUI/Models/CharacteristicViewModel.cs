@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ComputerStore.WebUI.Models
 {
@@ -15,5 +16,7 @@ namespace ComputerStore.WebUI.Models
 
         [Required]
         public string Name { get; set; }
+
+        public SelectList CategoriesSelectList { get; set; }
     }
 }

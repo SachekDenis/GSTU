@@ -8,21 +8,15 @@ namespace ComputerStore.BusinessLogicLayer.MapperProfile
     {
         public StoreProfile()
         {
-            CreateMap<Product, SupplyDto>();
-
             CreateMap<Product, ProductDto>().ReverseMap();
 
             CreateMap<Order, OrderDto>().ReverseMap();
 
             CreateMap<Manufacturer, ManufacturerDto>().ReverseMap();
 
-            CreateMap<Supplier, SupplierDto>().ReverseMap();
-
             CreateMap<Category, CategoryDto>().ReverseMap();
 
             CreateMap<Characteristic, CharacteristicDto>().ReverseMap();
-
-            CreateMap<Supply, SupplyDto>().ReverseMap();
 
             CreateMap<Field, FieldDto>().ReverseMap();
 

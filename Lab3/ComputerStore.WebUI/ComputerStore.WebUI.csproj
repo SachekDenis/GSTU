@@ -5,6 +5,40 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Seed\Categories.json" />
+    <Content Remove="Seed\Characteristics.json" />
+    <Content Remove="Seed\Fields.json" />
+    <Content Remove="Seed\Manufacturers.json" />
+    <Content Remove="Seed\Orders.json" />
+    <Content Remove="Seed\Products.json" />
+    <Content Remove="Seed\Users.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Seed\Categories.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Seed\Characteristics.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Seed\Fields.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Seed\Manufacturers.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Seed\Orders.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Seed\Products.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Seed\Users.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.3" />
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.2.0" />
