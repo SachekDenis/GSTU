@@ -1,0 +1,52 @@
+﻿@model IEnumerable<ComputerStore.WebUI.Models.OrderViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BuyertName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderStatus)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                <a asp-action="Details" asp-controller="Products" asp-route-id="@item.ProductId">@item.ProductName</a>
+            </td>
+            <td>
+                <a asp-action="Details" asp-controller="Buyers" asp-route-id="@item.BuyerId">@item.BuyertName</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderStatus)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {  id=item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

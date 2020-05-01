@@ -116,9 +116,6 @@ namespace ComputerStore.WebUI.Controllers
         // GET: Products/Create
         public async Task<ActionResult> Create()
         {
-            ViewBag.Categories = new SelectList(await _categoryManager.GetAll(), "Id", "Name");
-            ViewBag.Manufacturers = new SelectList(await _manufacturerManager.GetAll(), "Id", "Name");
-
             var characteristics = await _characteristicManager.GetAll();
             var productViewModel = new ProductViewModel
                                    {
@@ -127,7 +124,9 @@ namespace ComputerStore.WebUI.Controllers
                                                                      {
                                                                          CharacteristicName = characteristic.Name,
                                                                          CharacteristicId = characteristic.Id
-                                                                     })
+                                                                     }),
+                                       Categories = new SelectList(await _categoryManager.GetAll(), "Id", "Name"),
+                                       Manufacturers = new SelectList(await _manufacturerManager.GetAll(), "Id", "Name")
                                    };
 
             return View(productViewModel);
@@ -154,8 +153,8 @@ namespace ComputerStore.WebUI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(ProductViewModel productViewModel, IFormCollection formCollection)
         {
-            ViewBag.Categories = new SelectList(await _categoryManager.GetAll(), "Id", "Name");
-            ViewBag.Manufacturers = new SelectList(await _manufacturerManager.GetAll(), "Id", "Name");
+            productViewModel.Categories = new SelectList(await _categoryManager.GetAll(), "Id", "Name");
+            productViewModel.Manufacturers = new SelectList(await _manufacturerManager.GetAll(), "Id", "Name");
 
             try
             {
@@ -174,15 +173,15 @@ namespace ComputerStore.WebUI.Controllers
         // GET: Products/Edit/5
         public async Task<ActionResult> Edit(int id)
         {
-            ViewBag.Categories = new SelectList(await _categoryManager.GetAll(), "Id", "Name");
-            ViewBag.Manufacturers = new SelectList(await _manufacturerManager.GetAll(), "Id", "Name");
-
             var categories = await _categoryManager.GetAll();
             var manufacturers = await _manufacturerManager.GetAll();
             var characteristics = await _characteristicManager.GetAll();
             var product = await _productManager.GetById(id);
             var productViewModel = CreateProductViewModel(product, categories, manufacturers);
             productViewModel.Fields = CreateFieldViewModels(product, characteristics);
+
+            productViewModel.Categories = new SelectList(await _categoryManager.GetAll(), "Id", "Name");
+            productViewModel.Manufacturers = new SelectList(await _manufacturerManager.GetAll(), "Id", "Name");
 
             var emptyFields = characteristics
                               .Where(characteristic =>
@@ -206,8 +205,8 @@ namespace ComputerStore.WebUI.Controllers
         public async Task<ActionResult> Edit(ProductViewModel productViewModel, IFormCollection formCollection)
         {
             var characteristics = await _characteristicManager.GetAll();
-            ViewBag.Categories = new SelectList(await _categoryManager.GetAll(), "Id", "Name");
-            ViewBag.Manufacturers = new SelectList(await _manufacturerManager.GetAll(), "Id", "Name");
+            productViewModel.Categories = new SelectList(await _categoryManager.GetAll(), "Id", "Name");
+            productViewModel.Manufacturers = new SelectList(await _manufacturerManager.GetAll(), "Id", "Name");
             var product = CreateProduct(productViewModel, formCollection);
             productViewModel.Fields = CreateFieldViewModels(product, characteristics);
 

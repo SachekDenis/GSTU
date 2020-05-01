@@ -24,8 +24,8 @@ namespace ComputerStore.WebUI.Controllers
         // GET: Manufacturers/Details/5
         public async Task<ActionResult> Details(int id)
         {
-            var item = await _manufacturerManager.GetById(id);
-            return View(item);
+            var manufacturer = await _manufacturerManager.GetById(id);
+            return View(manufacturer);
         }
 
         // GET: Manufacturers/Create
@@ -37,41 +37,41 @@ namespace ComputerStore.WebUI.Controllers
         // POST: Manufacturers/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Manufacturer item)
+        public async Task<IActionResult> Create(Manufacturer manufacturer)
         {
             try
             {
-                await _manufacturerManager.Add(item);
+                await _manufacturerManager.Add(manufacturer);
 
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View(item);
+                return View(manufacturer);
             }
         }
 
         // GET: Manufacturers/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
-            var item = await _manufacturerManager.GetById(id);
-            return View(item);
+            var manufacturer = await _manufacturerManager.GetById(id);
+            return View(manufacturer);
         }
 
         // POST: Manufacturers/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Manufacturer item)
+        public async Task<IActionResult> Edit(Manufacturer manufacturer)
         {
             try
             {
-                await _manufacturerManager.Update(item);
+                await _manufacturerManager.Update(manufacturer);
 
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View(item);
+                return View(manufacturer);
             }
         }
 
@@ -79,24 +79,24 @@ namespace ComputerStore.WebUI.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            var item = await _manufacturerManager.GetById(id);
-            return View(item);
+            var manufacturer = await _manufacturerManager.GetById(id);
+            return View(manufacturer);
         }
 
         // POST: Manufacturers/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(Manufacturer item)
+        public async Task<IActionResult> Delete(Manufacturer manufacturer)
         {
             try
             {
-                await _manufacturerManager.Delete(item.Id);
+                await _manufacturerManager.Delete(manufacturer.Id);
 
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View(item);
+                return View(manufacturer);
             }
         }
     }

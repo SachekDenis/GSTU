@@ -7,41 +7,45 @@
 <h1>Edit</h1>
 
 <h4>ProductViewModel</h4>
-<hr />
+<hr/>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit" asp-route-id="@Model.Id">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
+                <input asp-for="Name" class="form-control"/>
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
+                <input asp-for="Price" class="form-control"/>
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="AmountInStorage" class="control-label"></label>
-                <input asp-for="AmountInStorage" class="form-control" />
+                <input asp-for="AmountInStorage" class="form-control"/>
                 <span asp-validation-for="AmountInStorage" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ManufacturerId" class="control-label"></label>
-                @Html.DropDownListFor(model => model.ManufacturerId, ViewBag.Manufacturers as SelectList, new { @class = "form-control" })
+                <label asp-for="ManufacturerName" class="control-label"></label>
+                @Html.DropDownListFor(model => model.ManufacturerId, Model.Manufacturers, new
+                                                                                                          {
+                                                                                                              @class = "form-control"
+                                                                                                          })
                 <span asp-validation-for="ManufacturerId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CategoryId" class="control-label"></label>
-                @Html.DropDownListFor(model => model.CategoryId, ViewBag.Categories as SelectList, new { @class = "form-control", @onchange = "generateFieldInputs()", @id = "categoryList" })
+                <label asp-for="CategoryName" class="control-label"></label>
+                <input asp-for="CategoryId" class="form-control" hidden="">
+                <input asp-for="CategoryName" class="form-control" disabled="disabled">
                 <span asp-validation-for="CategoryId" class="text-danger"></span>
             </div>
             <div id="fieldInputs">
                 <partial model="@Model.Fields" name="SelectFieldsForCategory"/>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary"/>
             </div>
         </form>
     </div>
@@ -52,5 +56,5 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }

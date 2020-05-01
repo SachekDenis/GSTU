@@ -1,0 +1,554 @@
+2020-05-01T16:34:35.2539978+03:00 80000008-0003-fb00-b63f-84710c7967bb [WRN] No type was specified for the decimal column '"Price"' on entity type '"ProductDto"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'HasColumnType()'. (3a0db05f)
+2020-05-01T16:34:35.2931340+03:00 80000008-0003-fb00-b63f-84710c7967bb [INF] Entity Framework Core "3.1.2" initialized '"StoreContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2020-05-01T16:34:37.0900274+03:00 80000008-0003-fb00-b63f-84710c7967bb [INF] Executed DbCommand ("29"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1" (0723d8ff)
+2020-05-01T16:34:37.1912122+03:00 80000008-0003-fb00-b63f-84710c7967bb [INF] Executed DbCommand ("90"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND NOT EXISTS (SELECT *
+         FROM [sys].[extended_properties] AS [ep]
+         WHERE [ep].[major_id] = [o].[object_id]
+             AND [ep].[minor_id] = 0
+             AND [ep].[class] = 1
+             AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0" (0723d8ff)
+2020-05-01T16:34:37.4637662+03:00 80000008-0003-fb00-b63f-84710c7967bb [INF] Executed DbCommand ("19"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [u].[Id], [u].[Address], [u].[Email], [u].[FirstName], [u].[PhoneNumber], [u].[SecondName], [u].[ZipCode]
+FROM [Users] AS [u]" (0723d8ff)
+2020-05-01T16:34:37.4935443+03:00 80000008-0003-fb00-b63f-84710c7967bb [INF] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [f].[Id], [f].[CharacteristicId], [f].[ProductId], [f].[Value]
+FROM [Fields] AS [f]" (0723d8ff)
+2020-05-01T16:34:37.5003255+03:00 80000008-0003-fb00-b63f-84710c7967bb [INF] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [p].[Id], [p].[AmountInStorage], [p].[CategoryId], [p].[ManufacturerId], [p].[Name], [p].[Price]
+FROM [Products] AS [p]" (0723d8ff)
+2020-05-01T16:34:37.5111778+03:00 80000008-0003-fb00-b63f-84710c7967bb [INF] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [o].[Id], [o].[Amount], [o].[BuyerId], [o].[OrderStatus], [o].[ProductId]
+FROM [Orders] AS [o]" (0723d8ff)
+2020-05-01T16:36:49.2221904+03:00 80000004-0007-fa00-b63f-84710c7967bb [INF] Entity Framework Core "3.1.2" initialized '"StoreContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2020-05-01T16:36:49.2261343+03:00 80000004-0007-fa00-b63f-84710c7967bb [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1" (0723d8ff)
+2020-05-01T16:36:49.2276800+03:00 80000004-0007-fa00-b63f-84710c7967bb [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND NOT EXISTS (SELECT *
+         FROM [sys].[extended_properties] AS [ep]
+         WHERE [ep].[major_id] = [o].[object_id]
+             AND [ep].[minor_id] = 0
+             AND [ep].[class] = 1
+             AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0" (0723d8ff)
+2020-05-01T16:36:49.2304012+03:00 80000004-0007-fa00-b63f-84710c7967bb [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [u].[Id], [u].[Address], [u].[Email], [u].[FirstName], [u].[PhoneNumber], [u].[SecondName], [u].[ZipCode]
+FROM [Users] AS [u]" (0723d8ff)
+2020-05-01T16:36:49.2323169+03:00 80000004-0007-fa00-b63f-84710c7967bb [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [f].[Id], [f].[CharacteristicId], [f].[ProductId], [f].[Value]
+FROM [Fields] AS [f]" (0723d8ff)
+2020-05-01T16:36:49.2334361+03:00 80000004-0007-fa00-b63f-84710c7967bb [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [p].[Id], [p].[AmountInStorage], [p].[CategoryId], [p].[ManufacturerId], [p].[Name], [p].[Price]
+FROM [Products] AS [p]" (0723d8ff)
+2020-05-01T16:36:49.2346135+03:00 80000004-0007-fa00-b63f-84710c7967bb [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [o].[Id], [o].[Amount], [o].[BuyerId], [o].[OrderStatus], [o].[ProductId]
+FROM [Orders] AS [o]" (0723d8ff)
+2020-05-01T16:36:56.1571418+03:00 8000001f-0004-fe00-b63f-84710c7967bb [INF] Entity Framework Core "3.1.2" initialized '"StoreContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2020-05-01T16:36:56.1632965+03:00 8000001f-0004-fe00-b63f-84710c7967bb [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1" (0723d8ff)
+2020-05-01T16:36:56.1647292+03:00 8000001f-0004-fe00-b63f-84710c7967bb [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND NOT EXISTS (SELECT *
+         FROM [sys].[extended_properties] AS [ep]
+         WHERE [ep].[major_id] = [o].[object_id]
+             AND [ep].[minor_id] = 0
+             AND [ep].[class] = 1
+             AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0" (0723d8ff)
+2020-05-01T16:36:56.1905383+03:00 8000001f-0004-fe00-b63f-84710c7967bb [INF] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [c].[Id], [c].[Name]
+FROM [Categories] AS [c]" (0723d8ff)
+2020-05-01T16:36:56.1975942+03:00 8000001f-0004-fe00-b63f-84710c7967bb [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [m].[Id], [m].[Country], [m].[Name]
+FROM [Manufacturers] AS [m]" (0723d8ff)
+2020-05-01T16:36:56.2038642+03:00 8000001f-0004-fe00-b63f-84710c7967bb [INF] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [c].[Id], [c].[CategoryId], [c].[Name]
+FROM [Characteristics] AS [c]" (0723d8ff)
+2020-05-01T16:36:56.2062892+03:00 8000001f-0004-fe00-b63f-84710c7967bb [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [f].[Id], [f].[CharacteristicId], [f].[ProductId], [f].[Value]
+FROM [Fields] AS [f]" (0723d8ff)
+2020-05-01T16:36:56.3405217+03:00 8000001f-0004-fe00-b63f-84710c7967bb [INF] Executed DbCommand ("38"ms) [Parameters=["@__id_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [p].[Id], [p].[AmountInStorage], [p].[CategoryId], [p].[ManufacturerId], [p].[Name], [p].[Price]
+FROM [Products] AS [p]
+WHERE [p].[Id] = @__id_0" (0723d8ff)
+2020-05-01T16:37:32.9137230+03:00 8000001b-0000-fd00-b63f-84710c7967bb [WRN] No type was specified for the decimal column '"Price"' on entity type '"ProductDto"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'HasColumnType()'. (3a0db05f)
+2020-05-01T16:37:32.9573390+03:00 8000001b-0000-fd00-b63f-84710c7967bb [INF] Entity Framework Core "3.1.2" initialized '"StoreContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2020-05-01T16:37:33.3054501+03:00 8000001b-0000-fd00-b63f-84710c7967bb [INF] Executed DbCommand ("24"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1" (0723d8ff)
+2020-05-01T16:37:33.3514485+03:00 8000001b-0000-fd00-b63f-84710c7967bb [INF] Executed DbCommand ("36"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND NOT EXISTS (SELECT *
+         FROM [sys].[extended_properties] AS [ep]
+         WHERE [ep].[major_id] = [o].[object_id]
+             AND [ep].[minor_id] = 0
+             AND [ep].[class] = 1
+             AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0" (0723d8ff)
+2020-05-01T16:37:33.5603821+03:00 8000001b-0000-fd00-b63f-84710c7967bb [INF] Executed DbCommand ("17"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [c].[Id], [c].[Name]
+FROM [Categories] AS [c]" (0723d8ff)
+2020-05-01T16:37:33.5875905+03:00 8000001b-0000-fd00-b63f-84710c7967bb [INF] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [m].[Id], [m].[Country], [m].[Name]
+FROM [Manufacturers] AS [m]" (0723d8ff)
+2020-05-01T16:37:33.5967991+03:00 8000001b-0000-fd00-b63f-84710c7967bb [INF] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [f].[Id], [f].[CharacteristicId], [f].[ProductId], [f].[Value]
+FROM [Fields] AS [f]" (0723d8ff)
+2020-05-01T16:37:33.6040110+03:00 8000001b-0000-fd00-b63f-84710c7967bb [INF] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [p].[Id], [p].[AmountInStorage], [p].[CategoryId], [p].[ManufacturerId], [p].[Name], [p].[Price]
+FROM [Products] AS [p]" (0723d8ff)
+2020-05-01T16:37:35.4686855+03:00 80000004-0003-fa00-b63f-84710c7967bb [INF] Entity Framework Core "3.1.2" initialized '"StoreContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2020-05-01T16:37:35.4774484+03:00 80000004-0003-fa00-b63f-84710c7967bb [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1" (0723d8ff)
+2020-05-01T16:37:35.4789177+03:00 80000004-0003-fa00-b63f-84710c7967bb [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND NOT EXISTS (SELECT *
+         FROM [sys].[extended_properties] AS [ep]
+         WHERE [ep].[major_id] = [o].[object_id]
+             AND [ep].[minor_id] = 0
+             AND [ep].[class] = 1
+             AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0" (0723d8ff)
+2020-05-01T16:37:35.4953960+03:00 80000004-0003-fa00-b63f-84710c7967bb [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [f].[Id], [f].[CharacteristicId], [f].[ProductId], [f].[Value]
+FROM [Fields] AS [f]" (0723d8ff)
+2020-05-01T16:37:35.6230197+03:00 80000004-0003-fa00-b63f-84710c7967bb [INF] Executed DbCommand ("38"ms) [Parameters=["@__id_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [p].[Id], [p].[AmountInStorage], [p].[CategoryId], [p].[ManufacturerId], [p].[Name], [p].[Price]
+FROM [Products] AS [p]
+WHERE [p].[Id] = @__id_0" (0723d8ff)
+2020-05-01T16:37:50.5894122+03:00 80000006-0007-fa00-b63f-84710c7967bb [INF] Entity Framework Core "3.1.2" initialized '"StoreContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2020-05-01T16:37:50.5957348+03:00 80000006-0007-fa00-b63f-84710c7967bb [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1" (0723d8ff)
+2020-05-01T16:37:50.5972664+03:00 80000006-0007-fa00-b63f-84710c7967bb [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND NOT EXISTS (SELECT *
+         FROM [sys].[extended_properties] AS [ep]
+         WHERE [ep].[major_id] = [o].[object_id]
+             AND [ep].[minor_id] = 0
+             AND [ep].[class] = 1
+             AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0" (0723d8ff)
+2020-05-01T16:37:50.8165547+03:00 80000006-0007-fa00-b63f-84710c7967bb [INF] Executed DbCommand ("6"ms) [Parameters=["@p0='?' (Size = 4000), @p1='?' (Size = 4000), @p2='?' (Size = 4000), @p3='?' (Size = 4000), @p4='?' (Size = 4000), @p5='?' (Size = 4000)"], CommandType='Text', CommandTimeout='30']"
+""SET NOCOUNT ON;
+INSERT INTO [Users] ([Address], [Email], [FirstName], [PhoneNumber], [SecondName], [ZipCode])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5);
+SELECT [Id]
+FROM [Users]
+WHERE @@ROWCOUNT = 1 AND [Id] = scope_identity();" (0723d8ff)
+2020-05-01T16:37:51.0164601+03:00 80000006-0007-fa00-b63f-84710c7967bb [ERR] Failed executing DbCommand ("117"ms) [Parameters=["@p0='?' (DbType = Int32), @p1='?' (DbType = Int32), @p2='?' (DbType = Int32), @p3='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SET NOCOUNT ON;
+INSERT INTO [Orders] ([Amount], [BuyerId], [OrderStatus], [ProductId])
+VALUES (@p0, @p1, @p2, @p3);
+SELECT [Id]
+FROM [Orders]
+WHERE @@ROWCOUNT = 1 AND [Id] = scope_identity();" (627a98df)
+2020-05-01T16:37:51.3248048+03:00 80000006-0007-fa00-b63f-84710c7967bb [ERR] An exception occurred in the database while saving changes for context type '"ComputerStore.DataAccessLayer.Context.StoreContext"'."
+""Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The INSERT statement conflicted with the FOREIGN KEY constraint \"FK_Orders_Products_ProductId\". The conflict occurred in database \"CoreComputerStore\", table \"dbo.Products\", column 'Id'.
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__164_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:2d0ea5f0-f459-4129-9e4a-1c5c18d3ba38
+Error Number:547,State:0,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(DbContext _, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)" (170f029e)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Orders_Products_ProductId". The conflict occurred in database "CoreComputerStore", table "dbo.Products", column 'Id'.
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__164_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:2d0ea5f0-f459-4129-9e4a-1c5c18d3ba38
+Error Number:547,State:0,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(DbContext _, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at ComputerStore.DataAccessLayer.Repo.StoreRepository`1.Add(T item) in C:\Users\User\source\repos\SachekDenis\SachekDenis_.Net\Lab3\ComputerStore.DataAccessLayer\Repo\StoreRepository.cs:line 21
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+2020-05-01T16:38:03.1492988+03:00 80000008-0001-fe00-b63f-84710c7967bb [INF] Entity Framework Core "3.1.2" initialized '"StoreContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2020-05-01T16:38:03.1507289+03:00 80000008-0001-fe00-b63f-84710c7967bb [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1" (0723d8ff)
+2020-05-01T16:38:03.1536636+03:00 80000008-0001-fe00-b63f-84710c7967bb [INF] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND NOT EXISTS (SELECT *
+         FROM [sys].[extended_properties] AS [ep]
+         WHERE [ep].[major_id] = [o].[object_id]
+             AND [ep].[minor_id] = 0
+             AND [ep].[class] = 1
+             AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0" (0723d8ff)
+2020-05-01T16:38:16.8908785+03:00 80000008-0001-fe00-b63f-84710c7967bb [INF] Executed DbCommand ("4"ms) [Parameters=["@p0='?' (Size = 4000), @p1='?' (Size = 4000), @p2='?' (Size = 4000), @p3='?' (Size = 4000), @p4='?' (Size = 4000), @p5='?' (Size = 4000)"], CommandType='Text', CommandTimeout='30']"
+""SET NOCOUNT ON;
+INSERT INTO [Users] ([Address], [Email], [FirstName], [PhoneNumber], [SecondName], [ZipCode])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5);
+SELECT [Id]
+FROM [Users]
+WHERE @@ROWCOUNT = 1 AND [Id] = scope_identity();" (0723d8ff)
+2020-05-01T16:39:43.9242003+03:00 80000057-0006-fd00-b63f-84710c7967bb [WRN] No type was specified for the decimal column '"Price"' on entity type '"ProductDto"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'HasColumnType()'. (3a0db05f)
+2020-05-01T16:39:43.9564824+03:00 80000057-0006-fd00-b63f-84710c7967bb [INF] Entity Framework Core "3.1.2" initialized '"StoreContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2020-05-01T16:39:44.2888001+03:00 80000057-0006-fd00-b63f-84710c7967bb [INF] Executed DbCommand ("22"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1" (0723d8ff)
+2020-05-01T16:39:44.3342867+03:00 80000057-0006-fd00-b63f-84710c7967bb [INF] Executed DbCommand ("35"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND NOT EXISTS (SELECT *
+         FROM [sys].[extended_properties] AS [ep]
+         WHERE [ep].[major_id] = [o].[object_id]
+             AND [ep].[minor_id] = 0
+             AND [ep].[class] = 1
+             AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0" (0723d8ff)
+2020-05-01T16:39:44.5370591+03:00 80000057-0006-fd00-b63f-84710c7967bb [INF] Executed DbCommand ("17"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [c].[Id], [c].[Name]
+FROM [Categories] AS [c]" (0723d8ff)
+2020-05-01T16:39:44.5629340+03:00 80000057-0006-fd00-b63f-84710c7967bb [INF] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [m].[Id], [m].[Country], [m].[Name]
+FROM [Manufacturers] AS [m]" (0723d8ff)
+2020-05-01T16:39:44.5719760+03:00 80000057-0006-fd00-b63f-84710c7967bb [INF] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [f].[Id], [f].[CharacteristicId], [f].[ProductId], [f].[Value]
+FROM [Fields] AS [f]" (0723d8ff)
+2020-05-01T16:39:44.5790416+03:00 80000057-0006-fd00-b63f-84710c7967bb [INF] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [p].[Id], [p].[AmountInStorage], [p].[CategoryId], [p].[ManufacturerId], [p].[Name], [p].[Price]
+FROM [Products] AS [p]" (0723d8ff)
+2020-05-01T16:39:46.2772115+03:00 8000000f-0006-fc00-b63f-84710c7967bb [INF] Entity Framework Core "3.1.2" initialized '"StoreContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2020-05-01T16:39:46.2829864+03:00 8000000f-0006-fc00-b63f-84710c7967bb [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1" (0723d8ff)
+2020-05-01T16:39:46.2846411+03:00 8000000f-0006-fc00-b63f-84710c7967bb [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND NOT EXISTS (SELECT *
+         FROM [sys].[extended_properties] AS [ep]
+         WHERE [ep].[major_id] = [o].[object_id]
+             AND [ep].[minor_id] = 0
+             AND [ep].[class] = 1
+             AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0" (0723d8ff)
+2020-05-01T16:39:46.3007450+03:00 8000000f-0006-fc00-b63f-84710c7967bb [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [f].[Id], [f].[CharacteristicId], [f].[ProductId], [f].[Value]
+FROM [Fields] AS [f]" (0723d8ff)
+2020-05-01T16:39:46.4352824+03:00 8000000f-0006-fc00-b63f-84710c7967bb [INF] Executed DbCommand ("35"ms) [Parameters=["@__id_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [p].[Id], [p].[AmountInStorage], [p].[CategoryId], [p].[ManufacturerId], [p].[Name], [p].[Price]
+FROM [Products] AS [p]
+WHERE [p].[Id] = @__id_0" (0723d8ff)
+2020-05-01T16:39:55.2871728+03:00 8000001b-0005-ff00-b63f-84710c7967bb [INF] Entity Framework Core "3.1.2" initialized '"StoreContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2020-05-01T16:39:55.2945801+03:00 8000001b-0005-ff00-b63f-84710c7967bb [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1" (0723d8ff)
+2020-05-01T16:39:55.2962510+03:00 8000001b-0005-ff00-b63f-84710c7967bb [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND NOT EXISTS (SELECT *
+         FROM [sys].[extended_properties] AS [ep]
+         WHERE [ep].[major_id] = [o].[object_id]
+             AND [ep].[minor_id] = 0
+             AND [ep].[class] = 1
+             AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0" (0723d8ff)
+2020-05-01T16:39:58.7858723+03:00 8000001b-0005-ff00-b63f-84710c7967bb [INF] Executed DbCommand ("7"ms) [Parameters=["@p0='?' (Size = 4000), @p1='?' (Size = 4000), @p2='?' (Size = 4000), @p3='?' (Size = 4000), @p4='?' (Size = 4000), @p5='?' (Size = 4000)"], CommandType='Text', CommandTimeout='30']"
+""SET NOCOUNT ON;
+INSERT INTO [Users] ([Address], [Email], [FirstName], [PhoneNumber], [SecondName], [ZipCode])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5);
+SELECT [Id]
+FROM [Users]
+WHERE @@ROWCOUNT = 1 AND [Id] = scope_identity();" (0723d8ff)
+2020-05-01T16:40:02.7090327+03:00 8000001b-0005-ff00-b63f-84710c7967bb [INF] Executed DbCommand ("23"ms) [Parameters=["@p0='?' (DbType = Int32), @p1='?' (DbType = Int32), @p2='?' (DbType = Int32), @p3='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SET NOCOUNT ON;
+INSERT INTO [Orders] ([Amount], [BuyerId], [OrderStatus], [ProductId])
+VALUES (@p0, @p1, @p2, @p3);
+SELECT [Id]
+FROM [Orders]
+WHERE @@ROWCOUNT = 1 AND [Id] = scope_identity();" (0723d8ff)
+2020-05-01T16:40:04.2296711+03:00 80000058-0004-ff00-b63f-84710c7967bb [INF] Entity Framework Core "3.1.2" initialized '"StoreContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2020-05-01T16:40:04.2304171+03:00 80000058-0004-ff00-b63f-84710c7967bb [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1" (0723d8ff)
+2020-05-01T16:40:04.2319358+03:00 80000058-0004-ff00-b63f-84710c7967bb [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND NOT EXISTS (SELECT *
+         FROM [sys].[extended_properties] AS [ep]
+         WHERE [ep].[major_id] = [o].[object_id]
+             AND [ep].[minor_id] = 0
+             AND [ep].[class] = 1
+             AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0" (0723d8ff)
+2020-05-01T16:40:04.2443338+03:00 80000058-0004-ff00-b63f-84710c7967bb [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [u].[Id], [u].[Address], [u].[Email], [u].[FirstName], [u].[PhoneNumber], [u].[SecondName], [u].[ZipCode]
+FROM [Users] AS [u]" (0723d8ff)
+2020-05-01T16:40:04.2468577+03:00 80000058-0004-ff00-b63f-84710c7967bb [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [f].[Id], [f].[CharacteristicId], [f].[ProductId], [f].[Value]
+FROM [Fields] AS [f]" (0723d8ff)
+2020-05-01T16:40:04.2476947+03:00 80000058-0004-ff00-b63f-84710c7967bb [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [p].[Id], [p].[AmountInStorage], [p].[CategoryId], [p].[ManufacturerId], [p].[Name], [p].[Price]
+FROM [Products] AS [p]" (0723d8ff)
+2020-05-01T16:40:04.2537222+03:00 80000058-0004-ff00-b63f-84710c7967bb [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [o].[Id], [o].[Amount], [o].[BuyerId], [o].[OrderStatus], [o].[ProductId]
+FROM [Orders] AS [o]" (0723d8ff)
+2020-05-01T16:48:04.3242257+03:00 80000011-0006-fc00-b63f-84710c7967bb [WRN] No type was specified for the decimal column '"Price"' on entity type '"ProductDto"'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'HasColumnType()'. (3a0db05f)
+2020-05-01T16:48:04.3584749+03:00 80000011-0006-fc00-b63f-84710c7967bb [INF] Entity Framework Core "3.1.2" initialized '"StoreContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2020-05-01T16:48:05.4890336+03:00 80000011-0006-fc00-b63f-84710c7967bb [INF] Executed DbCommand ("24"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1" (0723d8ff)
+2020-05-01T16:48:05.5517202+03:00 80000011-0006-fc00-b63f-84710c7967bb [INF] Executed DbCommand ("51"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND NOT EXISTS (SELECT *
+         FROM [sys].[extended_properties] AS [ep]
+         WHERE [ep].[major_id] = [o].[object_id]
+             AND [ep].[minor_id] = 0
+             AND [ep].[class] = 1
+             AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0" (0723d8ff)
+2020-05-01T16:48:05.7593361+03:00 80000011-0006-fc00-b63f-84710c7967bb [INF] Executed DbCommand ("15"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [c].[Id], [c].[Name]
+FROM [Categories] AS [c]" (0723d8ff)
+2020-05-01T16:48:05.7844829+03:00 80000011-0006-fc00-b63f-84710c7967bb [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [m].[Id], [m].[Country], [m].[Name]
+FROM [Manufacturers] AS [m]" (0723d8ff)
+2020-05-01T16:48:05.7915770+03:00 80000011-0006-fc00-b63f-84710c7967bb [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [f].[Id], [f].[CharacteristicId], [f].[ProductId], [f].[Value]
+FROM [Fields] AS [f]" (0723d8ff)
+2020-05-01T16:48:05.7968940+03:00 80000011-0006-fc00-b63f-84710c7967bb [INF] Executed DbCommand ("2"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [p].[Id], [p].[AmountInStorage], [p].[CategoryId], [p].[ManufacturerId], [p].[Name], [p].[Price]
+FROM [Products] AS [p]" (0723d8ff)
+2020-05-01T16:48:07.0001931+03:00 80000006-0002-fd00-b63f-84710c7967bb [INF] Entity Framework Core "3.1.2" initialized '"StoreContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2020-05-01T16:48:07.0093065+03:00 80000006-0002-fd00-b63f-84710c7967bb [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1" (0723d8ff)
+2020-05-01T16:48:07.0108238+03:00 80000006-0002-fd00-b63f-84710c7967bb [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND NOT EXISTS (SELECT *
+         FROM [sys].[extended_properties] AS [ep]
+         WHERE [ep].[major_id] = [o].[object_id]
+             AND [ep].[minor_id] = 0
+             AND [ep].[class] = 1
+             AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0" (0723d8ff)
+2020-05-01T16:48:07.0221580+03:00 80000006-0002-fd00-b63f-84710c7967bb [INF] Executed DbCommand ("4"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [c].[Id], [c].[CategoryId], [c].[Name]
+FROM [Characteristics] AS [c]" (0723d8ff)
+2020-05-01T16:48:07.0249456+03:00 80000006-0002-fd00-b63f-84710c7967bb [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [c].[Id], [c].[Name]
+FROM [Categories] AS [c]" (0723d8ff)
+2020-05-01T16:48:07.0263924+03:00 80000006-0002-fd00-b63f-84710c7967bb [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [m].[Id], [m].[Country], [m].[Name]
+FROM [Manufacturers] AS [m]" (0723d8ff)
+2020-05-01T16:48:07.3353256+03:00 8000001a-0001-fe00-b63f-84710c7967bb [INF] Entity Framework Core "3.1.2" initialized '"StoreContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2020-05-01T16:48:07.3428407+03:00 8000001a-0001-fe00-b63f-84710c7967bb [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1" (0723d8ff)
+2020-05-01T16:48:07.3441767+03:00 8000001a-0001-fe00-b63f-84710c7967bb [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND NOT EXISTS (SELECT *
+         FROM [sys].[extended_properties] AS [ep]
+         WHERE [ep].[major_id] = [o].[object_id]
+             AND [ep].[minor_id] = 0
+             AND [ep].[class] = 1
+             AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0" (0723d8ff)
+2020-05-01T16:48:07.3626397+03:00 8000001a-0001-fe00-b63f-84710c7967bb [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [c].[Id], [c].[CategoryId], [c].[Name]
+FROM [Characteristics] AS [c]" (0723d8ff)
+2020-05-01T16:48:11.7871401+03:00 8000000a-0002-fd00-b63f-84710c7967bb [INF] Entity Framework Core "3.1.2" initialized '"StoreContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2020-05-01T16:48:11.7881416+03:00 8000000a-0002-fd00-b63f-84710c7967bb [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1" (0723d8ff)
+2020-05-01T16:48:11.7896221+03:00 8000000a-0002-fd00-b63f-84710c7967bb [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND NOT EXISTS (SELECT *
+         FROM [sys].[extended_properties] AS [ep]
+         WHERE [ep].[major_id] = [o].[object_id]
+             AND [ep].[minor_id] = 0
+             AND [ep].[class] = 1
+             AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0" (0723d8ff)
+2020-05-01T16:48:11.7939917+03:00 8000000a-0002-fd00-b63f-84710c7967bb [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [c].[Id], [c].[Name]
+FROM [Categories] AS [c]" (0723d8ff)
+2020-05-01T16:48:11.7958275+03:00 8000000a-0002-fd00-b63f-84710c7967bb [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [m].[Id], [m].[Country], [m].[Name]
+FROM [Manufacturers] AS [m]" (0723d8ff)
+2020-05-01T16:48:11.7967564+03:00 8000000a-0002-fd00-b63f-84710c7967bb [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [c].[Id], [c].[CategoryId], [c].[Name]
+FROM [Characteristics] AS [c]" (0723d8ff)
+2020-05-01T16:48:11.7984921+03:00 8000000a-0002-fd00-b63f-84710c7967bb [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [f].[Id], [f].[CharacteristicId], [f].[ProductId], [f].[Value]
+FROM [Fields] AS [f]" (0723d8ff)
+2020-05-01T16:48:11.9391607+03:00 8000000a-0002-fd00-b63f-84710c7967bb [INF] Executed DbCommand ("45"ms) [Parameters=["@__id_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [p].[Id], [p].[AmountInStorage], [p].[CategoryId], [p].[ManufacturerId], [p].[Name], [p].[Price]
+FROM [Products] AS [p]
+WHERE [p].[Id] = @__id_0" (0723d8ff)
+2020-05-01T16:48:11.9433018+03:00 8000000a-0002-fd00-b63f-84710c7967bb [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [c].[Id], [c].[Name]
+FROM [Categories] AS [c]" (0723d8ff)
+2020-05-01T16:48:11.9439911+03:00 8000000a-0002-fd00-b63f-84710c7967bb [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [m].[Id], [m].[Country], [m].[Name]
+FROM [Manufacturers] AS [m]" (0723d8ff)
+2020-05-01T16:48:15.7980603+03:00 80000028-0003-fb00-b63f-84710c7967bb [INF] Entity Framework Core "3.1.2" initialized '"StoreContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2020-05-01T16:48:15.7991791+03:00 80000028-0003-fb00-b63f-84710c7967bb [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT 1" (0723d8ff)
+2020-05-01T16:48:15.8007222+03:00 80000028-0003-fb00-b63f-84710c7967bb [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND NOT EXISTS (SELECT *
+         FROM [sys].[extended_properties] AS [ep]
+         WHERE [ep].[major_id] = [o].[object_id]
+             AND [ep].[minor_id] = 0
+             AND [ep].[class] = 1
+             AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0" (0723d8ff)
+2020-05-01T16:48:15.8032966+03:00 80000028-0003-fb00-b63f-84710c7967bb [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [c].[Id], [c].[Name]
+FROM [Categories] AS [c]" (0723d8ff)
+2020-05-01T16:48:15.8053942+03:00 80000028-0003-fb00-b63f-84710c7967bb [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [m].[Id], [m].[Country], [m].[Name]
+FROM [Manufacturers] AS [m]" (0723d8ff)
+2020-05-01T16:48:15.8066010+03:00 80000028-0003-fb00-b63f-84710c7967bb [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [c].[Id], [c].[CategoryId], [c].[Name]
+FROM [Characteristics] AS [c]" (0723d8ff)
+2020-05-01T16:48:15.8077794+03:00 80000028-0003-fb00-b63f-84710c7967bb [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [f].[Id], [f].[CharacteristicId], [f].[ProductId], [f].[Value]
+FROM [Fields] AS [f]" (0723d8ff)
+2020-05-01T16:48:15.8127024+03:00 80000028-0003-fb00-b63f-84710c7967bb [INF] Executed DbCommand ("1"ms) [Parameters=["@__id_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [p].[Id], [p].[AmountInStorage], [p].[CategoryId], [p].[ManufacturerId], [p].[Name], [p].[Price]
+FROM [Products] AS [p]
+WHERE [p].[Id] = @__id_0" (0723d8ff)
+2020-05-01T16:48:15.8142572+03:00 80000028-0003-fb00-b63f-84710c7967bb [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [c].[Id], [c].[Name]
+FROM [Categories] AS [c]" (0723d8ff)
+2020-05-01T16:48:15.8153013+03:00 80000028-0003-fb00-b63f-84710c7967bb [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [m].[Id], [m].[Country], [m].[Name]
+FROM [Manufacturers] AS [m]" (0723d8ff)

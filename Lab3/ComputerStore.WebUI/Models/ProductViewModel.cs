@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using ComputerStore.BusinessLogicLayer.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ComputerStore.WebUI.Models
 {
@@ -34,5 +35,8 @@ namespace ComputerStore.WebUI.Models
 
         [Required]
         public IEnumerable<FieldViewModel> Fields { get; set; }
+
+        public SelectList Categories { get; set; }
+        public SelectList Manufacturers { get; set; }
     }
 }

@@ -24,8 +24,8 @@ namespace ComputerStore.WebUI.Controllers
         // GET: Categories/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            var item = await _categoryManager.GetById(id);
-            return View(item);
+            var category = await _categoryManager.GetById(id);
+            return View(category);
         }
 
         // GET: Categories/Create
@@ -37,65 +37,65 @@ namespace ComputerStore.WebUI.Controllers
         // POST: Categories/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Category item)
+        public async Task<IActionResult> Create(Category category)
         {
             try
             {
-                await _categoryManager.Add(item);
+                await _categoryManager.Add(category);
 
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View(item);
+                return View(category);
             }
         }
 
         // GET: Categories/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
-            var item = await _categoryManager.GetById(id);
-            return View(item);
+            var category = await _categoryManager.GetById(id);
+            return View(category);
         }
 
         // POST: Categories/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Category item)
+        public async Task<IActionResult> Edit(Category category)
         {
             try
             {
-                await _categoryManager.Update(item);
+                await _categoryManager.Update(category);
 
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View(item);
+                return View(category);
             }
         }
 
         // GET: Categories/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
-            var item = await _categoryManager.GetById(id);
-            return View(item);
+            var category = await _categoryManager.GetById(id);
+            return View(category);
         }
 
         // POST: Categories/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(Category item)
+        public async Task<IActionResult> Delete(Category category)
         {
             try
             {
-                await _categoryManager.Delete(item.Id);
+                await _categoryManager.Delete(category.Id);
 
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View(item);
+                return View(category);
             }
         }
     }
