@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using ComputerStore.BusinessLogicLayer.Managers;
 using ComputerStore.BusinessLogicLayer.Models;
@@ -13,11 +14,29 @@ namespace ComputerStore.WebUI.Controllers
         private readonly OrderManager _orderManager;
         private readonly ProductManager _productManager;
 
-        public OrdersController(ProductManager productManager, BuyerManager buyerManager, OrderManager orderManager)
+        public OrdersController(ProductManager productManager,
+                                BuyerManager buyerManager,
+                                OrderManager orderManager)
         {
             _productManager = productManager;
             _buyerManager = buyerManager;
             _orderManager = orderManager;
+        }
+
+        private OrderViewModel CreateOrderViewModel(Order order,
+                                                    IEnumerable<Buyer> buyers,
+                                                    IEnumerable<Product> products)
+        {
+            return new OrderViewModel
+                   {
+                       Amount = order.Amount,
+                       BuyerId = order.BuyerId,
+                       BuyerName = buyers.First(buyer => buyer.Id == order.BuyerId).FirstName,
+                       OrderStatus = order.OrderStatus,
+                       Id = order.Id,
+                       ProductId = order.ProductId,
+                       ProductName = products.First(product => product.Id == order.ProductId).Name
+                   };
         }
 
         public async Task<IActionResult> Index()
@@ -25,16 +44,7 @@ namespace ComputerStore.WebUI.Controllers
             var buyers = await _buyerManager.GetAll();
             var products = await _productManager.GetAll();
 
-            var orderViewModels = (await _orderManager.GetAll()).Select(order => new OrderViewModel
-                                                                                 {
-                                                                                     Amount = order.Amount,
-                                                                                     BuyerId = order.BuyerId,
-                                                                                     BuyertName = buyers.First(buyer => buyer.Id == order.BuyerId).FirstName,
-                                                                                     OrderStatus = order.OrderStatus,
-                                                                                     Id = order.Id,
-                                                                                     ProductId = order.ProductId,
-                                                                                     ProductName = products.First(product => product.Id == order.ProductId).Name
-                                                                                 });
+            var orderViewModels = (await _orderManager.GetAll()).Select(order => CreateOrderViewModel(order, buyers, products));
             return View(orderViewModels);
         }
 
@@ -87,6 +97,48 @@ namespace ComputerStore.WebUI.Controllers
             catch
             {
                 return View(purchaseViewModel);
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            var buyers = await _buyerManager.GetAll();
+            var products = await _productManager.GetAll();
+
+            var order = await _orderManager.GetById(id);
+            var orderViewModel = CreateOrderViewModel(order, buyers, products);
+
+            return View(orderViewModel);
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var orderViewModel = new OrderViewModel
+                                 {
+                                     Id = id
+                                 };
+
+            return View(orderViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(OrderViewModel orderViewModel)
+        {
+            try
+            {
+                var order = await _orderManager.GetById(orderViewModel.Id);
+
+                order.OrderStatus = orderViewModel.OrderStatus;
+
+                await _orderManager.Update(order);
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View(orderViewModel);
             }
         }
     }

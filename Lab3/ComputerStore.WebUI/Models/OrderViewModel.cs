@@ -16,7 +16,7 @@ namespace ComputerStore.WebUI.Models
         [Required]
         public int BuyerId { get; set; }
 
-        public string BuyertName { get; set; }
+        public string BuyerName { get; set; }
 
         [Required]
         [Range(1, int.MaxValue)]

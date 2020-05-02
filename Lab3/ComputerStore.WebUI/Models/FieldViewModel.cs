@@ -12,7 +12,7 @@ namespace ComputerStore.WebUI.Models
 
         [Required]
         public int CharacteristicId { get; set; }
-        
+
         [Required]
         public string CharacteristicName { get; set; }
 

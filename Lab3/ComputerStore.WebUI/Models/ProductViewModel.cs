@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using ComputerStore.BusinessLogicLayer.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ComputerStore.WebUI.Models

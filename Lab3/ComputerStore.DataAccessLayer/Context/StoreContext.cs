@@ -8,15 +8,15 @@ namespace ComputerStore.DataAccessLayer.Context
 {
     public class StoreContext : DbContext
     {
-        private static readonly ILoggerFactory FileLoggerFactory = LoggerFactory.Create(builder =>
-                                                                                        {
-                                                                                            builder
-                                                                                                .AddFilter((category, level) =>
-                                                                                                               category ==
-                                                                                                               DbLoggerCategory.Database.Command.Name &&
-                                                                                                               level == LogLevel.Information)
-                                                                                                .AddFile("Logs/SQL-{Date}.txt");
-                                                                                        });
+        private static readonly ILoggerFactory FileLoggerFactory =
+            LoggerFactory.Create(builder =>
+                                 {
+                                     builder.AddFilter((category, level) =>
+                                                           category ==
+                                                           DbLoggerCategory.Database.Command.Name &&
+                                                           level == LogLevel.Information)
+                                            .AddFile("Logs/SQL-{Date}.txt");
+                                 });
 
         public StoreContext(DbContextOptions<StoreContext> options, IConfiguration configuration) : base(options)
         {

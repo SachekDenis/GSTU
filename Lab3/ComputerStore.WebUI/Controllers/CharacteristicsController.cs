@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using ComputerStore.BusinessLogicLayer.Managers;
 using ComputerStore.BusinessLogicLayer.Models;
 using ComputerStore.WebUI.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -24,14 +23,14 @@ namespace ComputerStore.WebUI.Controllers
         private CharacteristicViewModel CreateCharacteristicViewModel(Characteristic characteristic, IEnumerable<Category> categories)
         {
             return new CharacteristicViewModel
-            {
-                Id = characteristic.Id,
-                CategoryId = characteristic.CategoryId,
-                CategoryName = categories
+                   {
+                       Id = characteristic.Id,
+                       CategoryId = characteristic.CategoryId,
+                       CategoryName = categories
                                       .First(category => category.Id == characteristic.CategoryId)
                                       .Name,
-                Name = characteristic.Name
-            };
+                       Name = characteristic.Name
+                   };
         }
 
 
@@ -40,8 +39,8 @@ namespace ComputerStore.WebUI.Controllers
         {
             var categories = await _categoryManager.GetAll();
             var characteristics = (await _characteristicManager.GetAll())
-                                 .Select(characteristic => CreateCharacteristicViewModel(characteristic, categories))
-                                 .OrderBy(characteristic => characteristic.CategoryName);
+                                  .Select(characteristic => CreateCharacteristicViewModel(characteristic, categories))
+                                  .OrderBy(characteristic => characteristic.CategoryName);
 
             return View(characteristics);
         }

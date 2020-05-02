@@ -12,7 +12,7 @@ namespace ComputerStore.BusinessLogicLayer.Models
         public string Name { get; set; }
 
         [Required]
-        [Range(typeof(decimal),"5.0", "99999.0")]
+        [Range(typeof(decimal), "5.0", "99999.0")]
         public decimal Price { get; set; }
 
         [Required]

@@ -19,8 +19,8 @@ namespace ComputerStore.WebUI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews()
-                    .AddRazorRuntimeCompilation();
+            services.AddControllersWithViews();
+                    //.AddRazorRuntimeCompilation();
             services.ConfigureAppServices(Configuration);
         }
 
@@ -30,7 +30,7 @@ namespace ComputerStore.WebUI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseBrowserLink();
+                //app.UseBrowserLink();
             }
             else
             {
@@ -49,7 +49,7 @@ namespace ComputerStore.WebUI
             app.UseEndpoints(endpoints =>
                              {
                                  endpoints.MapControllerRoute("default",
-                                                              "{controller=Home}/{action=Index}/{id?}");
+                                                              "{controller=Products}/{action=Index}/{id?}");
                              });
         }
     }
