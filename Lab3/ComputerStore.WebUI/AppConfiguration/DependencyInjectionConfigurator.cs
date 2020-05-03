@@ -27,7 +27,7 @@ namespace ComputerStore.WebUI.AppConfiguration
                                       .WithTransientLifetime())
                     .AddAutoMapper(typeof(StoreProfile))
                     .AddScoped(typeof(IRepository<>), typeof(StoreRepository<>))
-                    .AddLogging(loggingBuilder => loggingBuilder.AddFile("Logs/StoreApp-{Date}.txt"));
+                    .AddLogging(loggingBuilder => loggingBuilder.AddFile("bin/Logs/StoreApp-{Date}.txt"));
         }
     }
 }

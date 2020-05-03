@@ -8,16 +8,11 @@ namespace ComputerStore.DataAccessLayer.Context
 {
     public class StoreContext : DbContext
     {
-        private static readonly ILoggerFactory FileLoggerFactory = LoggerFactory.Create(builder =>
-                                                                                        {
-                                                                                            builder.AddFilter((category, level) =>
-                                                                                                                  category == DbLoggerCategory.Database.Command.Name &&
-                                                                                                                  level == LogLevel.Information)
-                                                                                                   .AddFile("Logs/SQL-{Date}.txt");
-                                                                                        });
+        private readonly ILoggerFactory _fileLoggerFactory;
 
-        public StoreContext(DbContextOptions<StoreContext> options, IConfiguration configuration) : base(options)
+        public StoreContext(DbContextOptions<StoreContext> options, IConfiguration configuration, ILoggerFactory fileLoggerFactory) : base(options)
         {
+            _fileLoggerFactory = fileLoggerFactory;
             if (Database.EnsureCreated())
             {
                 DbInitializer.Create(dbUtilsOptions =>
@@ -39,7 +34,7 @@ namespace ComputerStore.DataAccessLayer.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseLoggerFactory(FileLoggerFactory);
+            optionsBuilder.UseLoggerFactory(_fileLoggerFactory);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
