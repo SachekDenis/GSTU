@@ -14,53 +14,25 @@ namespace ComputerStore.ConsoleLayer.ConsoleView.CrudConsoleServices
         private readonly CharacteristicManager _characteristicManager;
         private readonly ManufacturerManager _manufacturerManager;
         private readonly ProductManager _productManager;
-        private readonly SupplierManager _supplierManager;
-        private readonly SupplyManager _supplyManager;
 
         public ProductListCrudConsoleService(CategoryManager categoryManager,
-            CharacteristicManager characteristicManager,
-            ManufacturerManager manufacturerManager,
-            ProductManager productManager,
-            SupplierManager supplierManager,
-            SupplyManager supplyManager)
+                                             CharacteristicManager characteristicManager,
+                                             ManufacturerManager manufacturerManager,
+                                             ProductManager productManager)
         {
             _categoryManager = categoryManager;
             _characteristicManager = characteristicManager;
             _manufacturerManager = manufacturerManager;
             _productManager = productManager;
-            _supplierManager = supplierManager;
-            _supplyManager = supplyManager;
         }
 
         public async Task Add()
         {
-            (await _supplierManager.GetAll()).WriteCollectionAsTable();
-
             Console.WriteLine("Enter Id of manufacturer");
-
-            var supplyDto = new Supply
-            {
-                Date = DateTime.Now,
-                SupplierId = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException())
-            };
-
             var product = await CreateModel();
 
-            try
-            {
-                await _productManager.Add(product);
-                supplyDto.ProductId = product.Id;
-                await _supplyManager.Add(supplyDto);
-            }
-            catch (ValidationException)
-            {
-                if (await _supplyManager.GetById(supplyDto.Id) != null)
-                {
-                    await _supplyManager.Delete(supplyDto.Id);
-                }
 
-                throw;
-            }
+            await _productManager.Add(product);
         }
 
         public async Task Delete()

@@ -14,18 +14,14 @@ namespace ComputerStore.WebUI.Controllers
         private readonly OrderManager _orderManager;
         private readonly ProductManager _productManager;
 
-        public OrdersController(ProductManager productManager,
-                                BuyerManager buyerManager,
-                                OrderManager orderManager)
+        public OrdersController(ProductManager productManager, BuyerManager buyerManager, OrderManager orderManager)
         {
             _productManager = productManager;
             _buyerManager = buyerManager;
             _orderManager = orderManager;
         }
 
-        private OrderViewModel CreateOrderViewModel(Order order,
-                                                    IEnumerable<Buyer> buyers,
-                                                    IEnumerable<Product> products)
+        private OrderViewModel CreateOrderViewModel(Order order, IEnumerable<Buyer> buyers, IEnumerable<Product> products)
         {
             return new OrderViewModel
                    {
@@ -57,6 +53,7 @@ namespace ComputerStore.WebUI.Controllers
                                         ProductId = productId,
                                         ProductName = product.Name
                                     };
+
             return View(purchaseViewModel);
         }
 

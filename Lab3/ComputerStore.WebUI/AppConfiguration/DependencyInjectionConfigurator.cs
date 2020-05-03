@@ -16,22 +16,18 @@ namespace ComputerStore.WebUI.AppConfiguration
         {
             var businessAssembly = Assembly.Load("ComputerStore.BusinessLogicLayer");
 
-            services
-                .AddDbContext<StoreContext>(options =>
-                                                options.UseSqlServer(config.GetConnectionString("StoreConnection")))
-                .Scan(scan => scan
-                              .FromAssemblies(businessAssembly)
-                              .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Manager")))
-                              .AsSelf()
-                              .WithScopedLifetime())
-                .Scan(scan => scan
-                              .FromAssemblies(businessAssembly)
-                              .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Validator")))
-                              .AsImplementedInterfaces()
-                              .WithTransientLifetime())
-                .AddAutoMapper(typeof(StoreProfile))
-                .AddScoped(typeof(IRepository<>), typeof(StoreRepository<>))
-                .AddLogging(loggingBuilder => loggingBuilder.AddFile("Logs/StoreApp-{Date}.txt"));
+            services.AddDbContext<StoreContext>(options => options.UseSqlServer(config.GetConnectionString("StoreConnection")))
+                    .Scan(scan => scan.FromAssemblies(businessAssembly)
+                                      .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Manager")))
+                                      .AsSelf()
+                                      .WithScopedLifetime())
+                    .Scan(scan => scan.FromAssemblies(businessAssembly)
+                                      .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Validator")))
+                                      .AsImplementedInterfaces()
+                                      .WithTransientLifetime())
+                    .AddAutoMapper(typeof(StoreProfile))
+                    .AddScoped(typeof(IRepository<>), typeof(StoreRepository<>))
+                    .AddLogging(loggingBuilder => loggingBuilder.AddFile("Logs/StoreApp-{Date}.txt"));
         }
     }
 }

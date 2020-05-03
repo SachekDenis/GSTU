@@ -28,20 +28,14 @@ namespace ComputerStore.WebUI.Controllers
             _characteristicManager = characteristicManager;
         }
 
-        private ProductViewModel CreateProductViewModel(Product product,
-                                                        IEnumerable<Category> categories,
-                                                        IEnumerable<Manufacturer> manufacturers)
+        private ProductViewModel CreateProductViewModel(Product product, IEnumerable<Category> categories, IEnumerable<Manufacturer> manufacturers)
         {
             return new ProductViewModel
                    {
                        Id = product.Id,
                        AmountInStorage = product.AmountInStorage,
-                       CategoryName = categories
-                                      .First(category => category.Id == product.CategoryId)
-                                      .Name,
-                       ManufacturerName = manufacturers
-                                          .First(manufacturer => manufacturer.Id == product.ManufacturerId)
-                                          .Name,
+                       CategoryName = categories.First(category => category.Id == product.CategoryId).Name,
+                       ManufacturerName = manufacturers.First(manufacturer => manufacturer.Id == product.ManufacturerId).Name,
                        Name = product.Name,
                        Price = product.Price,
                        CategoryId = product.CategoryId,
@@ -49,15 +43,13 @@ namespace ComputerStore.WebUI.Controllers
                    };
         }
 
-        private IEnumerable<FieldViewModel> CreateFieldViewModels(Product product,
-                                                                  IEnumerable<Characteristic> characteristics)
+        private IEnumerable<FieldViewModel> CreateFieldViewModels(Product product, IEnumerable<Characteristic> characteristics)
         {
             return product.Fields.Select(field => new FieldViewModel
                                                   {
                                                       CharacteristicId = field.CharacteristicId,
                                                       CharacteristicName = characteristics
-                                                                           .First(characteristic =>
-                                                                                      characteristic.Id == field.CharacteristicId)
+                                                                           .First(characteristic => characteristic.Id == field.CharacteristicId)
                                                                            .Name,
                                                       Id = field.Id,
                                                       ProductId = field.ProductId,
@@ -67,14 +59,12 @@ namespace ComputerStore.WebUI.Controllers
 
         private Product CreateProduct(ProductViewModel productViewModel, IFormCollection formCollection)
         {
-            var fields = formCollection
-                         .Where(formPair => formPair.Key.Contains("characteristic"))
-                         .Select(formPair => new Field
-                                             {
-                                                 CharacteristicId = int.Parse(formPair.Key.Substring(formPair.Key.IndexOf('-') + 1)),
-                                                 Value = formPair.Value
-                                             })
-                         .ToList();
+            var fields = formCollection.Where(formPair => formPair.Key.Contains("characteristic"))
+                                       .Select(formPair => new Field
+                                                           {
+                                                               CharacteristicId = int.Parse(formPair.Key.Substring(formPair.Key.IndexOf('-') + 1)),
+                                                               Value = formPair.Value
+                                                           });
 
             return new Product
                    {
@@ -119,12 +109,13 @@ namespace ComputerStore.WebUI.Controllers
             var characteristics = await _characteristicManager.GetAll();
             var productViewModel = new ProductViewModel
                                    {
-                                       Fields = characteristics
-                                           .Select(characteristic => new FieldViewModel
-                                                                     {
-                                                                         CharacteristicName = characteristic.Name,
-                                                                         CharacteristicId = characteristic.Id
-                                                                     }),
+                                       Fields = characteristics.Select(characteristic => new FieldViewModel
+                                                                                         {
+                                                                                             CharacteristicName =
+                                                                                                 characteristic.Name,
+                                                                                             CharacteristicId =
+                                                                                                 characteristic.Id
+                                                                                         }),
                                        Categories = new SelectList(await _categoryManager.GetAll(), "Id", "Name"),
                                        Manufacturers = new SelectList(await _manufacturerManager.GetAll(), "Id", "Name")
                                    };
@@ -134,15 +125,13 @@ namespace ComputerStore.WebUI.Controllers
 
         public async Task<ActionResult> SelectFieldsForCategory(int categoryId)
         {
-            var characteristics = (await _characteristicManager.GetAll())
-                .Where(characteristic => characteristic.CategoryId == categoryId);
+            var characteristics = (await _characteristicManager.GetAll()).Where(characteristic => characteristic.CategoryId == categoryId);
 
-            var fields = characteristics
-                .Select(characteristic => new FieldViewModel
-                                          {
-                                              CharacteristicName = characteristic.Name,
-                                              CharacteristicId = characteristic.Id
-                                          });
+            var fields = characteristics.Select(characteristic => new FieldViewModel
+                                                                  {
+                                                                      CharacteristicName = characteristic.Name,
+                                                                      CharacteristicId = characteristic.Id
+                                                                  });
 
             return PartialView(fields);
         }

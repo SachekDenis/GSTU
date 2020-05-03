@@ -8,15 +8,13 @@ namespace ComputerStore.DataAccessLayer.Context
 {
     public class StoreContext : DbContext
     {
-        private static readonly ILoggerFactory FileLoggerFactory =
-            LoggerFactory.Create(builder =>
-                                 {
-                                     builder.AddFilter((category, level) =>
-                                                           category ==
-                                                           DbLoggerCategory.Database.Command.Name &&
-                                                           level == LogLevel.Information)
-                                            .AddFile("Logs/SQL-{Date}.txt");
-                                 });
+        private static readonly ILoggerFactory FileLoggerFactory = LoggerFactory.Create(builder =>
+                                                                                        {
+                                                                                            builder.AddFilter((category, level) =>
+                                                                                                                  category == DbLoggerCategory.Database.Command.Name &&
+                                                                                                                  level == LogLevel.Information)
+                                                                                                   .AddFile("Logs/SQL-{Date}.txt");
+                                                                                        });
 
         public StoreContext(DbContextOptions<StoreContext> options, IConfiguration configuration) : base(options)
         {
@@ -25,9 +23,7 @@ namespace ComputerStore.DataAccessLayer.Context
                 DbInitializer.Create(dbUtilsOptions =>
                                      {
                                          dbUtilsOptions.UseSqlServer(Database.GetDbConnection().ConnectionString);
-                                         dbUtilsOptions.UseFileFolderPacker(configuration
-                                                                            .GetSection("SeedFolder")
-                                                                            .Value);
+                                         dbUtilsOptions.UseFileFolderPacker(configuration.GetSection("SeedFolder").Value);
                                      })
                              .Seed();
             }
@@ -48,17 +44,9 @@ namespace ComputerStore.DataAccessLayer.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<OrderDto>()
-                        .HasOne<BuyerDto>()
-                        .WithMany()
-                        .HasForeignKey(order => order.BuyerId)
-                        .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<OrderDto>().HasOne<BuyerDto>().WithMany().HasForeignKey(order => order.BuyerId).OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<OrderDto>()
-                        .HasOne<ProductDto>()
-                        .WithMany()
-                        .HasForeignKey(order => order.ProductId)
-                        .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<OrderDto>().HasOne<ProductDto>().WithMany().HasForeignKey(order => order.ProductId).OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<CharacteristicDto>()
                         .HasOne<CategoryDto>()
@@ -66,29 +54,13 @@ namespace ComputerStore.DataAccessLayer.Context
                         .HasForeignKey(characteristic => characteristic.CategoryId)
                         .OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<FieldDto>()
-                        .HasOne<CharacteristicDto>()
-                        .WithMany()
-                        .HasForeignKey(field => field.CharacteristicId)
-                        .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<FieldDto>().HasOne<CharacteristicDto>().WithMany().HasForeignKey(field => field.CharacteristicId).OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<FieldDto>()
-                        .HasOne<ProductDto>()
-                        .WithMany()
-                        .HasForeignKey(field => field.ProductId)
-                        .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<FieldDto>().HasOne<ProductDto>().WithMany().HasForeignKey(field => field.ProductId).OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<ProductDto>()
-                        .HasOne<ManufacturerDto>()
-                        .WithMany()
-                        .HasForeignKey(product => product.ManufacturerId)
-                        .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<ProductDto>().HasOne<ManufacturerDto>().WithMany().HasForeignKey(product => product.ManufacturerId).OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<ProductDto>()
-                        .HasOne<CategoryDto>()
-                        .WithMany()
-                        .HasForeignKey(product => product.CategoryId)
-                        .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<ProductDto>().HasOne<CategoryDto>().WithMany().HasForeignKey(product => product.CategoryId).OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

@@ -29,10 +29,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="ManufacturerName" class="control-label"></label>
-                @Html.DropDownListFor(model => model.ManufacturerId, Model.Manufacturers, new
-                                                                                          {
-                                                                                              @class = "form-control"
-                                                                                          })
+                @Html.DropDownListFor(model => model.ManufacturerId, Model.Manufacturers, new {@class = "form-control"})
                 <span asp-validation-for="ManufacturerId" class="text-danger"></span>
             </div>
             <div class="form-group">

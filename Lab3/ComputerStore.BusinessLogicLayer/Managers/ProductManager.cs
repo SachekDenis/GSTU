@@ -18,12 +18,11 @@ namespace ComputerStore.BusinessLogicLayer.Managers
         private readonly IRepository<ProductDto> _products;
         private readonly IValidator<Product> _productValidator;
 
-        public ProductManager(
-            IValidator<Product> productValidator,
-            IValidator<Field> fieldValidator,
-            IMapper mapper,
-            IRepository<FieldDto> fields,
-            IRepository<ProductDto> products)
+        public ProductManager(IValidator<Product> productValidator,
+                              IValidator<Field> fieldValidator,
+                              IMapper mapper,
+                              IRepository<FieldDto> fields,
+                              IRepository<ProductDto> products)
         {
             _productValidator = productValidator;
             _fieldValidator = fieldValidator;
@@ -52,8 +51,7 @@ namespace ComputerStore.BusinessLogicLayer.Managers
 
                     if (!_fieldValidator.Validate(field))
                     {
-                        throw new
-                            ValidationException($"{nameof(field)} has invalid data");
+                        throw new ValidationException($"{nameof(field)} has invalid data");
                     }
 
                     await _fields.Add(fieldDto);
@@ -93,9 +91,8 @@ namespace ComputerStore.BusinessLogicLayer.Managers
 
             {
                 field.ProductId = product.Id;
-                var productField = (await _fields.GetAll()).FirstOrDefault(fieldDto =>
-                                                                               fieldDto.ProductId == product.Id &&
-                                                                               fieldDto.CharacteristicId == field.CharacteristicId);
+                var productField =
+                    (await _fields.GetAll()).FirstOrDefault(fieldDto => fieldDto.ProductId == product.Id && fieldDto.CharacteristicId == field.CharacteristicId);
                 var fieldDto = _mapper.Map<FieldDto>(field);
 
                 if (!_fieldValidator.Validate(field))
@@ -135,10 +132,7 @@ namespace ComputerStore.BusinessLogicLayer.Managers
         private Product MapProduct(ProductDto productDto, IEnumerable<FieldDto> fields)
         {
             var product = _mapper.Map<Product>(productDto);
-            product.Fields = fields
-                             .Where(fieldDto => fieldDto.ProductId == product.Id)
-                             .Select(fieldDto => _mapper.Map<Field>(fieldDto))
-                             .ToList();
+            product.Fields = fields.Where(fieldDto => fieldDto.ProductId == product.Id).Select(fieldDto => _mapper.Map<Field>(fieldDto)).ToList();
             return product;
         }
     }

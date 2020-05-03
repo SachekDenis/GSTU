@@ -10,17 +10,14 @@ namespace ComputerStore.ConsoleLayer.ConsoleView.BaseConsoleServices
         private readonly ManufacturerBaseConsoleService _manufacturerConsoleService;
         private readonly OrderBaseConsoleService _orderConsoleService;
         private readonly ProductListBaseConsoleService _productListConsoleService;
-        private readonly SupplierBaseConsoleService _supplierConsoleService;
 
         public MainMenuBaseConsoleService(ManufacturerBaseConsoleService manufacturerConsoleService,
-            SupplierBaseConsoleService supplierConsoleService,
-            CategoryBaseConsoleService categoryConsoleService,
-            CharacteristicBaseConsoleService characteristicConsoleService,
-            ProductListBaseConsoleService productListConsoleService,
-            OrderBaseConsoleService orderConsoleService)
+                                          CategoryBaseConsoleService categoryConsoleService,
+                                          CharacteristicBaseConsoleService characteristicConsoleService,
+                                          ProductListBaseConsoleService productListConsoleService,
+                                          OrderBaseConsoleService orderConsoleService)
         {
             _manufacturerConsoleService = manufacturerConsoleService;
-            _supplierConsoleService = supplierConsoleService;
             _categoryConsoleService = categoryConsoleService;
             _productListConsoleService = productListConsoleService;
             _orderConsoleService = orderConsoleService;
@@ -46,30 +43,25 @@ namespace ComputerStore.ConsoleLayer.ConsoleView.BaseConsoleServices
                             break;
                         case 2:
                         {
-                            await _supplierConsoleService.StartConsoleLoop();
+                            await _characteristicConsoleService.StartConsoleLoop();
                         }
                             break;
                         case 3:
                         {
-                            await _characteristicConsoleService.StartConsoleLoop();
+                            await _categoryConsoleService.StartConsoleLoop();
                         }
                             break;
                         case 4:
                         {
-                            await _categoryConsoleService.StartConsoleLoop();
+                            await _productListConsoleService.StartConsoleLoop();
                         }
                             break;
                         case 5:
                         {
-                            await _productListConsoleService.StartConsoleLoop();
-                        }
-                            break;
-                        case 6:
-                        {
                             await _orderConsoleService.StartConsoleLoop();
                         }
                             break;
-                        case 7:
+                        case 6:
                         {
                             return;
                         }
@@ -86,12 +78,11 @@ namespace ComputerStore.ConsoleLayer.ConsoleView.BaseConsoleServices
         public void PrintMenu()
         {
             Console.WriteLine("1. Manufacturers");
-            Console.WriteLine("2. Suppliers");
-            Console.WriteLine("3. Characteristics");
-            Console.WriteLine("4. Categories");
-            Console.WriteLine("5. Products");
-            Console.WriteLine("6. Orders");
-            Console.WriteLine("7. Exit");
+            Console.WriteLine("2. Characteristics");
+            Console.WriteLine("3. Categories");
+            Console.WriteLine("4. Products");
+            Console.WriteLine("5. Orders");
+            Console.WriteLine("6. Exit");
         }
     }
 }

@@ -26,9 +26,7 @@ namespace ComputerStore.WebUI.Controllers
                    {
                        Id = characteristic.Id,
                        CategoryId = characteristic.CategoryId,
-                       CategoryName = categories
-                                      .First(category => category.Id == characteristic.CategoryId)
-                                      .Name,
+                       CategoryName = categories.First(category => category.Id == characteristic.CategoryId).Name,
                        Name = characteristic.Name
                    };
         }
@@ -61,6 +59,7 @@ namespace ComputerStore.WebUI.Controllers
                                           {
                                               CategoriesSelectList = new SelectList(await _categoryManager.GetAll(), "Id", "Name")
                                           };
+
             return View(characteristicViewModel);
         }
 
