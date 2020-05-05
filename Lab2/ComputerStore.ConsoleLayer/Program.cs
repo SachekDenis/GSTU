@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
-using ComputerStore.BusinessLogicLayer.DependencyInjection;
+using ComputerStore.ConsoleLayer.Configuration;
 using ComputerStore.ConsoleLayer.ConsoleView.BaseConsoleServices;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

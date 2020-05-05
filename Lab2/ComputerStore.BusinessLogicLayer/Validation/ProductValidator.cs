@@ -6,12 +6,7 @@ namespace ComputerStore.BusinessLogicLayer.Validation
     {
         public bool Validate(Product item)
         {
-            return !(item.Price < 0
-                     || string.IsNullOrEmpty(item.Name)
-                     || item.AmountInStorage < 0
-                     || item.Price < 0
-                     || item.Fields == null
-                );
+            return !(item.Price < 0 || string.IsNullOrEmpty(item.Name) || item.AmountInStorage < 0 || item.Price < 0 || item.Fields == null);
         }
     }
 }
