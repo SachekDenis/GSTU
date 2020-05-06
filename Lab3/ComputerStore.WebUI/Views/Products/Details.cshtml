@@ -1,4 +1,5 @@
-﻿@model ProductViewModel
+﻿@using ComputerStore.BusinessLogicLayer.Models
+@model ProductViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -10,40 +11,40 @@
     <h4>ProductViewModel</h4>
     <hr/>
     <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+<dt class="col-sm-2">
+            <label asp-for="Name"></label>
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Name)
+            @Model.Name
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
+            <label asp-for="Price"></label>
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Price)
+            @Model.Price
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.AmountInStorage)
+            <label asp-for="AmountInStorage"></label>
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.AmountInStorage)
+            @Model.AmountInStorage
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ManufacturerName)
+            <label asp-for="ManufacturerName"></label>
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ManufacturerName)
+            @Model.ManufacturerName
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CategoryName)
+            <label asp-for="CategoryName"></label>
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CategoryName)
+            @Model.CategoryName
         </dd>
         @foreach (var field in Model.Fields)
         {
             <dt class="col-sm-2">
-                @Html.DisplayName(field.CharacteristicName)
+                <label asp-for="@field.CharacteristicName"></label>
             </dt>
             <dd class="col-sm-10">
                 @field.Value
@@ -52,6 +53,6 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new {id = Model.Id}) |
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

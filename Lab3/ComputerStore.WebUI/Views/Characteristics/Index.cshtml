@@ -1,4 +1,5 @@
-﻿@model IEnumerable<CharacteristicViewModel>
+﻿@using System.Linq
+@model IEnumerable<CharacteristicViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,10 +14,10 @@
     <thead>
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.CategoryName)
+            <label asp-for="First().CategoryName"></label>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            <label asp-for="First().Name"></label>
         </th>
         <th></th>
     </tr>
@@ -26,15 +27,15 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.CategoryName)
+                @item.CategoryName
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @item.Name
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new {id = item.Id}) |
-                @Html.ActionLink("Details", "Details", new {id = item.Id}) |
-                @Html.ActionLink("Delete", "Delete", new {id = item.Id})
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>|
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a>|
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>|
             </td>
         </tr>
     }

@@ -1,4 +1,5 @@
-﻿@model IEnumerable<ProductViewModel>
+﻿@using System.Linq
+@model IEnumerable<ProductViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,19 +14,19 @@
     <thead>
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            <label asp-for="First().Name"></label>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Price)
+            <label asp-for="First().Price"></label>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.AmountInStorage)
+            <label asp-for="First().AmountInStorage"></label>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ManufacturerName)
+            <label asp-for="First().ManufacturerName"></label>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CategoryName)
+            <label asp-for="First().CategoryName"></label>
         </th>
         <th></th>
     </tr>
@@ -35,25 +36,25 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @item.Name
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Price)
+                @item.Price
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AmountInStorage)
+                @item.AmountInStorage
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ManufacturerName)
+                @item.ManufacturerName
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CategoryName)
+                @item.CategoryName
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new {id = item.Id}) |
-                @Html.ActionLink("Details", "Details", new {id = item.Id}) |
-                @Html.ActionLink("Delete", "Delete", new {id = item.Id}) |
-                @Html.ActionLink("Buy", "Buy", "Orders", new {productId = item.Id})
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>|
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a>|
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
+                <a asp-action="Buy" asp-controller="Orders" asp-route-productId="@item.Id">Delete</a>
             </td>
         </tr>
     }
