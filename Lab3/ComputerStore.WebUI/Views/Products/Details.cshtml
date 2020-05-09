@@ -8,7 +8,7 @@
 <h1>Details</h1>
 
 <div>
-    <h4>ProductViewModel</h4>
+    <h4>Product</h4>
     <hr/>
     <dl class="row">
 <dt class="col-sm-2">
@@ -44,7 +44,7 @@
         @foreach (var field in Model.Fields)
         {
             <dt class="col-sm-2">
-                <label asp-for="@field.CharacteristicName"></label>
+                <label>@field.CharacteristicName</label>
             </dt>
             <dd class="col-sm-10">
                 @field.Value
