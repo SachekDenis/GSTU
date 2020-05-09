@@ -11,8 +11,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView.BaseConsoleServices
         private readonly ICrudConsoleService<Manufacturer> _crudManufacturerService;
         private readonly IPrintConsoleService _printManufacturerService;
 
-        public ManufacturerBaseConsoleService(ICrudConsoleService<Manufacturer> crudManufacturerService,
-            ManufacturerPrintConsoleService printManufacturerService)
+        public ManufacturerBaseConsoleService(ICrudConsoleService<Manufacturer> crudManufacturerService, ManufacturerPrintConsoleService printManufacturerService)
         {
             _crudManufacturerService = crudManufacturerService;
             _printManufacturerService = printManufacturerService;

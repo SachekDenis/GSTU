@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ComputerStore.BusinessLogicLayer.Exception;
 using ComputerStore.BusinessLogicLayer.Managers;
 using ComputerStore.BusinessLogicLayer.Models;
 
@@ -62,29 +61,30 @@ namespace ComputerStore.ConsoleLayer.ConsoleView.CrudConsoleServices
             var categoryId = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
 
             var productDto = new Product
-            {
-                Name = name,
-                Price = price,
-                ManufacturerId = manufacturerId,
-                CategoryId = categoryId,
-                AmountInStorage = amount
-            };
+                             {
+                                 Name = name,
+                                 Price = price,
+                                 ManufacturerId = manufacturerId,
+                                 CategoryId = categoryId,
+                                 AmountInStorage = amount
+                             };
 
             var productCharacteristics = (await _characteristicManager.GetAll())
-                .Where(characteristicDto => characteristicDto.CategoryId == productDto.CategoryId).ToList();
+                                         .Where(characteristicDto => characteristicDto.CategoryId == productDto.CategoryId)
+                                         .ToList();
 
             var fieldList = new List<Field>();
 
             productCharacteristics.ForEach(characteristic =>
-            {
-                Console.WriteLine($"Enter value of characteristic {characteristic.Name}");
-                var value = Console.ReadLine();
-                fieldList.Add(new Field
-                {
-                    CharacteristicId = characteristic.Id,
-                    Value = value
-                });
-            });
+                                           {
+                                               Console.WriteLine($"Enter value of characteristic {characteristic.Name}");
+                                               var value = Console.ReadLine();
+                                               fieldList.Add(new Field
+                                                             {
+                                                                 CharacteristicId = characteristic.Id,
+                                                                 Value = value
+                                                             });
+                                           });
 
             productDto.Fields = fieldList;
 

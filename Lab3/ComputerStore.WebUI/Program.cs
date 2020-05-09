@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace ComputerStore.WebUI
 {
@@ -12,7 +13,13 @@ namespace ComputerStore.WebUI
 
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
-            return Host.CreateDefaultBuilder(args).ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
+            return Host.CreateDefaultBuilder(args)
+                       .ConfigureLogging(logging =>
+                                         {
+                                             logging.ClearProviders();
+                                             logging.AddFile("bin/Logs/StoreApp-{Date}.txt", LogLevel.Error);
+                                         })
+                       .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
         }
     }
 }

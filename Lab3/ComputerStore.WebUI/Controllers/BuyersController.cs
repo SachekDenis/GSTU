@@ -1,5 +1,7 @@
 ﻿using System.Threading.Tasks;
 using ComputerStore.BusinessLogicLayer.Managers;
+using ComputerStore.BusinessLogicLayer.Models;
+using ComputerStore.WebUI.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ComputerStore.WebUI.Controllers
@@ -18,7 +20,23 @@ namespace ComputerStore.WebUI.Controllers
         {
             var buyer = await _buyerManager.GetById(id);
 
-            return View(buyer);
+            var buyerViewModel = CreateBuyerViewModel(buyer);
+
+            return View(buyerViewModel);
+        }
+
+        private BuyerViewModel CreateBuyerViewModel(Buyer buyer)
+        {
+            return new BuyerViewModel
+                   {
+                       Id = buyer.Id,
+                       Address = buyer.Address,
+                       Email = buyer.Email,
+                       FirstName = buyer.FirstName,
+                       PhoneNumber = buyer.PhoneNumber,
+                       SecondName = buyer.SecondName,
+                       ZipCode = buyer.ZipCode
+                   };
         }
     }
 }

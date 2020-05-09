@@ -6,7 +6,6 @@ using ComputerStore.DataAccessLayer.Repo;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace ComputerStore.WebUI.AppConfiguration
 {
@@ -26,8 +25,7 @@ namespace ComputerStore.WebUI.AppConfiguration
                                       .AsImplementedInterfaces()
                                       .WithTransientLifetime())
                     .AddAutoMapper(typeof(StoreProfile))
-                    .AddScoped(typeof(IRepository<>), typeof(StoreRepository<>))
-                    .AddLogging(loggingBuilder => loggingBuilder.AddFile("bin/Logs/StoreApp-{Date}.txt"));
+                    .AddScoped(typeof(IRepository<>), typeof(StoreRepository<>));
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ComputerStore.BusinessLogicLayer.Managers;
@@ -7,6 +8,7 @@ using ComputerStore.WebUI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Logging;
 
 namespace ComputerStore.WebUI.Controllers
 {
@@ -14,67 +16,21 @@ namespace ComputerStore.WebUI.Controllers
     {
         private readonly CategoryManager _categoryManager;
         private readonly CharacteristicManager _characteristicManager;
+        private readonly ILogger<ProductsController> _logger;
         private readonly ManufacturerManager _manufacturerManager;
         private readonly ProductManager _productManager;
 
         public ProductsController(ProductManager productManager,
                                   CategoryManager categoryManager,
                                   ManufacturerManager manufacturerManager,
-                                  CharacteristicManager characteristicManager)
+                                  CharacteristicManager characteristicManager,
+                                  ILogger<ProductsController> logger)
         {
             _productManager = productManager;
             _categoryManager = categoryManager;
             _manufacturerManager = manufacturerManager;
             _characteristicManager = characteristicManager;
-        }
-
-        private ProductViewModel CreateProductViewModel(Product product, IEnumerable<Category> categories, IEnumerable<Manufacturer> manufacturers)
-        {
-            return new ProductViewModel
-                   {
-                       Id = product.Id,
-                       AmountInStorage = product.AmountInStorage,
-                       CategoryName = categories.First(category => category.Id == product.CategoryId).Name,
-                       ManufacturerName = manufacturers.First(manufacturer => manufacturer.Id == product.ManufacturerId).Name,
-                       Name = product.Name,
-                       Price = product.Price,
-                       CategoryId = product.CategoryId,
-                       ManufacturerId = product.ManufacturerId
-                   };
-        }
-
-        private IEnumerable<FieldViewModel> CreateFieldViewModels(Product product, IEnumerable<Characteristic> characteristics)
-        {
-            return product.Fields.Select(field => new FieldViewModel
-                                                  {
-                                                      CharacteristicId = field.CharacteristicId,
-                                                      CharacteristicName = characteristics
-                                                                           .First(characteristic => characteristic.Id == field.CharacteristicId)
-                                                                           .Name,
-                                                      Id = field.Id,
-                                                      ProductId = field.ProductId,
-                                                      Value = field.Value
-                                                  });
-        }
-
-        private Product CreateProduct(ProductViewModel productViewModel, IFormCollection formCollection)
-        {
-            var fields = formCollection.Where(formPair => formPair.Key.Contains("characteristic"))
-                                       .Select(formPair => new Field
-                                                           {
-                                                               CharacteristicId = int.Parse(formPair.Key.Substring(formPair.Key.IndexOf('-') + 1)),
-                                                               Value = formPair.Value
-                                                           });
-
-            return new Product
-                   {
-                       AmountInStorage = productViewModel.AmountInStorage,
-                       CategoryId = productViewModel.CategoryId,
-                       Fields = fields,
-                       ManufacturerId = productViewModel.ManufacturerId,
-                       Name = productViewModel.Name,
-                       Price = productViewModel.Price
-                   };
+            _logger = logger;
         }
 
         // GET: Products
@@ -153,8 +109,9 @@ namespace ComputerStore.WebUI.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception exception)
             {
+                _logger.LogError($"Error occured during creating product. Exception: {exception.Message}");
                 return View(productViewModel);
             }
         }
@@ -207,8 +164,9 @@ namespace ComputerStore.WebUI.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception exception)
             {
+                _logger.LogError($"Error occured during editing product. Exception: {exception.Message}");
                 return View(productViewModel);
             }
         }
@@ -234,10 +192,60 @@ namespace ComputerStore.WebUI.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception exception)
             {
+                _logger.LogError($"Error occured during deleting product. Exception: {exception.Message}");
                 return View(product);
             }
+        }
+
+        private ProductViewModel CreateProductViewModel(Product product, IEnumerable<Category> categories, IEnumerable<Manufacturer> manufacturers)
+        {
+            return new ProductViewModel
+                   {
+                       Id = product.Id,
+                       AmountInStorage = product.AmountInStorage,
+                       CategoryName = categories.First(category => category.Id == product.CategoryId).Name,
+                       ManufacturerName = manufacturers.First(manufacturer => manufacturer.Id == product.ManufacturerId).Name,
+                       Name = product.Name,
+                       Price = product.Price,
+                       CategoryId = product.CategoryId,
+                       ManufacturerId = product.ManufacturerId
+                   };
+        }
+
+        private IEnumerable<FieldViewModel> CreateFieldViewModels(Product product, IEnumerable<Characteristic> characteristics)
+        {
+            return product.Fields.Select(field => new FieldViewModel
+                                                  {
+                                                      CharacteristicId = field.CharacteristicId,
+                                                      CharacteristicName = characteristics
+                                                                           .First(characteristic => characteristic.Id == field.CharacteristicId)
+                                                                           .Name,
+                                                      Id = field.Id,
+                                                      ProductId = field.ProductId,
+                                                      Value = field.Value
+                                                  });
+        }
+
+        private Product CreateProduct(ProductViewModel productViewModel, IFormCollection formCollection)
+        {
+            var fields = formCollection.Where(formPair => formPair.Key.Contains("characteristic"))
+                                       .Select(formPair => new Field
+                                                           {
+                                                               CharacteristicId = int.Parse(formPair.Key.Substring(formPair.Key.IndexOf('-') + 1)),
+                                                               Value = formPair.Value
+                                                           });
+
+            return new Product
+                   {
+                       AmountInStorage = productViewModel.AmountInStorage,
+                       CategoryId = productViewModel.CategoryId,
+                       Fields = fields,
+                       ManufacturerId = productViewModel.ManufacturerId,
+                       Name = productViewModel.Name,
+                       Price = productViewModel.Price
+                   };
         }
     }
 }

@@ -40,17 +40,17 @@ namespace ComputerStore.ConsoleLayer.ConsoleView.CrudConsoleServices
         public async Task<Category> CreateModel()
         {
             return await Task.Run(() =>
-            {
-                Console.WriteLine("Enter category name");
-                var name = Console.ReadLine();
+                                  {
+                                      Console.WriteLine("Enter category name");
+                                      var name = Console.ReadLine();
 
-                var categoryDto = new Category
-                {
-                    Name = name
-                };
+                                      var categoryDto = new Category
+                                                        {
+                                                            Name = name
+                                                        };
 
-                return categoryDto;
-            });
+                                      return categoryDto;
+                                  });
         }
     }
 }

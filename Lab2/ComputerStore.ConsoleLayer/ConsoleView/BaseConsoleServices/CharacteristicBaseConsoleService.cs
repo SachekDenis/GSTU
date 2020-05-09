@@ -12,7 +12,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView.BaseConsoleServices
         private readonly IPrintConsoleService _printCharacteristicService;
 
         public CharacteristicBaseConsoleService(ICrudConsoleService<Characteristic> crudCharacteristicService,
-            CharacteristicPrintConsoleService printCharacteristicService)
+                                                CharacteristicPrintConsoleService printCharacteristicService)
         {
             _crudCharacteristicService = crudCharacteristicService;
             _printCharacteristicService = printCharacteristicService;

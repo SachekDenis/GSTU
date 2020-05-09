@@ -17,10 +17,10 @@ namespace ComputerStore.ConsoleLayer.ConsoleView.BaseConsoleServices
         private readonly ProductManager _productManager;
 
         public ProductBaseConsoleService(ProductManager productManager,
-            OrderManager orderManager,
-            BuyerManager buyerManager,
-            ManufacturerManager manufacturerManager,
-            CharacteristicManager characteristicManager)
+                                         OrderManager orderManager,
+                                         BuyerManager buyerManager,
+                                         ManufacturerManager manufacturerManager,
+                                         CharacteristicManager characteristicManager)
         {
             _productManager = productManager;
             _orderManager = orderManager;
@@ -88,14 +88,14 @@ namespace ComputerStore.ConsoleLayer.ConsoleView.BaseConsoleServices
 
 
             var buyerDto = new Buyer
-            {
-                Address = address,
-                FirstName = firstName,
-                SecondName = surname,
-                Email = email,
-                PhoneNumber = phone,
-                ZipCode = zipCode
-            };
+                           {
+                               Address = address,
+                               FirstName = firstName,
+                               SecondName = surname,
+                               Email = email,
+                               PhoneNumber = phone,
+                               ZipCode = zipCode
+                           };
 
             await _buyerManager.Add(buyerDto);
 
@@ -103,11 +103,11 @@ namespace ComputerStore.ConsoleLayer.ConsoleView.BaseConsoleServices
             var amount = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
 
             var orderDto = new Order
-            {
-                ProductId = ProductId,
-                BuyerId = buyerDto.Id,
-                Amount = amount
-            };
+                           {
+                               ProductId = ProductId,
+                               BuyerId = buyerDto.Id,
+                               Amount = amount
+                           };
 
             try
             {
@@ -128,13 +128,13 @@ namespace ComputerStore.ConsoleLayer.ConsoleView.BaseConsoleServices
         {
             var productDto = await _productManager.GetById(ProductId);
             var productViewModel = new ProductViewModel
-            {
-                Amount = productDto.AmountInStorage,
-                Fields = productDto.Fields,
-                Manufacturer = (await _manufacturerManager.GetById(productDto.ManufacturerId)).Name,
-                Name = productDto.Name,
-                Price = productDto.Price
-            };
+                                   {
+                                       Amount = productDto.AmountInStorage,
+                                       Fields = productDto.Fields,
+                                       Manufacturer = (await _manufacturerManager.GetById(productDto.ManufacturerId)).Name,
+                                       Name = productDto.Name,
+                                       Price = productDto.Price
+                                   };
 
             Console.Write("Product name: ");
             Console.WriteLine(productViewModel.Name);
@@ -147,14 +147,14 @@ namespace ComputerStore.ConsoleLayer.ConsoleView.BaseConsoleServices
 
             var characteristics = await _characteristicManager.GetAll();
 
-            productViewModel.Fields.ToList().ForEach(field =>
-            {
-                Console.Write(characteristics.First(characteristic => characteristic.Id == field.CharacteristicId)
-                    .Name);
-                Console.Write(":");
-                Console.Write(field.Value);
-                Console.WriteLine();
-            });
+            productViewModel.Fields.ToList()
+                            .ForEach(field =>
+                                     {
+                                         Console.Write(characteristics.First(characteristic => characteristic.Id == field.CharacteristicId).Name);
+                                         Console.Write(":");
+                                         Console.Write(field.Value);
+                                         Console.WriteLine();
+                                     });
         }
     }
 }

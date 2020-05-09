@@ -11,8 +11,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView.PrintConsoleServices
         private readonly OrderManager _orderManager;
         private readonly ProductManager _productManager;
 
-        public OrderPrintConsoleService(OrderManager orderManager, ProductManager productManager,
-            BuyerManager buyerManager)
+        public OrderPrintConsoleService(OrderManager orderManager, ProductManager productManager, BuyerManager buyerManager)
         {
             _orderManager = orderManager;
             _productManager = productManager;
@@ -24,15 +23,14 @@ namespace ComputerStore.ConsoleLayer.ConsoleView.PrintConsoleServices
             var products = await _productManager.GetAll();
             var buyers = await _buyerManager.GetAll();
 
-            var items = (await _orderManager.GetAll())
-                .Select(item => new OrderViewModel
-                {
-                    ProductName = products.First(product => product.Id == item.ProductId).Name,
-                    BuyerAddress = buyers.First(buyer => buyer.Id == item.BuyerId).Address,
-                    Count = item.Amount,
-                    OrderStatus = item.OrderStatus,
-                    Id = item.Id
-                });
+            var items = (await _orderManager.GetAll()).Select(item => new OrderViewModel
+                                                                      {
+                                                                          ProductName = products.First(product => product.Id == item.ProductId).Name,
+                                                                          BuyerAddress = buyers.First(buyer => buyer.Id == item.BuyerId).Address,
+                                                                          Count = item.Amount,
+                                                                          OrderStatus = item.OrderStatus,
+                                                                          Id = item.Id
+                                                                      });
 
             items.WriteCollectionAsTable();
         }

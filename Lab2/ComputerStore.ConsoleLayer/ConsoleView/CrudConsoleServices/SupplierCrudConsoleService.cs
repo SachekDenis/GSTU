@@ -40,23 +40,23 @@ namespace ComputerStore.ConsoleLayer.ConsoleView.CrudConsoleServices
         public async Task<Supplier> CreateModel()
         {
             return await Task.Run(() =>
-            {
-                Console.WriteLine("Enter supplier name");
-                var name = Console.ReadLine();
-                Console.WriteLine("Enter supplier address");
-                var address = Console.ReadLine();
-                Console.WriteLine("Enter supplier phone");
-                var phone = Console.ReadLine();
+                                  {
+                                      Console.WriteLine("Enter supplier name");
+                                      var name = Console.ReadLine();
+                                      Console.WriteLine("Enter supplier address");
+                                      var address = Console.ReadLine();
+                                      Console.WriteLine("Enter supplier phone");
+                                      var phone = Console.ReadLine();
 
-                var supplierDto = new Supplier
-                {
-                    Name = name,
-                    Address = address,
-                    Phone = phone
-                };
+                                      var supplierDto = new Supplier
+                                                        {
+                                                            Name = name,
+                                                            Address = address,
+                                                            Phone = phone
+                                                        };
 
-                return supplierDto;
-            });
+                                      return supplierDto;
+                                  });
         }
     }
 }

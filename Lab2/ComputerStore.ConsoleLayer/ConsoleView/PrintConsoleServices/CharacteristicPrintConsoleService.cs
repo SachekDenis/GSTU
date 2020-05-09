@@ -10,8 +10,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView.PrintConsoleServices
         private readonly CategoryManager _categoryManager;
         private readonly CharacteristicManager _characteristicManager;
 
-        public CharacteristicPrintConsoleService(CharacteristicManager characteristicManager,
-            CategoryManager categoryManager)
+        public CharacteristicPrintConsoleService(CharacteristicManager characteristicManager, CategoryManager categoryManager)
         {
             _characteristicManager = characteristicManager;
             _categoryManager = categoryManager;
@@ -21,14 +20,16 @@ namespace ComputerStore.ConsoleLayer.ConsoleView.PrintConsoleServices
         {
             var categories = await _categoryManager.GetAll();
 
-            var items = (await _characteristicManager.GetAll())
-                .Select(item => new CharacteristicViewModel
-                {
-                    CharacteristicId = item.Id,
-                    CategoryId = item.CategoryId,
-                    CategoryName = categories.First(category => category.Id == item.CategoryId).Name,
-                    CharacteristicName = item.Name
-                });
+            var items = (await _characteristicManager.GetAll()).Select(item => new CharacteristicViewModel
+                                                                               {
+                                                                                   CharacteristicId = item.Id,
+                                                                                   CategoryId = item.CategoryId,
+                                                                                   CategoryName = categories
+                                                                                                  .First(category => category.Id ==
+                                                                                                                     item.CategoryId)
+                                                                                                  .Name,
+                                                                                   CharacteristicName = item.Name
+                                                                               });
 
             items.WriteCollectionAsTable();
         }

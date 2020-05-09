@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ComputerStore.BusinessLogicLayer.Managers;
@@ -6,6 +7,7 @@ using ComputerStore.BusinessLogicLayer.Models;
 using ComputerStore.WebUI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Logging;
 
 namespace ComputerStore.WebUI.Controllers
 {
@@ -13,24 +15,14 @@ namespace ComputerStore.WebUI.Controllers
     {
         private readonly CategoryManager _categoryManager;
         private readonly CharacteristicManager _characteristicManager;
+        private readonly ILogger<CharacteristicsController> _logger;
 
-        public CharacteristicsController(CharacteristicManager characteristicManager, CategoryManager categoryManager)
+        public CharacteristicsController(CharacteristicManager characteristicManager, CategoryManager categoryManager, ILogger<CharacteristicsController> logger)
         {
             _characteristicManager = characteristicManager;
             _categoryManager = categoryManager;
+            _logger = logger;
         }
-
-        private CharacteristicViewModel CreateCharacteristicViewModel(Characteristic characteristic, IEnumerable<Category> categories)
-        {
-            return new CharacteristicViewModel
-                   {
-                       Id = characteristic.Id,
-                       CategoryId = characteristic.CategoryId,
-                       CategoryName = categories.First(category => category.Id == characteristic.CategoryId).Name,
-                       Name = characteristic.Name
-                   };
-        }
-
 
         // GET: Characteristics
         public async Task<ActionResult> Index()
@@ -78,8 +70,9 @@ namespace ComputerStore.WebUI.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception exception)
             {
+                _logger.LogError($"Error occured during creating characteristic. Exception: {exception.Message}");
                 characteristicViewModel.CategoriesSelectList = new SelectList(await _categoryManager.GetAll(), "Id", "Name");
                 return View(characteristicViewModel);
             }
@@ -110,8 +103,9 @@ namespace ComputerStore.WebUI.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception exception)
             {
+                _logger.LogError($"Error occured during editing characteristic. Exception: {exception.Message}");
                 characteristicViewModel.CategoriesSelectList = new SelectList(await _categoryManager.GetAll(), "Id", "Name");
                 return View(characteristicViewModel);
             }
@@ -136,10 +130,22 @@ namespace ComputerStore.WebUI.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception exception)
             {
+                _logger.LogError($"Error occured during deleting characteristic. Exception: {exception.Message}");
                 return View(characteristicViewModel);
             }
+        }
+
+        private CharacteristicViewModel CreateCharacteristicViewModel(Characteristic characteristic, IEnumerable<Category> categories)
+        {
+            return new CharacteristicViewModel
+                   {
+                       Id = characteristic.Id,
+                       CategoryId = characteristic.CategoryId,
+                       CategoryName = categories.First(category => category.Id == characteristic.CategoryId).Name,
+                       Name = characteristic.Name
+                   };
         }
     }
 }
