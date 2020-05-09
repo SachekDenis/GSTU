@@ -4,26 +4,15 @@
   "libraries": [
     {
       "library": "twitter-bootstrap@4.4.0",
-      "destination": "wwwroot/lib/bootstrap/dist/"
+      "destination": "wwwroot/lib/bootstrap/"
     },
     {
       "library": "jquery@3.5.0",
-      "files": [
-        "jquery.min.js",
-        "jquery.js",
-        "jquery.min.map"
-      ],
-      "destination": "wwwroot/lib/jquery/dist/"
+      "destination": "wwwroot/lib/jquery/"
     },
     {
       "library": "jquery-validate@1.19.1",
-      "files": [
-        "additional-methods.js",
-        "additional-methods.min.js",
-        "jquery.validate.js",
-        "jquery.validate.min.js"
-      ],
-      "destination": "wwwroot/lib/jquery-validation/dist/"
+      "destination": "wwwroot/lib/jquery-validation/"
     },
     {
       "library": "jquery-validation-unobtrusive@3.2.11",
