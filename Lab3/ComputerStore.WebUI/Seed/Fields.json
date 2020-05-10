@@ -1,0 +1,49 @@
+{
+  "name": "Fields",
+  "schema": {
+    "columns": [
+      {
+        "name": "Id",
+        "type": "System.Int32"
+      },
+      {
+        "name": "ProductId",
+        "type": "System.Int32"
+      },
+      {
+        "name": "CharacteristicId",
+        "type": "System.Int32"
+      },
+      {
+        "name": "Value",
+        "type": "System.String"
+      }
+    ]
+  },
+  "data": [
+    {
+      "Id": 1,
+      "ProductId": 2,
+      "CharacteristicId": 1,
+      "Value": "3600"
+    },
+    {
+      "Id": 2,
+      "ProductId": 2,
+      "CharacteristicId": 2,
+      "Value": "4 GB"
+    },
+    {
+      "Id": 3,
+      "ProductId": 3,
+      "CharacteristicId": 3,
+      "Value": "3600"
+    },
+    {
+      "Id": 4,
+      "ProductId": 3,
+      "CharacteristicId": 4,
+      "Value": "4"
+    }
+  ]
+}

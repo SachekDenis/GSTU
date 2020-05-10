@@ -1,0 +1,42 @@
+﻿@model OrderViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Order</h4>
+    <hr/>
+    <dl class="row">
+        <dt class="col-sm-2">
+            <label asp-for="ProductName"></label>
+        </dt>
+        <dd class="col-sm-10">
+            <a asp-action="Details" asp-controller="Products" asp-route-id="@Model.ProductId">@Model.ProductName</a>
+        </dd>
+        <dt class="col-sm-2">
+            <label asp-for="BuyerName"></label>
+        </dt>
+        <dd class="col-sm-10">
+            <a asp-action="Details" asp-controller="Buyers" asp-route-id="@Model.BuyerId">@Model.BuyerName</a>
+        </dd>
+        <dt class="col-sm-2">
+            <label asp-for="Amount"></label>
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Amount
+        </dd>
+        <dt class="col-sm-2">
+            <label asp-for="OrderStatus"></label>
+        </dt>
+        <dd class="col-sm-10">
+            @Model.OrderStatus
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

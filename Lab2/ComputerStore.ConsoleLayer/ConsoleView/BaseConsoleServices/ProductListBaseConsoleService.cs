@@ -15,9 +15,9 @@ namespace ComputerStore.ConsoleLayer.ConsoleView.BaseConsoleServices
         private readonly ProductManager _productManager;
 
         public ProductListBaseConsoleService(ProductBaseConsoleService productConsoleService,
-            ICrudConsoleService<Product> crudProductService,
-            ProductListPrintConsoleService printProductService,
-            ProductManager productManager)
+                                             ICrudConsoleService<Product> crudProductService,
+                                             ProductListPrintConsoleService printProductService,
+                                             ProductManager productManager)
         {
             _productConsoleService = productConsoleService;
             _crudProductService = crudProductService;

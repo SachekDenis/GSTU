@@ -10,8 +10,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView.PrintConsoleServices
         private readonly CategoryManager _categoryManager;
         private readonly ProductManager _productManager;
 
-        public ProductListPrintConsoleService(CategoryManager categoryManager,
-            ProductManager productManager)
+        public ProductListPrintConsoleService(CategoryManager categoryManager, ProductManager productManager)
         {
             _categoryManager = categoryManager;
             _productManager = productManager;
@@ -21,11 +20,13 @@ namespace ComputerStore.ConsoleLayer.ConsoleView.PrintConsoleServices
         {
             var categories = await _categoryManager.GetAll();
             var items = (await _productManager.GetAll()).Select(item => new ProductListViewModel
-            {
-                Id = item.Id,
-                Category = categories.First(category => category.Id == item.CategoryId).Name,
-                Name = item.Name
-            });
+                                                                        {
+                                                                            Id = item.Id,
+                                                                            Category = categories
+                                                                                       .First(category => category.Id == item.CategoryId)
+                                                                                       .Name,
+                                                                            Name = item.Name
+                                                                        });
 
             items.WriteCollectionAsTable();
         }

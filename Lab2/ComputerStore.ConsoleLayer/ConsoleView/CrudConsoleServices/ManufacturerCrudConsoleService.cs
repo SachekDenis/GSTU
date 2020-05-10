@@ -40,20 +40,20 @@ namespace ComputerStore.ConsoleLayer.ConsoleView.CrudConsoleServices
         public async Task<Manufacturer> CreateModel()
         {
             return await Task.Run(() =>
-            {
-                Console.WriteLine("Enter name of manufacturer");
-                var name = Console.ReadLine();
-                Console.WriteLine("Enter country of manufacturer");
-                var country = Console.ReadLine();
+                                  {
+                                      Console.WriteLine("Enter name of manufacturer");
+                                      var name = Console.ReadLine();
+                                      Console.WriteLine("Enter country of manufacturer");
+                                      var country = Console.ReadLine();
 
-                var manufacturerDto = new Manufacturer
-                {
-                    Name = name,
-                    Country = country
-                };
+                                      var manufacturerDto = new Manufacturer
+                                                            {
+                                                                Name = name,
+                                                                Country = country
+                                                            };
 
-                return manufacturerDto;
-            });
+                                      return manufacturerDto;
+                                  });
         }
     }
 }

@@ -1,0 +1,10 @@
+﻿@model IEnumerable<FieldViewModel>
+
+@foreach (var field in Model)
+{
+    <div class="form-group">
+        <label class="control-label">@field.CharacteristicName</label>
+        <input name="characteristic-@field.CharacteristicId" class="form-control" value="@field.Value"/>
+        <span asp-validation-for="@field.Value" class="text-danger"></span>
+    </div>
+}

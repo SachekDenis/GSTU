@@ -6,8 +6,7 @@ namespace ComputerStore.BusinessLogicLayer.Validation
     {
         public bool Validate(Manufacturer item)
         {
-            return !(string.IsNullOrEmpty(item.Name)
-                     || string.IsNullOrEmpty(item.Country));
+            return !(string.IsNullOrEmpty(item.Name) || string.IsNullOrEmpty(item.Country));
         }
     }
 }

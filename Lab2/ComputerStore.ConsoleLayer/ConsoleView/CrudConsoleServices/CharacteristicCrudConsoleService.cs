@@ -10,8 +10,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView.CrudConsoleServices
         private readonly CategoryManager _categoryManager;
         private readonly CharacteristicManager _characteristicManager;
 
-        public CharacteristicCrudConsoleService(CharacteristicManager characteristicManager,
-            CategoryManager categoryManager)
+        public CharacteristicCrudConsoleService(CharacteristicManager characteristicManager, CategoryManager categoryManager)
         {
             _characteristicManager = characteristicManager;
             _categoryManager = categoryManager;
@@ -48,10 +47,10 @@ namespace ComputerStore.ConsoleLayer.ConsoleView.CrudConsoleServices
             var categoryId = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
 
             var characteristicDto = new Characteristic
-            {
-                CategoryId = categoryId,
-                Name = name
-            };
+                                    {
+                                        CategoryId = categoryId,
+                                        Name = name
+                                    };
 
             return characteristicDto;
         }

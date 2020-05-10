@@ -7,9 +7,7 @@ namespace ComputerStore.BusinessLogicLayer.Validation
     {
         public bool Validate(Supplier item)
         {
-            return !(string.IsNullOrEmpty(item.Name)
-                     || !Regex.Match(item.Phone, RegexCollection.PhoneRegex).Success
-                     || string.IsNullOrEmpty(item.Address));
+            return !(string.IsNullOrEmpty(item.Name) || !Regex.Match(item.Phone, RegexCollection.PhoneRegex).Success || string.IsNullOrEmpty(item.Address));
         }
     }
 }

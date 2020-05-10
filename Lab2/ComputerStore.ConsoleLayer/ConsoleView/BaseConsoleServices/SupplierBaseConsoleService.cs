@@ -11,8 +11,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView.BaseConsoleServices
         private readonly ICrudConsoleService<Supplier> _crudSupplierService;
         private readonly IPrintConsoleService _printSupplierService;
 
-        public SupplierBaseConsoleService(ICrudConsoleService<Supplier> crudSupplierService,
-            SupplierPrintConsoleService printSupplierService)
+        public SupplierBaseConsoleService(ICrudConsoleService<Supplier> crudSupplierService, SupplierPrintConsoleService printSupplierService)
         {
             _crudSupplierService = crudSupplierService;
             _printSupplierService = printSupplierService;

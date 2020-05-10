@@ -6,12 +6,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="ConsoleTables" Version="2.4.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ComputerStore.BusinessLogicLayer\ComputerStore.BusinessLogicLayer.csproj" />
+    <ProjectReference Include="..\ComputerStore.DataAccessLayer\ComputerStore.DataAccessLayer.csproj" />
   </ItemGroup>
 
 </Project>

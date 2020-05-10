@@ -11,8 +11,7 @@ namespace ComputerStore.ConsoleLayer.ConsoleView.BaseConsoleServices
         private readonly ICrudConsoleService<Category> _crudCategoryService;
         private readonly IPrintConsoleService _printCategoryService;
 
-        public CategoryBaseConsoleService(ICrudConsoleService<Category> crudCategoryService,
-            CategoryPrintConsoleService printCategoryService)
+        public CategoryBaseConsoleService(ICrudConsoleService<Category> crudCategoryService, CategoryPrintConsoleService printCategoryService)
         {
             _crudCategoryService = crudCategoryService;
             _printCategoryService = printCategoryService;

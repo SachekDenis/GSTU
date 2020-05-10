@@ -16,9 +16,9 @@ namespace ComputerStore.ConsoleLayer.ConsoleView.BaseConsoleServices
         private readonly ProductBaseConsoleService _productConsoleService;
 
         public OrderBaseConsoleService(OrderManager orderManager,
-            BuyerManager buyerManager,
-            ProductBaseConsoleService productConsoleService,
-            OrderPrintConsoleService printOrderService)
+                                       BuyerManager buyerManager,
+                                       ProductBaseConsoleService productConsoleService,
+                                       OrderPrintConsoleService printOrderService)
         {
             _orderManager = orderManager;
             _buyerManager = buyerManager;
