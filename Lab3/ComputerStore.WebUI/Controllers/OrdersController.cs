@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ComputerStore.BusinessLogicLayer.Managers;
 using ComputerStore.BusinessLogicLayer.Models;
 using ComputerStore.WebUI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -100,6 +101,7 @@ namespace ComputerStore.WebUI.Controllers
             return View(orderViewModel);
         }
 
+        [Authorize(Roles = "admin")]
         [HttpGet]
         public IActionResult Edit(int id)
         {
@@ -111,6 +113,7 @@ namespace ComputerStore.WebUI.Controllers
             return View(orderViewModel);
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<IActionResult> Edit(OrderViewModel orderViewModel)
         {

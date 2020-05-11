@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using ComputerStore.BusinessLogicLayer.Managers;
 using ComputerStore.BusinessLogicLayer.Models;
 using ComputerStore.WebUI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 
 namespace ComputerStore.WebUI.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class CharacteristicsController : Controller
     {
         private readonly CategoryManager _categoryManager;

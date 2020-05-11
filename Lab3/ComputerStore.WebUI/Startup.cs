@@ -1,6 +1,7 @@
 using ComputerStore.WebUI.AppConfiguration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -21,6 +22,7 @@ namespace ComputerStore.WebUI
         {
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.ConfigureAppServices(Configuration);
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,9 +45,14 @@ namespace ComputerStore.WebUI
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints => { endpoints.MapControllerRoute("default", "{controller=Products}/{action=Index}/{id?}"); });
+            app.UseEndpoints(endpoints =>
+                             {
+                                 endpoints.MapControllerRoute("default", "{controller=Products}/{action=Index}/{id?}"); 
+                                 endpoints.MapRazorPages();
+                             });
         }
     }
 }

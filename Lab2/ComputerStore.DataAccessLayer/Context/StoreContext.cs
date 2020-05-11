@@ -13,15 +13,13 @@ namespace ComputerStore.DataAccessLayer.Context
         public StoreContext(DbContextOptions<StoreContext> options, IConfiguration configuration, ILoggerFactory fileLoggerFactory) : base(options)
         {
             _fileLoggerFactory = fileLoggerFactory;
-            if (Database.EnsureCreated())
-            {
-                DbInitializer.Create(dbUtilsOptions =>
-                                     {
-                                         dbUtilsOptions.UseSqlServer(Database.GetDbConnection().ConnectionString);
-                                         dbUtilsOptions.UseFileFolderPacker(configuration.GetSection("SeedFolder").Value);
-                                     })
-                             .Seed();
-            }
+            Database.Migrate();
+            DbInitializer.Create(dbUtilsOptions =>
+                                 {
+                                     dbUtilsOptions.UseSqlServer(Database.GetDbConnection().ConnectionString);
+                                     dbUtilsOptions.UseFileFolderPacker(configuration.GetSection("SeedFolder").Value);
+                                 })
+                         .Seed();
         }
 
         public DbSet<ProductDto> Products { get; set; }
