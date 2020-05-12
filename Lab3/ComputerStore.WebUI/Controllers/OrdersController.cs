@@ -4,41 +4,61 @@ using System.Linq;
 using System.Threading.Tasks;
 using ComputerStore.BusinessLogicLayer.Managers;
 using ComputerStore.BusinessLogicLayer.Models;
+using ComputerStore.DataAccessLayer.Models.Identity;
 using ComputerStore.WebUI.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace ComputerStore.WebUI.Controllers
 {
+    [Authorize(Roles = "admin, user")]
     public class OrdersController : Controller
     {
         private readonly BuyerManager _buyerManager;
+        private readonly UserManager<IdentityBuyer> _userManager;
         private readonly ILogger<OrdersController> _logger;
         private readonly OrderManager _orderManager;
         private readonly ProductManager _productManager;
 
-        public OrdersController(ProductManager productManager, BuyerManager buyerManager, OrderManager orderManager, ILogger<OrdersController> logger)
+        public OrdersController(ProductManager productManager,
+                                BuyerManager buyerManager, 
+                                OrderManager orderManager, 
+                                ILogger<OrdersController> logger, 
+                                UserManager<IdentityBuyer> userManager)
         {
             _productManager = productManager;
             _buyerManager = buyerManager;
             _orderManager = orderManager;
             _logger = logger;
+            _userManager = userManager;
         }
 
         public async Task<IActionResult> Index()
         {
             var buyers = await _buyerManager.GetAll();
             var products = await _productManager.GetAll();
+            var orders = await _orderManager.GetAll();
 
-            var orderViewModels = (await _orderManager.GetAll()).Select(order => CreateOrderViewModel(order, buyers, products));
-            return View(orderViewModels);
+            if (User.IsInRole("admin"))
+            {
+                var orderViewModels = orders.Select(order => CreateOrderViewModel(order, buyers, products));
+                return View(orderViewModels);
+            }
+            else
+            {
+                var buyerId= (await _userManager.GetUserAsync(User)).BuyerId;
+                var orderViewModels = orders.Where(order => order.BuyerId == buyerId).Select(order => CreateOrderViewModel(order, buyers, products));
+                return View(orderViewModels);
+            }
         }
 
         [HttpGet]
         public async Task<IActionResult> Buy(int productId)
         {
             var product = await _productManager.GetById(productId);
+
             var purchaseViewModel = new PurchaseViewModel
                                     {
                                         ProductId = productId,
@@ -54,17 +74,9 @@ namespace ComputerStore.WebUI.Controllers
         {
             try
             {
-                var buyer = new Buyer
-                            {
-                                Address = purchaseViewModel.Address,
-                                Email = purchaseViewModel.Email,
-                                FirstName = purchaseViewModel.FirstName,
-                                PhoneNumber = purchaseViewModel.PhoneNumber,
-                                SecondName = purchaseViewModel.SecondName,
-                                ZipCode = purchaseViewModel.ZipCode
-                            };
+                var buyerId = (await _userManager.GetUserAsync(User)).BuyerId;
 
-                await _buyerManager.Add(buyer);
+                var buyer = await _buyerManager.GetById(buyerId);
 
                 var order = new Order
                             {

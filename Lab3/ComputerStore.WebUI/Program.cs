@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using ComputerStore.DataAccessLayer.Models.Identity;
 
 namespace ComputerStore.WebUI
 {
@@ -18,7 +19,7 @@ namespace ComputerStore.WebUI
             {
                 var services = scope.ServiceProvider;
 
-                var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+                var userManager = services.GetRequiredService<UserManager<IdentityBuyer>>();
                 var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
                 await IdentityInitializer.InitializeAsync(userManager, roleManager);

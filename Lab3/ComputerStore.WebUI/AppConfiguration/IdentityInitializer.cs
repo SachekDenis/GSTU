@@ -1,32 +1,36 @@
 ﻿using System.Threading.Tasks;
+using ComputerStore.DataAccessLayer.Models.Identity;
 using Microsoft.AspNetCore.Identity;
 
 namespace ComputerStore.WebUI.AppConfiguration
 {
     public class IdentityInitializer
     {
-        public static async Task InitializeAsync(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        private const string AdminEmail = "admin@gmail.com";
+        private const string Password = "SACHEK1denis";
+        private const string AdminRoleName = "admin";
+        private const string UserRoleName = "user";
+
+        public static async Task InitializeAsync(UserManager<IdentityBuyer> userManager, RoleManager<IdentityRole> roleManager)
         {
-            string adminEmail = "admin@gmail.com";
-            string password = "SACHEK1denis";
-            if (await roleManager.FindByNameAsync("admin") == null)
+            if (await roleManager.FindByNameAsync(AdminRoleName) == null)
             {
-                await roleManager.CreateAsync(new IdentityRole("admin"));
+                await roleManager.CreateAsync(new IdentityRole(AdminRoleName));
             }
 
-            if (await roleManager.FindByNameAsync("user") == null)
+            if (await roleManager.FindByNameAsync(UserRoleName) == null)
             {
-                await roleManager.CreateAsync(new IdentityRole("user"));
+                await roleManager.CreateAsync(new IdentityRole(UserRoleName));
             }
 
-            if (await userManager.FindByNameAsync(adminEmail) == null)
+            if (await userManager.FindByNameAsync(AdminEmail) == null)
             {
-                IdentityUser admin = new IdentityUser { Email = adminEmail, UserName = adminEmail };
-                IdentityResult result = await userManager.CreateAsync(admin, password);
+                IdentityBuyer admin = new IdentityBuyer { Email = AdminEmail, UserName = AdminEmail, BuyerId = 1};
+                IdentityResult result = await userManager.CreateAsync(admin, Password);
 
                 if (result.Succeeded)
                 {
-                    await userManager.AddToRoleAsync(admin, "admin");
+                    await userManager.AddToRoleAsync(admin, AdminRoleName);
                 }
             }
         }
