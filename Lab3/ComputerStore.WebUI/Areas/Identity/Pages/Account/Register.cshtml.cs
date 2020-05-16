@@ -69,12 +69,14 @@ namespace ComputerStore.WebUI.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
+
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
                 var user = new IdentityBuyer { UserName = Input.Email, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 await _userManager.AddToRoleAsync(user, "user");
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");

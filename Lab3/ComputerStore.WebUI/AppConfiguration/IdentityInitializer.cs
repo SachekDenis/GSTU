@@ -8,19 +8,17 @@ namespace ComputerStore.WebUI.AppConfiguration
     {
         private const string AdminEmail = "admin@gmail.com";
         private const string Password = "SACHEK1denis";
-        private const string AdminRoleName = "admin";
-        private const string UserRoleName = "user";
 
         public static async Task InitializeAsync(UserManager<IdentityBuyer> userManager, RoleManager<IdentityRole> roleManager)
         {
-            if (await roleManager.FindByNameAsync(AdminRoleName) == null)
+            if (await roleManager.FindByNameAsync(RolesNames.Admin) == null)
             {
-                await roleManager.CreateAsync(new IdentityRole(AdminRoleName));
+                await roleManager.CreateAsync(new IdentityRole(RolesNames.Admin));
             }
 
-            if (await roleManager.FindByNameAsync(UserRoleName) == null)
+            if (await roleManager.FindByNameAsync(RolesNames.User) == null)
             {
-                await roleManager.CreateAsync(new IdentityRole(UserRoleName));
+                await roleManager.CreateAsync(new IdentityRole(RolesNames.User));
             }
 
             if (await userManager.FindByNameAsync(AdminEmail) == null)
@@ -30,7 +28,7 @@ namespace ComputerStore.WebUI.AppConfiguration
 
                 if (result.Succeeded)
                 {
-                    await userManager.AddToRoleAsync(admin, AdminRoleName);
+                    await userManager.AddToRoleAsync(admin, RolesNames.Admin);
                 }
             }
         }

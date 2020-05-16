@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ComputerStore.BusinessLogicLayer.Managers;
 using ComputerStore.BusinessLogicLayer.Models;
 using ComputerStore.DataAccessLayer.Models.Identity;
+using ComputerStore.WebUI.AppConfiguration;
 using ComputerStore.WebUI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -13,20 +14,21 @@ using Microsoft.Extensions.Logging;
 
 namespace ComputerStore.WebUI.Controllers
 {
-    [Authorize(Roles = "admin, user")]
+    [Authorize(Roles = RolesNames.AdminOrUser)]
     public class OrdersController : Controller
     {
         private readonly BuyerManager _buyerManager;
-        private readonly UserManager<IdentityBuyer> _userManager;
         private readonly ILogger<OrdersController> _logger;
         private readonly OrderManager _orderManager;
         private readonly ProductManager _productManager;
+        private readonly UserManager<IdentityBuyer> _userManager;
 
-        public OrdersController(ProductManager productManager,
-                                BuyerManager buyerManager, 
-                                OrderManager orderManager, 
-                                ILogger<OrdersController> logger, 
-                                UserManager<IdentityBuyer> userManager)
+        public OrdersController(
+            ProductManager productManager,
+            BuyerManager buyerManager,
+            OrderManager orderManager,
+            ILogger<OrdersController> logger,
+            UserManager<IdentityBuyer> userManager)
         {
             _productManager = productManager;
             _buyerManager = buyerManager;
@@ -41,21 +43,22 @@ namespace ComputerStore.WebUI.Controllers
             var products = await _productManager.GetAll();
             var orders = await _orderManager.GetAll();
 
-            if (User.IsInRole("admin"))
+            if (User.IsInRole(RolesNames.Admin))
             {
                 var orderViewModels = orders.Select(order => CreateOrderViewModel(order, buyers, products));
                 return View(orderViewModels);
             }
             else
             {
-                var buyerId= (await _userManager.GetUserAsync(User)).BuyerId;
+                var buyerId = (await _userManager.GetUserAsync(User)).BuyerId;
                 var orderViewModels = orders.Where(order => order.BuyerId == buyerId).Select(order => CreateOrderViewModel(order, buyers, products));
                 return View(orderViewModels);
             }
         }
 
         [HttpGet]
-        public async Task<IActionResult> Buy(int productId)
+        public async Task<IActionResult> Buy(
+            int productId)
         {
             var product = await _productManager.GetById(productId);
 
@@ -70,7 +73,8 @@ namespace ComputerStore.WebUI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Buy(PurchaseViewModel purchaseViewModel)
+        public async Task<IActionResult> Buy(
+            PurchaseViewModel purchaseViewModel)
         {
             try
             {
@@ -102,7 +106,8 @@ namespace ComputerStore.WebUI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(
+            int id)
         {
             var buyers = await _buyerManager.GetAll();
             var products = await _productManager.GetAll();
@@ -113,9 +118,10 @@ namespace ComputerStore.WebUI.Controllers
             return View(orderViewModel);
         }
 
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = RolesNames.Admin)]
         [HttpGet]
-        public IActionResult Edit(int id)
+        public IActionResult Edit(
+            int id)
         {
             var orderViewModel = new OrderViewModel
                                  {
@@ -125,9 +131,10 @@ namespace ComputerStore.WebUI.Controllers
             return View(orderViewModel);
         }
 
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = RolesNames.Admin)]
         [HttpPost]
-        public async Task<IActionResult> Edit(OrderViewModel orderViewModel)
+        public async Task<IActionResult> Edit(
+            OrderViewModel orderViewModel)
         {
             try
             {
@@ -146,7 +153,10 @@ namespace ComputerStore.WebUI.Controllers
             }
         }
 
-        private OrderViewModel CreateOrderViewModel(Order order, IEnumerable<Buyer> buyers, IEnumerable<Product> products)
+        private OrderViewModel CreateOrderViewModel(
+            Order order,
+            IEnumerable<Buyer> buyers,
+            IEnumerable<Product> products)
         {
             return new OrderViewModel
                    {

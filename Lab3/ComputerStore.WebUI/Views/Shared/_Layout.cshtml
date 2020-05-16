@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using ComputerStore.WebUI.AppConfiguration
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -23,7 +24,7 @@
                         <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Index">Home</a>
                     </li>
 
-                    @if (User.IsInRole("admin"))
+                    @if (User.IsInRole(RolesNames.Admin))
                     {
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Manufacturers" asp-action="Index">Manufacturers</a>
@@ -40,7 +41,7 @@
                         <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Index">Products</a>
                     </li>
 
-                    @if (User.IsInRole("user"))
+                    @if (User.IsInRole(RolesNames.User))
                     {
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Orders" asp-action="Index">Orders</a>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ComputerStore.BusinessLogicLayer.Managers;
 using ComputerStore.BusinessLogicLayer.Models;
+using ComputerStore.WebUI.AppConfiguration;
 using ComputerStore.WebUI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -61,7 +62,7 @@ namespace ComputerStore.WebUI.Controllers
         }
 
         // GET: Products/Create
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = RolesNames.Admin)]
         public async Task<ActionResult> Create()
         {
             var characteristics = await _characteristicManager.GetAll();
@@ -98,7 +99,7 @@ namespace ComputerStore.WebUI.Controllers
         // POST: Products/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = RolesNames.Admin)]
         public async Task<ActionResult> Create(ProductViewModel productViewModel, IFormCollection formCollection)
         {
             productViewModel.Categories = new SelectList(await _categoryManager.GetAll(), "Id", "Name");
@@ -120,7 +121,7 @@ namespace ComputerStore.WebUI.Controllers
         }
 
         // GET: Products/Edit/5
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = RolesNames.Admin)]
         public async Task<ActionResult> Edit(int id)
         {
             var categories = await _categoryManager.GetAll();
@@ -152,7 +153,7 @@ namespace ComputerStore.WebUI.Controllers
         // POST: Products/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = RolesNames.Admin)]
         public async Task<ActionResult> Edit(ProductViewModel productViewModel, IFormCollection formCollection)
         {
             var characteristics = await _characteristicManager.GetAll();
@@ -177,7 +178,7 @@ namespace ComputerStore.WebUI.Controllers
         }
 
         // GET: Products/Delete/5
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = RolesNames.Admin)]
         public async Task<ActionResult> Delete(int id)
         {
             var categories = await _categoryManager.GetAll();
@@ -190,7 +191,7 @@ namespace ComputerStore.WebUI.Controllers
         // POST: Products/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = RolesNames.Admin)]
         public async Task<ActionResult> Delete(ProductViewModel product)
         {
             try

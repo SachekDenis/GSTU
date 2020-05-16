@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using ComputerStore.BusinessLogicLayer.Managers;
 using ComputerStore.BusinessLogicLayer.Models;
 using ComputerStore.DataAccessLayer.Models.Identity;
+using ComputerStore.WebUI.AppConfiguration;
 using ComputerStore.WebUI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -11,7 +12,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ComputerStore.WebUI.Controllers
 {
-    [Authorize(Roles = "admin, user")]
+    [Authorize(Roles = RolesNames.AdminOrUser)]
     public class BuyersController : Controller
     {
         private readonly BuyerManager _buyerManager;
