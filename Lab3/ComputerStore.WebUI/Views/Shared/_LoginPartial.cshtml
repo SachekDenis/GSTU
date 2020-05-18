@@ -1,0 +1,28 @@
+﻿@using ComputerStore.DataAccessLayer.Models.Identity
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityBuyer> SignInManager
+@inject UserManager<IdentityBuyer> UserManager
+
+<ul class="navbar-nav">
+@if (SignInManager.IsSignedIn(User))
+{
+    <li class="nav-item">
+        <a id="manage" class="nav-link text-dark" asp-action="Details" asp-controller="Buyers" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+    </li>
+    <li class="nav-item">
+        <form id="logoutForm" class="form-inline" asp-page="/Identity/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Products")">
+            <button id="logout" type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+        </form>
+    </li>
+}
+else
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" id="register" asp-page="/Identity/Account/Register">Register</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" id="login" asp-page="/Identity/Account/Login">Login</a>
+    </li>
+}
+</ul>

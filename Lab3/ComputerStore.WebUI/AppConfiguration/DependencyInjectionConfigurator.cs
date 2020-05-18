@@ -2,7 +2,9 @@
 using AutoMapper;
 using ComputerStore.BusinessLogicLayer.MapperProfile;
 using ComputerStore.DataAccessLayer.Context;
+using ComputerStore.DataAccessLayer.Models.Identity;
 using ComputerStore.DataAccessLayer.Repo;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,6 +28,9 @@ namespace ComputerStore.WebUI.AppConfiguration
                                       .WithTransientLifetime())
                     .AddAutoMapper(typeof(StoreProfile))
                     .AddScoped(typeof(IRepository<>), typeof(StoreRepository<>));
+
+            services.AddIdentity<IdentityBuyer, IdentityRole>(options => { options.Password.RequireNonAlphanumeric = false; })
+                    .AddEntityFrameworkStores<StoreContext>();
         }
     }
 }

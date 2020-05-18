@@ -1,36 +1,36 @@
 ﻿using ComputerStore.DataAccessLayer.Models;
+using ComputerStore.DataAccessLayer.Models.Identity;
 using Korzh.DbUtils;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace ComputerStore.DataAccessLayer.Context
 {
-    public class StoreContext : DbContext
+    public class StoreContext : IdentityDbContext<IdentityBuyer>
     {
         private readonly ILoggerFactory _fileLoggerFactory;
 
         public StoreContext(DbContextOptions<StoreContext> options, IConfiguration configuration, ILoggerFactory fileLoggerFactory) : base(options)
         {
             _fileLoggerFactory = fileLoggerFactory;
-            if (Database.EnsureCreated())
-            {
-                DbInitializer.Create(dbUtilsOptions =>
-                                     {
-                                         dbUtilsOptions.UseSqlServer(Database.GetDbConnection().ConnectionString);
-                                         dbUtilsOptions.UseFileFolderPacker(configuration.GetSection("SeedFolder").Value);
-                                     })
-                             .Seed();
-            }
+            Database.Migrate();
+            DbInitializer.Create(dbUtilsOptions =>
+                                 {
+                                     dbUtilsOptions.UseSqlServer(Database.GetDbConnection().ConnectionString);
+                                     dbUtilsOptions.UseFileFolderPacker(configuration.GetSection("SeedFolder").Value);
+                                 })
+                         .Seed();
         }
 
         public DbSet<ProductDto> Products { get; set; }
         public DbSet<OrderDto> Orders { get; set; }
-        public DbSet<BuyerDto> Users { get; set; }
         public DbSet<ManufacturerDto> Manufacturers { get; set; }
         public DbSet<CharacteristicDto> Characteristics { get; set; }
         public DbSet<FieldDto> Fields { get; set; }
         public DbSet<CategoryDto> Categories { get; set; }
+        public DbSet<BuyerDto> Buyers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -39,6 +39,8 @@ namespace ComputerStore.DataAccessLayer.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<OrderDto>().HasOne<BuyerDto>().WithMany().HasForeignKey(order => order.BuyerId).OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<OrderDto>().HasOne<ProductDto>().WithMany().HasForeignKey(order => order.ProductId).OnDelete(DeleteBehavior.NoAction);
