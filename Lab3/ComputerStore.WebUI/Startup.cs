@@ -43,6 +43,13 @@ namespace ComputerStore.WebUI
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            app.UseSwagger();
+
+            app.UseSwaggerUI(swagger =>
+                             { 
+                                 swagger.SwaggerEndpoint("/swagger/v1/swagger.json", "Store API V1");
+                             });
+
             app.UseRouting();
 
             app.UseAuthentication();

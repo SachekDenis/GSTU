@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Models;
 
 namespace ComputerStore.WebUI.AppConfiguration
 {
@@ -31,6 +32,8 @@ namespace ComputerStore.WebUI.AppConfiguration
 
             services.AddIdentity<IdentityBuyer, IdentityRole>(options => { options.Password.RequireNonAlphanumeric = false; })
                     .AddEntityFrameworkStores<StoreContext>();
+
+            services.AddSwaggerGen(swagger => swagger.SwaggerDoc("v1", new OpenApiInfo {Title = "Store Api", Version = "v1"}));
         }
     }
 }
