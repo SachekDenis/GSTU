@@ -1,57 +1,56 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ComputerStore.BusinessLogicLayer.Managers;
 using ComputerStore.BusinessLogicLayer.Models;
 using ComputerStore.WebUI.AppConfiguration;
+using ComputerStore.WebUI.Controllers;
 using ComputerStore.WebUI.Mappers;
 using ComputerStore.WebUI.Models;
+using ComputerStore.WebUI.Models.JwtToken;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace ComputerStore.WebUI.Controllers
+namespace ComputerStore.WebUI.ApiControllers
 {
-    [Authorize(Roles = RolesNames.Admin)]
-    public class ManufacturersController : Controller
+    [Route("api/manufacturers")]
+    [ApiController]
+    [Authorize(Roles = RolesNames.Admin, AuthenticationSchemes = JwtInfo.AuthSchemes)]
+    public class ManufacturersApiController : ControllerBase
     {
-        private readonly ILogger<ManufacturersController> _logger;
+        private readonly ILogger<ManufacturersApiController> _logger;
         private readonly ManufacturerManager _manufacturerManager;
 
-        public ManufacturersController(ManufacturerManager manufacturerManager, ILogger<ManufacturersController> logger)
+        public ManufacturersApiController(ManufacturerManager manufacturerManager,
+                                         ILogger<ManufacturersApiController> logger)
         {
             _manufacturerManager = manufacturerManager;
             _logger = logger;
         }
 
-        // GET: Manufacturers
-        public async Task<IActionResult> Index()
+        [HttpGet("manufacturers")]
+        public async Task<IEnumerable<ManufacturerViewModel>> Manufacturers()
         {
             var manufacturerViewModels = (await _manufacturerManager.GetAll()).Select(manufacturer => manufacturer.CreateManufacturerViewModel());
 
-            return View(manufacturerViewModels);
+            return manufacturerViewModels;
         }
-
-        // GET: Manufacturers/Details/5
-        public async Task<ActionResult> Details(int id)
+        
+        [HttpGet("details")]
+        public async Task<ManufacturerViewModel> Details([FromQuery] int id)
         {
             var manufacturer = await _manufacturerManager.GetById(id);
 
             var manufacturerViewModel = manufacturer.CreateManufacturerViewModel();
 
-            return View(manufacturerViewModel);
+            return manufacturerViewModel;
         }
 
-        // GET: Manufacturers/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Manufacturers/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ManufacturerViewModel manufacturerViewModel)
+        [HttpPost("create")]
+        public async Task<StatusCodeResult> Create([FromBody] ManufacturerViewModel manufacturerViewModel)
         {
             try
             {
@@ -62,29 +61,18 @@ namespace ComputerStore.WebUI.Controllers
                                                    Name = manufacturerViewModel.Name
                                                });
 
-                return RedirectToAction(nameof(Index));
+                return Ok();
             }
             catch (Exception exception)
             {
                 _logger.LogError($"Error occured during creating manufacturer. Exception: {exception.Message}");
-                return View(manufacturerViewModel);
+                return BadRequest();
             }
         }
 
-        // GET: Manufacturers/Edit/5
-        public async Task<IActionResult> Edit(int id)
-        {
-            var manufacturer = await _manufacturerManager.GetById(id);
-
-            var manufacturerViewModel = manufacturer.CreateManufacturerViewModel();
-
-            return View(manufacturerViewModel);
-        }
-
         // POST: Manufacturers/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(ManufacturerViewModel manufacturerViewModel)
+        [HttpPost("edit")]
+        public async Task<StatusCodeResult> Edit([FromBody] ManufacturerViewModel manufacturerViewModel)
         {
             try
             {
@@ -95,41 +83,28 @@ namespace ComputerStore.WebUI.Controllers
                                                       Name = manufacturerViewModel.Name
                                                   });
 
-                return RedirectToAction(nameof(Index));
+                return Ok();
             }
             catch (Exception exception)
             {
                 _logger.LogError($"Error occured during editing manufacturer. Exception: {exception.Message}");
-                return View(manufacturerViewModel);
+                return BadRequest();
             }
         }
 
-        // GET: Manufacturers/Delete/5
-        [HttpGet]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var manufacturer = await _manufacturerManager.GetById(id);
-
-            var manufacturerViewModel = manufacturer.CreateManufacturerViewModel();
-
-            return View(manufacturerViewModel);
-        }
-
-        // POST: Manufacturers/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(ManufacturerViewModel manufacturerViewModel)
+        [HttpPost("delete")]
+        public async Task<StatusCodeResult> Delete([FromBody] ManufacturerViewModel manufacturerViewModel)
         {
             try
             {
                 await _manufacturerManager.Delete(manufacturerViewModel.Id);
 
-                return RedirectToAction(nameof(Index));
+                return Ok();
             }
             catch (Exception exception)
             {
                 _logger.LogError($"Error occured during deleting manufacturer. Exception: {exception.Message}");
-                return View(manufacturerViewModel);
+                return Ok();
             }
         }
     }

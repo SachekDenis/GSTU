@@ -6,29 +6,34 @@ using ComputerStore.BusinessLogicLayer.Managers;
 using ComputerStore.BusinessLogicLayer.Models;
 using ComputerStore.DataAccessLayer.Models.Identity;
 using ComputerStore.WebUI.AppConfiguration;
+using ComputerStore.WebUI.Controllers;
 using ComputerStore.WebUI.Mappers;
 using ComputerStore.WebUI.Models;
+using ComputerStore.WebUI.Models.JwtToken;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace ComputerStore.WebUI.Controllers
+namespace ComputerStore.WebUI.ApiControllers
 {
-    [Authorize(Roles = RolesNames.AdminOrUser)]
-    public class OrdersController : Controller
+    [Route("api/orders")]
+    [ApiController]
+    [Authorize(Roles = RolesNames.AdminOrUser, AuthenticationSchemes = JwtInfo.AuthSchemes)]
+    public class OrdersApiController : ControllerBase
     {
         private readonly BuyerManager _buyerManager;
-        private readonly ILogger<OrdersController> _logger;
+        private readonly ILogger<OrdersApiController> _logger;
         private readonly OrderManager _orderManager;
         private readonly ProductManager _productManager;
         private readonly UserManager<IdentityBuyer> _userManager;
 
-        public OrdersController(
+        public OrdersApiController(
             ProductManager productManager,
             BuyerManager buyerManager,
             OrderManager orderManager,
-            ILogger<OrdersController> logger,
+            ILogger<OrdersApiController> logger,
             UserManager<IdentityBuyer> userManager)
         {
             _productManager = productManager;
@@ -38,7 +43,8 @@ namespace ComputerStore.WebUI.Controllers
             _userManager = userManager;
         }
 
-        public async Task<IActionResult> Index()
+        [HttpGet("orders")]
+        public async Task<IEnumerable<OrderViewModel>> Orders()
         {
             var buyers = await _buyerManager.GetAll();
             var products = await _productManager.GetAll();
@@ -47,35 +53,18 @@ namespace ComputerStore.WebUI.Controllers
             if (User.IsInRole(RolesNames.Admin))
             {
                 var orderViewModels = orders.Select(order => order.CreateOrderViewModel(buyers, products));
-                return View(orderViewModels);
+                return orderViewModels;
             }
             else
             {
                 var buyerId = (await _userManager.GetUserAsync(User)).BuyerId;
                 var orderViewModels = orders.Where(order => order.BuyerId == buyerId).Select(order => order.CreateOrderViewModel(buyers, products));
-                return View(orderViewModels);
+                return orderViewModels;
             }
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Buy(
-            int productId)
-        {
-            var product = await _productManager.GetById(productId);
-
-            var purchaseViewModel = new PurchaseViewModel
-                                    {
-                                        ProductId = productId,
-                                        ProductName = product.Name
-                                    };
-
-            return View(purchaseViewModel);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Buy(
-            PurchaseViewModel purchaseViewModel)
+        [HttpPost("Buy")]
+        public async Task<StatusCodeResult> Buy([FromBody] PurchaseViewModel purchaseViewModel)
         {
             try
             {
@@ -97,17 +86,17 @@ namespace ComputerStore.WebUI.Controllers
 
                 await _orderManager.Add(order);
 
-                return RedirectToAction(nameof(Index));
+                return Ok();
             }
             catch (Exception exception)
             {
                 _logger.LogError($"Error occured during creating purchase. Exception: {exception.Message}");
-                return View(purchaseViewModel);
+                return BadRequest();
             }
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Details(
+        [HttpGet("details")]
+        public async Task<OrderViewModel> Details(
             int id)
         {
             var buyers = await _buyerManager.GetAll();
@@ -116,26 +105,12 @@ namespace ComputerStore.WebUI.Controllers
             var order = await _orderManager.GetById(id);
             var orderViewModel = order.CreateOrderViewModel(buyers, products);
 
-            return View(orderViewModel);
+            return orderViewModel;
         }
 
-        [Authorize(Roles = RolesNames.Admin)]
-        [HttpGet]
-        public IActionResult Edit(
-            int id)
-        {
-            var orderViewModel = new OrderViewModel
-                                 {
-                                     Id = id
-                                 };
-
-            return View(orderViewModel);
-        }
-
-        [Authorize(Roles = RolesNames.Admin)]
-        [HttpPost]
-        public async Task<IActionResult> Edit(
-            OrderViewModel orderViewModel)
+        [Authorize(Roles = RolesNames.Admin, AuthenticationSchemes = JwtInfo.AuthSchemes)]
+        [HttpPost("edit")]
+        public async Task<StatusCodeResult> Edit(OrderViewModel orderViewModel)
         {
             try
             {
@@ -145,12 +120,12 @@ namespace ComputerStore.WebUI.Controllers
 
                 await _orderManager.Update(order);
 
-                return RedirectToAction(nameof(Index));
+                return Ok();
             }
             catch (Exception exception)
             {
                 _logger.LogError($"Error occured during editing order. Exception: {exception.Message}");
-                return View(orderViewModel);
+                return BadRequest();
             }
         }
     }

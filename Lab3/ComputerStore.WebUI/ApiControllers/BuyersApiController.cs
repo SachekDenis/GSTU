@@ -1,10 +1,16 @@
 ﻿using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Threading.Tasks;
 using ComputerStore.BusinessLogicLayer.Managers;
 using ComputerStore.BusinessLogicLayer.Models;
 using ComputerStore.DataAccessLayer.Models.Identity;
+using ComputerStore.WebUI.AppConfiguration;
 using ComputerStore.WebUI.Controllers;
+using ComputerStore.WebUI.Mappers;
 using ComputerStore.WebUI.Models;
+using ComputerStore.WebUI.Models.JwtToken;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -13,41 +19,36 @@ namespace ComputerStore.WebUI.ApiControllers
 {
     [Route("api/buyers")]
     [ApiController]
+    [Authorize(Roles = RolesNames.AdminOrUser, AuthenticationSchemes = JwtInfo.AuthSchemes)]
     public class BuyersApiController : ControllerBase
     {
         private readonly BuyerManager _buyerManager;
-        private readonly ILogger<BuyersController> _logger;
+        private readonly ILogger<BuyersApiController> _logger;
         private readonly UserManager<IdentityBuyer> _userManager;
 
-        public BuyersApiController(BuyerManager buyerManager, ILogger<BuyersController> logger, UserManager<IdentityBuyer> userManager)
+        public BuyersApiController(BuyerManager buyerManager,
+            ILogger<BuyersApiController> logger,
+            UserManager<IdentityBuyer> userManager)
         {
             _buyerManager = buyerManager;
             _logger = logger;
             _userManager = userManager;
         }
 
-        // GET: api/BuyersApi/Details
-        [HttpGet("Details")]
+        [HttpGet("details")]
         public async Task<BuyerViewModel> Details()
         {
-            var user = await _userManager.GetUserAsync(User);
-
-            if (user == null)
-            {
-                return null;
-            }
-
-            var buyerId = user.BuyerId;
+            var buyerId = int.Parse(User.Claims.FirstOrDefault(claim => claim.Type == BuyerClaim.BuyerId).Value);
 
             var buyer = await _buyerManager.GetById(buyerId);
 
-            var buyerViewModel = CreateBuyerViewModel(buyer);
+            var buyerViewModel = buyer.CreateBuyerViewModel();
 
             return buyerViewModel;
         }
 
-        [HttpPost("Create")]
-        public async Task Create([FromBody] BuyerViewModel buyerViewModel)
+        [HttpPost("create")]
+        public async Task<StatusCodeResult> Create([FromBody] BuyerViewModel buyerViewModel)
         {
             try
             {
@@ -63,20 +64,23 @@ namespace ComputerStore.WebUI.ApiControllers
 
                 await _buyerManager.Add(buyer);
 
-                var user = await _userManager.GetUserAsync(User);
+                var user = await _userManager.FindByEmailAsync(User.Claims.FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.UniqueName).Value);
 
-                user.BuyerId = buyer.Id;
+                user.BuyerId = int.Parse(User.Claims.FirstOrDefault(claim => claim.Type == BuyerClaim.BuyerId).Value);
 
                 await _userManager.UpdateAsync(user);
+                
+                return Ok();
             }
             catch (Exception exception)
             {
                 _logger.LogError($"Error occured during creating buyer. Exception: {exception.Message}");
+                return BadRequest();
             }
         }
 
-        [HttpPost("Edit")]
-        public async Task Edit([FromBody] BuyerViewModel buyerViewModel)
+        [HttpPost("edit")]
+        public async Task<StatusCodeResult> Edit([FromBody] BuyerViewModel buyerViewModel)
         {
             try
             {
@@ -92,25 +96,14 @@ namespace ComputerStore.WebUI.ApiControllers
                             };
 
                 await _buyerManager.Update(buyer);
+
+                return Ok();
             }
             catch (Exception exception)
             {
                 _logger.LogError($"Error occured during updating buyer. Exception: {exception.Message}");
+                return BadRequest();
             }
-        }
-
-        private BuyerViewModel CreateBuyerViewModel(Buyer buyer)
-        {
-            return new BuyerViewModel
-                   {
-                       Id = buyer.Id,
-                       Address = buyer.Address,
-                       Email = buyer.Email,
-                       FirstName = buyer.FirstName,
-                       PhoneNumber = buyer.PhoneNumber,
-                       SecondName = buyer.SecondName,
-                       ZipCode = buyer.ZipCode
-                   };
         }
     }
 }

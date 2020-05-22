@@ -5,64 +5,58 @@ using System.Threading.Tasks;
 using ComputerStore.BusinessLogicLayer.Managers;
 using ComputerStore.BusinessLogicLayer.Models;
 using ComputerStore.WebUI.AppConfiguration;
+using ComputerStore.WebUI.Controllers;
 using ComputerStore.WebUI.Mappers;
 using ComputerStore.WebUI.Models;
+using ComputerStore.WebUI.Models.JwtToken;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 
-namespace ComputerStore.WebUI.Controllers
+namespace ComputerStore.WebUI.ApiControllers
 {
-    [Authorize(Roles = RolesNames.Admin)]
-    public class CharacteristicsController : Controller
+    [Route("api/characteristics")]
+    [ApiController]
+    [Authorize(Roles = RolesNames.Admin, AuthenticationSchemes = JwtInfo.AuthSchemes)]
+    public class CharacteristicsApiController : ControllerBase
     {
         private readonly CategoryManager _categoryManager;
         private readonly CharacteristicManager _characteristicManager;
-        private readonly ILogger<CharacteristicsController> _logger;
+        private readonly ILogger<CharacteristicsApiController> _logger;
 
-        public CharacteristicsController(CharacteristicManager characteristicManager, CategoryManager categoryManager, ILogger<CharacteristicsController> logger)
+        public CharacteristicsApiController(CharacteristicManager characteristicManager,
+                                            CategoryManager categoryManager, 
+                                            ILogger<CharacteristicsApiController> logger)
         {
             _characteristicManager = characteristicManager;
             _categoryManager = categoryManager;
             _logger = logger;
         }
 
-        // GET: Characteristics
-        public async Task<ActionResult> Index()
+        [HttpGet("characteristics")]
+        public async Task<IEnumerable<CharacteristicViewModel>> Characteristics()
         {
             var categories = await _categoryManager.GetAll();
             var characteristics = (await _characteristicManager.GetAll())
                                   .Select(characteristic => characteristic.CreateCharacteristicViewModel(categories))
                                   .OrderBy(characteristic => characteristic.CategoryName);
 
-            return View(characteristics);
+            return characteristics;
         }
 
-        // GET: Characteristics/Details/5
-        public async Task<ActionResult> Details(int id)
+        [HttpGet("details")]
+        public async Task<CharacteristicViewModel> Details([FromQuery] int id)
         {
             var categories = await _categoryManager.GetAll();
             var characteristic = (await _characteristicManager.GetById(id)).CreateCharacteristicViewModel(categories);
 
-            return View(characteristic);
+            return characteristic;
         }
 
-        // GET: Characteristics/Create
-        public async Task<ActionResult> Create()
-        {
-            var characteristicViewModel = new CharacteristicViewModel
-                                          {
-                                              CategoriesSelectList = new SelectList(await _categoryManager.GetAll(), "Id", "Name")
-                                          };
 
-            return View(characteristicViewModel);
-        }
-
-        // POST: Characteristics/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(CharacteristicViewModel characteristicViewModel)
+        [HttpPost("create")]
+        public async Task<StatusCodeResult> Create([FromBody] CharacteristicViewModel characteristicViewModel)
         {
             try
             {
@@ -72,29 +66,19 @@ namespace ComputerStore.WebUI.Controllers
                                                      Name = characteristicViewModel.Name
                                                  });
 
-                return RedirectToAction(nameof(Index));
+                return Ok();
             }
             catch (Exception exception)
             {
                 _logger.LogError($"Error occured during creating characteristic. Exception: {exception.Message}");
                 characteristicViewModel.CategoriesSelectList = new SelectList(await _categoryManager.GetAll(), "Id", "Name");
-                return View(characteristicViewModel);
+                return BadRequest();
             }
         }
 
-        // GET: Characteristics/Edit/5
-        public async Task<ActionResult> Edit(int id)
-        {
-            var categories = await _categoryManager.GetAll();
-            var characteristicViewModel = (await _characteristicManager.GetById(id)).CreateCharacteristicViewModel(categories);
-            characteristicViewModel.CategoriesSelectList = new SelectList(await _categoryManager.GetAll(), "Id", "Name");
-            return View(characteristicViewModel);
-        }
-
         // POST: Characteristics/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(CharacteristicViewModel characteristicViewModel)
+        [HttpPost("edit")]
+        public async Task<StatusCodeResult> Edit([FromBody] CharacteristicViewModel characteristicViewModel)
         {
             try
             {
@@ -105,39 +89,29 @@ namespace ComputerStore.WebUI.Controllers
                                                         Name = characteristicViewModel.Name
                                                     });
 
-                return RedirectToAction(nameof(Index));
+                return Ok();
             }
             catch (Exception exception)
             {
                 _logger.LogError($"Error occured during editing characteristic. Exception: {exception.Message}");
-                characteristicViewModel.CategoriesSelectList = new SelectList(await _categoryManager.GetAll(), "Id", "Name");
-                return View(characteristicViewModel);
+                return BadRequest();
             }
         }
 
-        // GET: Characteristics/Delete/5
-        public async Task<ActionResult> Delete(int id)
-        {
-            var categories = await _categoryManager.GetAll();
-            var characteristicViewModel = (await _characteristicManager.GetById(id)).CreateCharacteristicViewModel(categories);
-            return View(characteristicViewModel);
-        }
 
-        // POST: Characteristics/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Delete(CharacteristicViewModel characteristicViewModel)
+        [HttpPost("delete")]
+        public async Task<ActionResult> Delete([FromBody] CharacteristicViewModel characteristicViewModel)
         {
             try
             {
                 await _characteristicManager.Delete(characteristicViewModel.Id);
 
-                return RedirectToAction(nameof(Index));
+                return Ok();
             }
             catch (Exception exception)
             {
                 _logger.LogError($"Error occured during deleting characteristic. Exception: {exception.Message}");
-                return View(characteristicViewModel);
+                return BadRequest();
             }
         }
     }

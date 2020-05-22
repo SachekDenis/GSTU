@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using ComputerStore.BusinessLogicLayer.Managers;
 using ComputerStore.BusinessLogicLayer.Models;
 using ComputerStore.WebUI.AppConfiguration;
+using ComputerStore.WebUI.Mappers;
 using ComputerStore.WebUI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -26,7 +27,7 @@ namespace ComputerStore.WebUI.Controllers
         // GET: Categories
         public async Task<IActionResult> Index()
         {
-            var categoryViewModels = (await _categoryManager.GetAll()).Select(CreateCategoryViewModel);
+            var categoryViewModels = (await _categoryManager.GetAll()).Select(category => category.CreateCategoryViewModel());
             return View(categoryViewModels);
         }
 
@@ -35,7 +36,7 @@ namespace ComputerStore.WebUI.Controllers
         {
             var category = await _categoryManager.GetById(id);
 
-            var categoryViewModel = CreateCategoryViewModel(category);
+            var categoryViewModel = category.CreateCategoryViewModel();
 
             return View(categoryViewModel);
         }
@@ -73,7 +74,7 @@ namespace ComputerStore.WebUI.Controllers
         {
             var category = await _categoryManager.GetById(id);
 
-            var categoryViewModel = CreateCategoryViewModel(category);
+            var categoryViewModel = category.CreateCategoryViewModel();
 
             return View(categoryViewModel);
         }
@@ -105,7 +106,7 @@ namespace ComputerStore.WebUI.Controllers
         {
             var category = await _categoryManager.GetById(id);
 
-            var categoryViewModel = CreateCategoryViewModel(category);
+            var categoryViewModel = category.CreateCategoryViewModel();
 
             return View(categoryViewModel);
         }
@@ -126,15 +127,6 @@ namespace ComputerStore.WebUI.Controllers
                 _logger.LogError($"Error occured during deleting category. Exception: {exception.Message}");
                 return View(categoryViewModel);
             }
-        }
-
-        private CategoryViewModel CreateCategoryViewModel(Category category)
-        {
-            return new CategoryViewModel
-                   {
-                       Id = category.Id,
-                       Name = category.Name
-                   };
         }
     }
 }

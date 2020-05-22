@@ -4,8 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using ComputerStore.BusinessLogicLayer.Managers;
 using ComputerStore.BusinessLogicLayer.Models;
+using ComputerStore.WebUI.AppConfiguration;
 using ComputerStore.WebUI.Controllers;
+using ComputerStore.WebUI.Mappers;
 using ComputerStore.WebUI.Models;
+using ComputerStore.WebUI.Models.JwtToken;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -13,13 +17,14 @@ namespace ComputerStore.WebUI.ApiControllers
 {
     [Route("api/categories")]
     [ApiController]
+    [Authorize(Roles = RolesNames.Admin, AuthenticationSchemes = JwtInfo.AuthSchemes)]
     public class CategoriesApiController : ControllerBase
     {
         private readonly CategoryManager _categoryManager;
-        private readonly ILogger<CategoriesController> _logger;
+        private readonly ILogger<CategoriesApiController> _logger;
 
         public CategoriesApiController(CategoryManager categoryManager, 
-                                       ILogger<CategoriesController> logger)
+                                       ILogger<CategoriesApiController> logger)
         {
             _categoryManager = categoryManager;
             _logger = logger;
@@ -28,7 +33,7 @@ namespace ComputerStore.WebUI.ApiControllers
         [HttpGet("categories")]
         public async Task<IEnumerable<CategoryViewModel>> Categories()
         {
-            var categoryViewModels = (await _categoryManager.GetAll()).Select(CreateCategoryViewModel);
+            var categoryViewModels = (await _categoryManager.GetAll()).Select(category => category.CreateCategoryViewModel());
             return categoryViewModels;
         }
 
@@ -37,7 +42,7 @@ namespace ComputerStore.WebUI.ApiControllers
         {
             var category = await _categoryManager.GetById(id);
 
-            var categoryViewModel = CreateCategoryViewModel(category);
+            var categoryViewModel = category.CreateCategoryViewModel();
 
             return categoryViewModel;
         }
@@ -52,7 +57,6 @@ namespace ComputerStore.WebUI.ApiControllers
                                                Id = categoryViewModel.Id,
                                                Name = categoryViewModel.Name
                                            });
-
                 return Ok();
             }
             catch (Exception exception)
@@ -95,15 +99,6 @@ namespace ComputerStore.WebUI.ApiControllers
                 _logger.LogError($"Error occured during deleting category. Exception: {exception.Message}");
                 return BadRequest();
             }
-        }
-
-        private CategoryViewModel CreateCategoryViewModel(Category category)
-        {
-            return new CategoryViewModel
-                   {
-                       Id = category.Id,
-                       Name = category.Name
-                   };
         }
     }
 }

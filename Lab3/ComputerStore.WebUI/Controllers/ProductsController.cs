@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ComputerStore.BusinessLogicLayer.Managers;
 using ComputerStore.BusinessLogicLayer.Models;
 using ComputerStore.WebUI.AppConfiguration;
+using ComputerStore.WebUI.Mappers;
 using ComputerStore.WebUI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -41,7 +42,7 @@ namespace ComputerStore.WebUI.Controllers
             var categories = await _categoryManager.GetAll();
             var manufacturers = await _manufacturerManager.GetAll();
             var productViewModels = (await _productManager.GetAll())
-                                    .Select(product => CreateProductViewModel(product, categories, manufacturers))
+                                    .Select(product => product.CreateProductViewModel(categories, manufacturers))
                                     .OrderBy(product => product.CategoryName);
 
             return View(productViewModels);
@@ -55,8 +56,8 @@ namespace ComputerStore.WebUI.Controllers
             var characteristics = await _characteristicManager.GetAll();
             var product = await _productManager.GetById(id);
 
-            var productViewModel = CreateProductViewModel(product, categories, manufacturers);
-            productViewModel.Fields = CreateFieldViewModels(product, characteristics);
+            var productViewModel = product.CreateProductViewModel(categories, manufacturers);
+            productViewModel.Fields = product.CreateFieldViewModels(characteristics);
 
             return View(productViewModel);
         }
@@ -70,10 +71,8 @@ namespace ComputerStore.WebUI.Controllers
                                    {
                                        Fields = characteristics.Select(characteristic => new FieldViewModel
                                                                                          {
-                                                                                             CharacteristicName =
-                                                                                                 characteristic.Name,
-                                                                                             CharacteristicId =
-                                                                                                 characteristic.Id
+                                                                                             CharacteristicName = characteristic.Name,
+                                                                                             CharacteristicId = characteristic.Id
                                                                                          }),
                                        Categories = new SelectList(await _categoryManager.GetAll(), "Id", "Name"),
                                        Manufacturers = new SelectList(await _manufacturerManager.GetAll(), "Id", "Name")
@@ -107,7 +106,7 @@ namespace ComputerStore.WebUI.Controllers
 
             try
             {
-                var product = CreateProduct(productViewModel, formCollection);
+                var product = productViewModel.CreateProductWithFields(formCollection);
 
                 await _productManager.Add(product);
 
@@ -128,8 +127,8 @@ namespace ComputerStore.WebUI.Controllers
             var manufacturers = await _manufacturerManager.GetAll();
             var characteristics = await _characteristicManager.GetAll();
             var product = await _productManager.GetById(id);
-            var productViewModel = CreateProductViewModel(product, categories, manufacturers);
-            productViewModel.Fields = CreateFieldViewModels(product, characteristics);
+            var productViewModel = product.CreateProductViewModel(categories, manufacturers);
+            productViewModel.Fields = product.CreateFieldViewModels(characteristics);
 
             productViewModel.Categories = new SelectList(await _categoryManager.GetAll(), "Id", "Name");
             productViewModel.Manufacturers = new SelectList(await _manufacturerManager.GetAll(), "Id", "Name");
@@ -159,8 +158,8 @@ namespace ComputerStore.WebUI.Controllers
             var characteristics = await _characteristicManager.GetAll();
             productViewModel.Categories = new SelectList(await _categoryManager.GetAll(), "Id", "Name");
             productViewModel.Manufacturers = new SelectList(await _manufacturerManager.GetAll(), "Id", "Name");
-            var product = CreateProduct(productViewModel, formCollection);
-            productViewModel.Fields = CreateFieldViewModels(product, characteristics);
+            var product = productViewModel.CreateProductWithFields(formCollection);
+            productViewModel.Fields = product.CreateFieldViewModels(characteristics);
 
             try
             {
@@ -184,7 +183,7 @@ namespace ComputerStore.WebUI.Controllers
             var categories = await _categoryManager.GetAll();
             var manufacturers = await _manufacturerManager.GetAll();
             var product = await _productManager.GetById(id);
-            var productViewModel = CreateProductViewModel(product, categories, manufacturers);
+            var productViewModel = product.CreateProductViewModel(categories, manufacturers);
             return View(productViewModel);
         }
 
@@ -205,55 +204,6 @@ namespace ComputerStore.WebUI.Controllers
                 _logger.LogError($"Error occured during deleting product. Exception: {exception.Message}");
                 return View(product);
             }
-        }
-
-        private ProductViewModel CreateProductViewModel(Product product, IEnumerable<Category> categories, IEnumerable<Manufacturer> manufacturers)
-        {
-            return new ProductViewModel
-                   {
-                       Id = product.Id,
-                       AmountInStorage = product.AmountInStorage,
-                       CategoryName = categories.First(category => category.Id == product.CategoryId).Name,
-                       ManufacturerName = manufacturers.First(manufacturer => manufacturer.Id == product.ManufacturerId).Name,
-                       Name = product.Name,
-                       Price = product.Price,
-                       CategoryId = product.CategoryId,
-                       ManufacturerId = product.ManufacturerId
-                   };
-        }
-
-        private IEnumerable<FieldViewModel> CreateFieldViewModels(Product product, IEnumerable<Characteristic> characteristics)
-        {
-            return product.Fields.Select(field => new FieldViewModel
-                                                  {
-                                                      CharacteristicId = field.CharacteristicId,
-                                                      CharacteristicName = characteristics
-                                                                           .First(characteristic => characteristic.Id == field.CharacteristicId)
-                                                                           .Name,
-                                                      Id = field.Id,
-                                                      ProductId = field.ProductId,
-                                                      Value = field.Value
-                                                  });
-        }
-
-        private Product CreateProduct(ProductViewModel productViewModel, IFormCollection formCollection)
-        {
-            var fields = formCollection.Where(formPair => formPair.Key.Contains("characteristic"))
-                                       .Select(formPair => new Field
-                                                           {
-                                                               CharacteristicId = int.Parse(formPair.Key.Substring(formPair.Key.IndexOf('-') + 1)),
-                                                               Value = formPair.Value
-                                                           });
-
-            return new Product
-                   {
-                       AmountInStorage = productViewModel.AmountInStorage,
-                       CategoryId = productViewModel.CategoryId,
-                       Fields = fields,
-                       ManufacturerId = productViewModel.ManufacturerId,
-                       Name = productViewModel.Name,
-                       Price = productViewModel.Price
-                   };
         }
     }
 }
