@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using ComputerStore.DataAccessLayer.Models.Identity;
+using ComputerStore.WebUI.AppConfiguration;
 using ComputerStore.WebUI.Models;
 using ComputerStore.WebUI.Models.JwtToken;
 using Microsoft.AspNetCore.Identity;
@@ -61,6 +62,22 @@ namespace ComputerStore.WebUI.ApiControllers
             }
 
             return null;
+        }
+
+        [HttpPost("register")]
+        public async Task<StatusCodeResult> Register([FromBody] LoginViewModel loginViewModel)
+        {
+            var user = new IdentityBuyer { UserName = loginViewModel.Email, Email = loginViewModel.Email };
+            var result = await _userManager.CreateAsync(user, loginViewModel.Password);
+
+            if (result.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(user, RolesNames.User);
+                await _signInManager.SignInAsync(user, isPersistent: false);
+                return Ok();
+            }
+
+            return BadRequest();
         }
     }
 }

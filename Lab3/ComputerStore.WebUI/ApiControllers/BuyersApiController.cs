@@ -40,6 +40,9 @@ namespace ComputerStore.WebUI.ApiControllers
         {
             var buyerId = int.Parse(User.Claims.FirstOrDefault(claim => claim.Type == BuyerClaim.BuyerId).Value);
 
+            if (buyerId == 0)
+                return null;
+
             var buyer = await _buyerManager.GetById(buyerId);
 
             var buyerViewModel = buyer.CreateBuyerViewModel();

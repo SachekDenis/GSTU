@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using ComputerStore.DataAccessLayer.Models.Identity;
+using ComputerStore.WebUI.AppConfiguration;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -70,7 +71,7 @@ namespace ComputerStore.WebUI.Pages.Identity.Account
             {
                 var user = new IdentityBuyer { UserName = Input.Email, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
-                await _userManager.AddToRoleAsync(user, "user");
+                await _userManager.AddToRoleAsync(user, RolesNames.User);
 
                 if (result.Succeeded)
                 {
