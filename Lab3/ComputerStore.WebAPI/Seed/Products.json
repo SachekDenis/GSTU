@@ -1,0 +1,55 @@
+{
+  "name": "Products",
+  "schema": {
+    "columns": [
+      {
+        "name": "Price",
+        "type": "System.Decimal"
+      },
+      {
+        "name": "AmountInStorage",
+        "type": "System.Int32"
+      },
+      {
+        "name": "ManufacturerId",
+        "type": "System.Int32"
+      },
+      {
+        "name": "SupplyId",
+        "type": "System.Int32"
+      },
+      {
+        "name": "CategoryId",
+        "type": "System.Int32"
+      },
+      {
+        "name": "Id",
+        "type": "System.Int32"
+      },
+      {
+        "name": "Name",
+        "type": "System.String"
+      }
+    ]
+  },
+  "data": [
+    {
+      "Price": 600.00,
+      "AmountInStorage": 2,
+      "ManufacturerId": 2,
+      "SupplyId": 1,
+      "CategoryId": 1,
+      "Id": 2,
+      "Name": "GTX 1060"
+    },
+    {
+      "Price": 700.00,
+      "AmountInStorage": 1,
+      "ManufacturerId": 1,
+      "SupplyId": 2,
+      "CategoryId": 2,
+      "Id": 3,
+      "Name": "i7-9800"
+    }
+  ]
+}

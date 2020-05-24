@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 
-namespace ComputerStore.WebUI.Models.JwtToken
+namespace ComputerStore.WebAPI.Models
 {
     public class JwtInfo
     {

@@ -1,6 +1,4 @@
-﻿using ComputerStore.BusinessLogicLayer.Models;
-
-namespace ComputerStore.WebUI.Models.JwtToken
+﻿namespace ComputerStore.WebAPI.Models
 {
     public static class BuyerClaim
     {

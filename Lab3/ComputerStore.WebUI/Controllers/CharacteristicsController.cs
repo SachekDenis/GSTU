@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using ComputerStore.BusinessLogicLayer.Managers;
 using ComputerStore.BusinessLogicLayer.Models;
 using ComputerStore.WebUI.AppConfiguration;
@@ -20,30 +21,36 @@ namespace ComputerStore.WebUI.Controllers
         private readonly CategoryManager _categoryManager;
         private readonly CharacteristicManager _characteristicManager;
         private readonly ILogger<CharacteristicsController> _logger;
+        private readonly IMapper _mapper;
 
-        public CharacteristicsController(CharacteristicManager characteristicManager, CategoryManager categoryManager, ILogger<CharacteristicsController> logger)
+        public CharacteristicsController(
+            CharacteristicManager characteristicManager, 
+            CategoryManager categoryManager, 
+            ILogger<CharacteristicsController> logger,
+            IMapper mapper)
         {
             _characteristicManager = characteristicManager;
             _categoryManager = categoryManager;
             _logger = logger;
+            _mapper = mapper;
         }
 
         // GET: Characteristics
         public async Task<ActionResult> Index()
         {
             var categories = await _categoryManager.GetAll();
-            var characteristics = (await _characteristicManager.GetAll())
-                                  .Select(characteristic => characteristic.CreateCharacteristicViewModel(categories))
+            var characteristicViewModels = (await _characteristicManager.GetAll())
+                                  .Select(characteristic => MapCharacteristic(characteristic, categories))
                                   .OrderBy(characteristic => characteristic.CategoryName);
 
-            return View(characteristics);
+            return View(characteristicViewModels);
         }
 
         // GET: Characteristics/Details/5
         public async Task<ActionResult> Details(int id)
         {
             var categories = await _categoryManager.GetAll();
-            var characteristic = (await _characteristicManager.GetById(id)).CreateCharacteristicViewModel(categories);
+            var characteristic = MapCharacteristic(await _characteristicManager.GetById(id), categories);
 
             return View(characteristic);
         }
@@ -66,11 +73,7 @@ namespace ComputerStore.WebUI.Controllers
         {
             try
             {
-                await _characteristicManager.Add(new Characteristic
-                                                 {
-                                                     CategoryId = characteristicViewModel.CategoryId,
-                                                     Name = characteristicViewModel.Name
-                                                 });
+                await _characteristicManager.Add(_mapper.Map<CharacteristicViewModel, Characteristic>(characteristicViewModel));
 
                 return RedirectToAction(nameof(Index));
             }
@@ -86,7 +89,7 @@ namespace ComputerStore.WebUI.Controllers
         public async Task<ActionResult> Edit(int id)
         {
             var categories = await _categoryManager.GetAll();
-            var characteristicViewModel = (await _characteristicManager.GetById(id)).CreateCharacteristicViewModel(categories);
+            var characteristicViewModel = MapCharacteristic(await _characteristicManager.GetById(id),categories);
             characteristicViewModel.CategoriesSelectList = new SelectList(await _categoryManager.GetAll(), "Id", "Name");
             return View(characteristicViewModel);
         }
@@ -119,7 +122,7 @@ namespace ComputerStore.WebUI.Controllers
         public async Task<ActionResult> Delete(int id)
         {
             var categories = await _categoryManager.GetAll();
-            var characteristicViewModel = (await _characteristicManager.GetById(id)).CreateCharacteristicViewModel(categories);
+            var characteristicViewModel = MapCharacteristic(await _characteristicManager.GetById(id), categories);
             return View(characteristicViewModel);
         }
 
@@ -139,6 +142,13 @@ namespace ComputerStore.WebUI.Controllers
                 _logger.LogError($"Error occured during deleting characteristic. Exception: {exception.Message}");
                 return View(characteristicViewModel);
             }
+        }
+
+        private CharacteristicViewModel MapCharacteristic(Characteristic characteristic,IEnumerable<Category> categories)
+        {
+           return _mapper.Map<Characteristic, CharacteristicViewModel>(characteristic, 
+                          options => options.AfterMap((src, dest) => dest.CategoryName = 
+                                                                         categories.First(category => category.Id == characteristic.CategoryId).Name));
         }
     }
 }

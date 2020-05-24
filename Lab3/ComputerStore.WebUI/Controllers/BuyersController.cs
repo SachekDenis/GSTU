@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using AutoMapper;
 using ComputerStore.BusinessLogicLayer.Managers;
 using ComputerStore.BusinessLogicLayer.Models;
 using ComputerStore.DataAccessLayer.Models.Identity;
@@ -19,14 +20,18 @@ namespace ComputerStore.WebUI.Controllers
         private readonly BuyerManager _buyerManager;
         private readonly ILogger<BuyersController> _logger;
         private readonly UserManager<IdentityBuyer> _userManager;
+        private readonly IMapper _mapper;
 
-        public BuyersController(BuyerManager buyerManager, 
-                                ILogger<BuyersController> logger,
-                                UserManager<IdentityBuyer> userManager)
+        public BuyersController(
+            BuyerManager buyerManager, 
+            ILogger<BuyersController> logger,
+            UserManager<IdentityBuyer> userManager,
+            IMapper mapper)
         {
             _buyerManager = buyerManager;
             _logger = logger;
             _userManager = userManager;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -36,7 +41,7 @@ namespace ComputerStore.WebUI.Controllers
 
             var buyer = await _buyerManager.GetById(buyerId);
 
-            var buyerViewModel = buyer.CreateBuyerViewModel();
+            var buyerViewModel = _mapper.Map<Buyer, BuyerViewModel>(buyer);
 
             return View(buyerViewModel);
         }
@@ -53,15 +58,7 @@ namespace ComputerStore.WebUI.Controllers
         {
             try
             {
-                var buyer = new Buyer
-                            {
-                                Address = buyerViewModel.Address,
-                                Email = buyerViewModel.Email,
-                                FirstName = buyerViewModel.FirstName,
-                                PhoneNumber = buyerViewModel.PhoneNumber,
-                                SecondName = buyerViewModel.SecondName,
-                                ZipCode = buyerViewModel.ZipCode
-                            };
+                var buyer = _mapper.Map<BuyerViewModel, Buyer>(buyerViewModel);
 
                 await _buyerManager.Add(buyer);
 
@@ -87,7 +84,7 @@ namespace ComputerStore.WebUI.Controllers
 
             var buyer = await _buyerManager.GetById(buyerId);
 
-            var buyerViewModel = buyer.CreateBuyerViewModel();
+            var buyerViewModel = _mapper.Map<Buyer, BuyerViewModel>(buyer);
 
             return View(buyerViewModel);
         }
@@ -98,16 +95,7 @@ namespace ComputerStore.WebUI.Controllers
         {
             try
             {
-                var buyer = new Buyer
-                            {
-                                Id = buyerViewModel.Id,
-                                Address = buyerViewModel.Address,
-                                Email = buyerViewModel.Email,
-                                FirstName = buyerViewModel.FirstName,
-                                PhoneNumber = buyerViewModel.PhoneNumber,
-                                SecondName = buyerViewModel.SecondName,
-                                ZipCode = buyerViewModel.ZipCode
-                            };
+                var buyer = _mapper.Map<BuyerViewModel, Buyer>(buyerViewModel);
 
                 await _buyerManager.Update(buyer);
 

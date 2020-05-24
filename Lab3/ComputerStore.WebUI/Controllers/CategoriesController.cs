@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using ComputerStore.BusinessLogicLayer.Managers;
 using ComputerStore.BusinessLogicLayer.Models;
 using ComputerStore.WebUI.AppConfiguration;
@@ -17,17 +18,22 @@ namespace ComputerStore.WebUI.Controllers
     {
         private readonly CategoryManager _categoryManager;
         private readonly ILogger<CategoriesController> _logger;
+        private readonly IMapper _mapper;
 
-        public CategoriesController(CategoryManager categoryManager, ILogger<CategoriesController> logger)
+        public CategoriesController(
+            CategoryManager categoryManager, 
+            ILogger<CategoriesController> logger, 
+            IMapper mapper)
         {
             _categoryManager = categoryManager;
             _logger = logger;
+            _mapper = mapper;
         }
 
         // GET: Categories
         public async Task<IActionResult> Index()
         {
-            var categoryViewModels = (await _categoryManager.GetAll()).Select(category => category.CreateCategoryViewModel());
+            var categoryViewModels = (await _categoryManager.GetAll()).Select(category => _mapper.Map<Category, CategoryViewModel>(category));
             return View(categoryViewModels);
         }
 
@@ -36,7 +42,7 @@ namespace ComputerStore.WebUI.Controllers
         {
             var category = await _categoryManager.GetById(id);
 
-            var categoryViewModel = category.CreateCategoryViewModel();
+            var categoryViewModel = _mapper.Map<Category, CategoryViewModel>(category);
 
             return View(categoryViewModel);
         }
@@ -54,11 +60,7 @@ namespace ComputerStore.WebUI.Controllers
         {
             try
             {
-                await _categoryManager.Add(new Category
-                                           {
-                                               Id = categoryViewModel.Id,
-                                               Name = categoryViewModel.Name
-                                           });
+                await _categoryManager.Add(_mapper.Map<CategoryViewModel, Category>(categoryViewModel));
 
                 return RedirectToAction(nameof(Index));
             }
@@ -74,7 +76,7 @@ namespace ComputerStore.WebUI.Controllers
         {
             var category = await _categoryManager.GetById(id);
 
-            var categoryViewModel = category.CreateCategoryViewModel();
+            var categoryViewModel = _mapper.Map<Category, CategoryViewModel>(category);
 
             return View(categoryViewModel);
         }
@@ -86,11 +88,7 @@ namespace ComputerStore.WebUI.Controllers
         {
             try
             {
-                await _categoryManager.Update(new Category
-                                              {
-                                                  Id = categoryViewModel.Id,
-                                                  Name = categoryViewModel.Name
-                                              });
+                await _categoryManager.Update(_mapper.Map<CategoryViewModel, Category>(categoryViewModel));
 
                 return RedirectToAction(nameof(Index));
             }
@@ -106,7 +104,7 @@ namespace ComputerStore.WebUI.Controllers
         {
             var category = await _categoryManager.GetById(id);
 
-            var categoryViewModel = category.CreateCategoryViewModel();
+            var categoryViewModel = _mapper.Map<Category, CategoryViewModel>(category);
 
             return View(categoryViewModel);
         }

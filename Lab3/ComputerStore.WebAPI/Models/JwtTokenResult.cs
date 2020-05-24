@@ -1,4 +1,4 @@
-﻿namespace ComputerStore.WebUI.Models.JwtToken
+﻿namespace ComputerStore.WebAPI.Models
 {
     public class JwtTokenResult
     {

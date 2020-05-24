@@ -5,42 +5,43 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using ComputerStore.DataAccessLayer.Models.Identity;
+using ComputerStore.WebAPI.Models;
 using ComputerStore.WebUI.AppConfiguration;
-using ComputerStore.WebUI.Models;
-using ComputerStore.WebUI.Models.JwtToken;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 
-namespace ComputerStore.WebUI.ApiControllers
+namespace ComputerStore.WebAPI.Controllers.v1
 {
-    [Route("api/authorization")]
+    [ApiVersion("1")]
     [ApiController]
-    public class AuthorizationApiController : ControllerBase
+    [Route("api/v{version:apiVersion}/[controller]")]
+    public class AuthorizationController : ControllerBase
     {
         private readonly SignInManager<IdentityBuyer> _signInManager;
         private readonly UserManager<IdentityBuyer> _userManager;
 
-        public AuthorizationApiController(UserManager<IdentityBuyer> userManager, 
-                                          SignInManager<IdentityBuyer> signInManager)
+        public AuthorizationController(
+            UserManager<IdentityBuyer> userManager, 
+            SignInManager<IdentityBuyer> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
         }
 
-        [HttpGet("createtoken")]
-        public async Task<JwtTokenResult> CreateToken([FromQuery] LoginViewModel loginViewModel)
+        [HttpGet]
+        public async Task<JwtTokenResult> CreateToken([FromQuery] Login login)
         {
-            var user = await _userManager.FindByEmailAsync(loginViewModel.Email);
-            var result = await _signInManager.CheckPasswordSignInAsync(user, loginViewModel.Password, false);
+            var user = await _userManager.FindByEmailAsync(login.Email);
+            var result = await _signInManager.CheckPasswordSignInAsync(user, login.Password, false);
 
             var roleClaims = (await _userManager.GetRolesAsync(user)).Select(role => new Claim(ClaimTypes.Role, role));
 
             var claims = new[]
                          {
-                             new Claim(JwtRegisteredClaimNames.Sub, loginViewModel.Email),
+                             new Claim(JwtRegisteredClaimNames.Sub, login.Email),
                              new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                             new Claim(JwtRegisteredClaimNames.UniqueName, loginViewModel.Email),
+                             new Claim(JwtRegisteredClaimNames.UniqueName, login.Email),
                              new Claim(BuyerClaim.BuyerId, user.BuyerId.ToString()), 
                          };
 
@@ -64,11 +65,11 @@ namespace ComputerStore.WebUI.ApiControllers
             return null;
         }
 
-        [HttpPost("register")]
-        public async Task<StatusCodeResult> Register([FromBody] LoginViewModel loginViewModel)
+        [HttpPost]
+        public async Task<StatusCodeResult> Register([FromBody] Login login)
         {
-            var user = new IdentityBuyer { UserName = loginViewModel.Email, Email = loginViewModel.Email };
-            var result = await _userManager.CreateAsync(user, loginViewModel.Password);
+            var user = new IdentityBuyer {UserName = login.Email, Email = login.Email};
+            var result = await _userManager.CreateAsync(user, login.Password);
 
             if (result.Succeeded)
             {
