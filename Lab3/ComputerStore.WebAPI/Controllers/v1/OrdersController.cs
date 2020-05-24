@@ -90,7 +90,7 @@ namespace ComputerStore.WebAPI.Controllers.v1
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<ActionResult<Order>> Details(int id)
+        public async Task<ActionResult<Order>> Get(int id)
         {
             try
             {
@@ -107,7 +107,7 @@ namespace ComputerStore.WebAPI.Controllers.v1
 
         [Authorize(Roles = RolesNames.Admin, AuthenticationSchemes = JwtInfo.AuthSchemes)]
         [HttpPut]
-        public async Task<ActionResult<Order>> Edit(Order order)
+        public async Task<ActionResult<Order>> Put(Order order)
         {
             try
             {

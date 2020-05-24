@@ -54,7 +54,7 @@ namespace ComputerStore.WebAPI.Controllers.v1
 
 
         [HttpPost]
-        public async Task<ActionResult<Characteristic>> Create([FromBody] Characteristic characteristic)
+        public async Task<ActionResult<Characteristic>> Post([FromBody] Characteristic characteristic)
         {
             try
             {
@@ -70,7 +70,7 @@ namespace ComputerStore.WebAPI.Controllers.v1
         }
 
         [HttpPut]
-        public async Task<ActionResult<Characteristic>> Edit([FromBody] Characteristic characteristic)
+        public async Task<ActionResult<Characteristic>> Put([FromBody] Characteristic characteristic)
         {
             try
             {
