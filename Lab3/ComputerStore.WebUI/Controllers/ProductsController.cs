@@ -245,16 +245,6 @@ namespace ComputerStore.WebUI.Controllers
                                                                Value = formPair.Value
                                                            });
 
-            var product = MapProductViewModel(productViewModel);
-            product.Fields = fields;
-
-            return product;
-        }
-
-        private Product MapProductViewModel(ProductViewModel productViewModel)
-        {
-            var fields = productViewModel.Fields.Select(fieldViewModel => _mapper.Map<FieldViewModel,Field>(fieldViewModel));
-
             var product = _mapper.Map<ProductViewModel, Product>(productViewModel);
             product.Fields = fields;
 
