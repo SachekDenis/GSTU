@@ -2,7 +2,7 @@
 
 namespace ComputerStore.WebAPI.Models
 {
-    public class JwtInfo
+    public static class JwtInfo
     {
         public const string Issuer = "Store";
         public const string Audience = "ApiUser";

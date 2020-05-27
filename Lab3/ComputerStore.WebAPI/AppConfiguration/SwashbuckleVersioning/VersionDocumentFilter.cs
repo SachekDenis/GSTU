@@ -3,7 +3,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace ComputerStore.WebAPI.AppConfiguration.SwashbuckleVersioning
 {
-    public class ReplaceVersionWithExactValueInPath : IDocumentFilter
+    public class VersionDocumentFilter : IDocumentFilter
     {
         public void Apply(OpenApiDocument swaggerDoc, DocumentFilterContext context)
         {

@@ -38,9 +38,9 @@ namespace ComputerStore.WebAPI.AppConfiguration
                                    {
                                        swagger.SwaggerDoc("v1", new OpenApiInfo {Title = "Store Api", Version = "v1"});
 
-                                       swagger.OperationFilter<RemoveVersionFromParameter>();
+                                       swagger.OperationFilter<VersionOperationFilter>();
 
-                                       swagger.DocumentFilter<ReplaceVersionWithExactValueInPath>();
+                                       swagger.DocumentFilter<VersionDocumentFilter>();
 
                                        swagger.DocInclusionPredicate((version, desc) =>
                                                                      {

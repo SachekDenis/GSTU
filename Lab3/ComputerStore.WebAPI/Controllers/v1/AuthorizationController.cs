@@ -9,6 +9,7 @@ using ComputerStore.WebAPI.Models;
 using ComputerStore.WebUI.AppConfiguration;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 
 namespace ComputerStore.WebAPI.Controllers.v1
@@ -20,65 +21,60 @@ namespace ComputerStore.WebAPI.Controllers.v1
     {
         private readonly SignInManager<IdentityBuyer> _signInManager;
         private readonly UserManager<IdentityBuyer> _userManager;
+        private readonly ILogger<AuthorizationController> _logger;
 
         public AuthorizationController(
             UserManager<IdentityBuyer> userManager, 
-            SignInManager<IdentityBuyer> signInManager)
+            SignInManager<IdentityBuyer> signInManager,
+            ILogger<AuthorizationController> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _logger = logger;
         }
 
         [HttpGet]
-        public async Task<JwtTokenResult> CreateToken([FromQuery] Login login)
+        public async Task<ActionResult<JwtTokenResult>> Token([FromQuery] Login login)
         {
-            var user = await _userManager.FindByEmailAsync(login.Email);
-            var result = await _signInManager.CheckPasswordSignInAsync(user, login.Password, false);
-
-            var roleClaims = (await _userManager.GetRolesAsync(user)).Select(role => new Claim(ClaimTypes.Role, role));
-
-            var claims = new[]
-                         {
-                             new Claim(JwtRegisteredClaimNames.Sub, login.Email),
-                             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                             new Claim(JwtRegisteredClaimNames.UniqueName, login.Email),
-                             new Claim(BuyerClaim.BuyerId, user.BuyerId.ToString()), 
-                         };
-
-            claims = claims.Concat(roleClaims).ToArray();
-
-            if (result.Succeeded)
+            try
             {
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtInfo.Key));
-                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                var user = await _userManager.FindByEmailAsync(login.Email);
+                var result = await _signInManager.CheckPasswordSignInAsync(user, login.Password, false);
 
-                var token = new JwtSecurityToken(JwtInfo.Issuer, JwtInfo.Audience, claims, expires: DateTime.Now.AddHours(1), signingCredentials: creds);
+                var roleClaims = (await _userManager.GetRolesAsync(user)).Select(role => new Claim(ClaimTypes.Role, role));
 
-                var tokenResult = new JwtTokenResult
-                                  {
-                                      Token = new JwtSecurityTokenHandler().WriteToken(token)
-                                  };
+                var claims = new[]
+                             {
+                                 new Claim(JwtRegisteredClaimNames.Sub, login.Email),
+                                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                                 new Claim(JwtRegisteredClaimNames.UniqueName, login.Email),
+                                 new Claim(BuyerClaim.BuyerId, user.BuyerId.ToString()), 
+                             };
 
-                return tokenResult;
+                claims = claims.Concat(roleClaims).ToArray();
+
+                if (result.Succeeded)
+                {
+                    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtInfo.Key));
+                    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+                    var token = new JwtSecurityToken(JwtInfo.Issuer, JwtInfo.Audience, claims, expires: DateTime.Now.AddHours(1), signingCredentials: creds);
+
+                    var tokenResult = new JwtTokenResult
+                                      {
+                                          Token = new JwtSecurityTokenHandler().WriteToken(token)
+                                      };
+
+                    return tokenResult;
+                }
+
+                return BadRequest();
             }
-
-            return null;
-        }
-
-        [HttpPost]
-        public async Task<StatusCodeResult> Register([FromBody] Login login)
-        {
-            var user = new IdentityBuyer {UserName = login.Email, Email = login.Email};
-            var result = await _userManager.CreateAsync(user, login.Password);
-
-            if (result.Succeeded)
+            catch (Exception exception)
             {
-                await _userManager.AddToRoleAsync(user, RolesNames.User);
-                await _signInManager.SignInAsync(user, isPersistent: false);
-                return Ok();
+                _logger.LogError($"Error occured during creating token. Exception: {exception.Message}");
+                return BadRequest();
             }
-
-            return BadRequest();
         }
     }
 }

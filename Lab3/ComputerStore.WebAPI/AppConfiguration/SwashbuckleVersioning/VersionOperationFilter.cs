@@ -4,7 +4,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace ComputerStore.WebAPI.AppConfiguration.SwashbuckleVersioning
 {
-    public class RemoveVersionFromParameter : IOperationFilter
+    public class VersionOperationFilter : IOperationFilter
     {
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
