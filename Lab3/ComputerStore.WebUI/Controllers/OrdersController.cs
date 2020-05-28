@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using ComputerStore.BusinessLogicLayer.Managers;
 using ComputerStore.BusinessLogicLayer.Models;
 using ComputerStore.DataAccessLayer.Models.Identity;
 using ComputerStore.WebUI.AppConfiguration;
+using ComputerStore.WebUI.Mappers;
 using ComputerStore.WebUI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -22,19 +24,22 @@ namespace ComputerStore.WebUI.Controllers
         private readonly OrderManager _orderManager;
         private readonly ProductManager _productManager;
         private readonly UserManager<IdentityBuyer> _userManager;
+        private readonly IMapper _mapper;
 
         public OrdersController(
             ProductManager productManager,
             BuyerManager buyerManager,
             OrderManager orderManager,
             ILogger<OrdersController> logger,
-            UserManager<IdentityBuyer> userManager)
+            UserManager<IdentityBuyer> userManager,
+            IMapper mapper)
         {
             _productManager = productManager;
             _buyerManager = buyerManager;
             _orderManager = orderManager;
             _logger = logger;
             _userManager = userManager;
+            _mapper = mapper;
         }
 
         public async Task<IActionResult> Index()
@@ -45,20 +50,19 @@ namespace ComputerStore.WebUI.Controllers
 
             if (User.IsInRole(RolesNames.Admin))
             {
-                var orderViewModels = orders.Select(order => CreateOrderViewModel(order, buyers, products));
+                var orderViewModels = orders.Select(order => MapOrder(order, buyers, products));
                 return View(orderViewModels);
             }
             else
             {
                 var buyerId = (await _userManager.GetUserAsync(User)).BuyerId;
-                var orderViewModels = orders.Where(order => order.BuyerId == buyerId).Select(order => CreateOrderViewModel(order, buyers, products));
+                var orderViewModels = orders.Where(order => order.BuyerId == buyerId).Select(order => MapOrder(order, buyers, products));
                 return View(orderViewModels);
             }
         }
 
         [HttpGet]
-        public async Task<IActionResult> Buy(
-            int productId)
+        public async Task<IActionResult> Buy(int productId)
         {
             var product = await _productManager.GetById(productId);
 
@@ -73,8 +77,7 @@ namespace ComputerStore.WebUI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Buy(
-            PurchaseViewModel purchaseViewModel)
+        public async Task<IActionResult> Buy(PurchaseViewModel purchaseViewModel)
         {
             try
             {
@@ -113,7 +116,7 @@ namespace ComputerStore.WebUI.Controllers
             var products = await _productManager.GetAll();
 
             var order = await _orderManager.GetById(id);
-            var orderViewModel = CreateOrderViewModel(order, buyers, products);
+            var orderViewModel = MapOrder(order, buyers, products);
 
             return View(orderViewModel);
         }
@@ -153,21 +156,14 @@ namespace ComputerStore.WebUI.Controllers
             }
         }
 
-        private OrderViewModel CreateOrderViewModel(
-            Order order,
-            IEnumerable<Buyer> buyers,
-            IEnumerable<Product> products)
+        private OrderViewModel MapOrder(Order order, IEnumerable<Buyer> buyers, IEnumerable<Product> products)
         {
-            return new OrderViewModel
-                   {
-                       Amount = order.Amount,
-                       BuyerId = order.BuyerId,
-                       BuyerName = buyers.First(buyer => buyer.Id == order.BuyerId).FirstName,
-                       OrderStatus = order.OrderStatus,
-                       Id = order.Id,
-                       ProductId = order.ProductId,
-                       ProductName = products.First(product => product.Id == order.ProductId).Name
-                   };
+            return _mapper.Map<Order, OrderViewModel>(order, 
+                                                      options => options.AfterMap((src, dest) =>
+                                                                                  {
+                                                                                      dest.BuyerName = buyers.First(buyer => buyer.Id == order.BuyerId).FirstName;
+                                                                                      dest.ProductName = products.First(product => product.Id == order.ProductId).Name;
+                                                                                  }));
         }
     }
 }

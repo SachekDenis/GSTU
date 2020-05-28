@@ -4,6 +4,7 @@ using ComputerStore.BusinessLogicLayer.MapperProfile;
 using ComputerStore.DataAccessLayer.Context;
 using ComputerStore.DataAccessLayer.Models.Identity;
 using ComputerStore.DataAccessLayer.Repo;
+using ComputerStore.WebUI.Mappers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -26,7 +27,7 @@ namespace ComputerStore.WebUI.AppConfiguration
                                       .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Validator")))
                                       .AsImplementedInterfaces()
                                       .WithTransientLifetime())
-                    .AddAutoMapper(typeof(StoreProfile))
+                    .AddAutoMapper(typeof(StoreProfile), typeof(ViewModelsProfile))
                     .AddScoped(typeof(IRepository<>), typeof(StoreRepository<>));
 
             services.AddIdentity<IdentityBuyer, IdentityRole>(options => { options.Password.RequireNonAlphanumeric = false; })

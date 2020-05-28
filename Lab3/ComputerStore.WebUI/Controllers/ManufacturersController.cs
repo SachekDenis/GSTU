@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using ComputerStore.BusinessLogicLayer.Managers;
 using ComputerStore.BusinessLogicLayer.Models;
 using ComputerStore.WebUI.AppConfiguration;
+using ComputerStore.WebUI.Mappers;
 using ComputerStore.WebUI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,17 +18,22 @@ namespace ComputerStore.WebUI.Controllers
     {
         private readonly ILogger<ManufacturersController> _logger;
         private readonly ManufacturerManager _manufacturerManager;
+        private readonly IMapper _mapper;
 
-        public ManufacturersController(ManufacturerManager manufacturerManager, ILogger<ManufacturersController> logger)
+        public ManufacturersController(ManufacturerManager manufacturerManager, 
+                                       ILogger<ManufacturersController> logger, 
+                                       IMapper mapper)
         {
             _manufacturerManager = manufacturerManager;
             _logger = logger;
+            _mapper = mapper;
         }
 
         // GET: Manufacturers
         public async Task<IActionResult> Index()
         {
-            var manufacturerViewModels = (await _manufacturerManager.GetAll()).Select(CreateManufacturerViewModel);
+            var manufacturerViewModels = (await _manufacturerManager.GetAll()).Select(manufacturer =>
+                                                                                          _mapper.Map<Manufacturer, ManufacturerViewModel>(manufacturer));
 
             return View(manufacturerViewModels);
         }
@@ -36,7 +43,7 @@ namespace ComputerStore.WebUI.Controllers
         {
             var manufacturer = await _manufacturerManager.GetById(id);
 
-            var manufacturerViewModel = CreateManufacturerViewModel(manufacturer);
+            var manufacturerViewModel = _mapper.Map<Manufacturer, ManufacturerViewModel>(manufacturer);
 
             return View(manufacturerViewModel);
         }
@@ -54,12 +61,7 @@ namespace ComputerStore.WebUI.Controllers
         {
             try
             {
-                await _manufacturerManager.Add(new Manufacturer
-                                               {
-                                                   Country = manufacturerViewModel.Country,
-                                                   Id = manufacturerViewModel.Id,
-                                                   Name = manufacturerViewModel.Name
-                                               });
+                await _manufacturerManager.Add(_mapper.Map<ManufacturerViewModel,Manufacturer>(manufacturerViewModel));
 
                 return RedirectToAction(nameof(Index));
             }
@@ -75,7 +77,7 @@ namespace ComputerStore.WebUI.Controllers
         {
             var manufacturer = await _manufacturerManager.GetById(id);
 
-            var manufacturerViewModel = CreateManufacturerViewModel(manufacturer);
+            var manufacturerViewModel = _mapper.Map<Manufacturer, ManufacturerViewModel>(manufacturer);
 
             return View(manufacturerViewModel);
         }
@@ -87,12 +89,7 @@ namespace ComputerStore.WebUI.Controllers
         {
             try
             {
-                await _manufacturerManager.Update(new Manufacturer
-                                                  {
-                                                      Country = manufacturerViewModel.Country,
-                                                      Id = manufacturerViewModel.Id,
-                                                      Name = manufacturerViewModel.Name
-                                                  });
+                await _manufacturerManager.Update(_mapper.Map<ManufacturerViewModel, Manufacturer>(manufacturerViewModel));
 
                 return RedirectToAction(nameof(Index));
             }
@@ -109,7 +106,7 @@ namespace ComputerStore.WebUI.Controllers
         {
             var manufacturer = await _manufacturerManager.GetById(id);
 
-            var manufacturerViewModel = CreateManufacturerViewModel(manufacturer);
+            var manufacturerViewModel = _mapper.Map<Manufacturer, ManufacturerViewModel>(manufacturer);
 
             return View(manufacturerViewModel);
         }
@@ -130,16 +127,6 @@ namespace ComputerStore.WebUI.Controllers
                 _logger.LogError($"Error occured during deleting manufacturer. Exception: {exception.Message}");
                 return View(manufacturerViewModel);
             }
-        }
-
-        private ManufacturerViewModel CreateManufacturerViewModel(Manufacturer manufacturer)
-        {
-            return new ManufacturerViewModel
-                   {
-                       Country = manufacturer.Country,
-                       Id = manufacturer.Id,
-                       Name = manufacturer.Name
-                   };
         }
     }
 }

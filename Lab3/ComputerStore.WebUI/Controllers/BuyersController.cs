@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
+using AutoMapper;
 using ComputerStore.BusinessLogicLayer.Managers;
 using ComputerStore.BusinessLogicLayer.Models;
 using ComputerStore.DataAccessLayer.Models.Identity;
 using ComputerStore.WebUI.AppConfiguration;
+using ComputerStore.WebUI.Mappers;
 using ComputerStore.WebUI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -18,14 +20,18 @@ namespace ComputerStore.WebUI.Controllers
         private readonly BuyerManager _buyerManager;
         private readonly ILogger<BuyersController> _logger;
         private readonly UserManager<IdentityBuyer> _userManager;
+        private readonly IMapper _mapper;
 
-        public BuyersController(BuyerManager buyerManager, 
-                                ILogger<BuyersController> logger,
-                                UserManager<IdentityBuyer> userManager)
+        public BuyersController(
+            BuyerManager buyerManager, 
+            ILogger<BuyersController> logger,
+            UserManager<IdentityBuyer> userManager,
+            IMapper mapper)
         {
             _buyerManager = buyerManager;
             _logger = logger;
             _userManager = userManager;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -35,7 +41,7 @@ namespace ComputerStore.WebUI.Controllers
 
             var buyer = await _buyerManager.GetById(buyerId);
 
-            var buyerViewModel = CreateBuyerViewModel(buyer);
+            var buyerViewModel = _mapper.Map<Buyer, BuyerViewModel>(buyer);
 
             return View(buyerViewModel);
         }
@@ -52,15 +58,7 @@ namespace ComputerStore.WebUI.Controllers
         {
             try
             {
-                var buyer = new Buyer
-                            {
-                                Address = buyerViewModel.Address,
-                                Email = buyerViewModel.Email,
-                                FirstName = buyerViewModel.FirstName,
-                                PhoneNumber = buyerViewModel.PhoneNumber,
-                                SecondName = buyerViewModel.SecondName,
-                                ZipCode = buyerViewModel.ZipCode
-                            };
+                var buyer = _mapper.Map<BuyerViewModel, Buyer>(buyerViewModel);
 
                 await _buyerManager.Add(buyer);
 
@@ -86,7 +84,7 @@ namespace ComputerStore.WebUI.Controllers
 
             var buyer = await _buyerManager.GetById(buyerId);
 
-            var buyerViewModel = CreateBuyerViewModel(buyer);
+            var buyerViewModel = _mapper.Map<Buyer, BuyerViewModel>(buyer);
 
             return View(buyerViewModel);
         }
@@ -97,16 +95,7 @@ namespace ComputerStore.WebUI.Controllers
         {
             try
             {
-                var buyer = new Buyer
-                            {
-                                Id = buyerViewModel.Id,
-                                Address = buyerViewModel.Address,
-                                Email = buyerViewModel.Email,
-                                FirstName = buyerViewModel.FirstName,
-                                PhoneNumber = buyerViewModel.PhoneNumber,
-                                SecondName = buyerViewModel.SecondName,
-                                ZipCode = buyerViewModel.ZipCode
-                            };
+                var buyer = _mapper.Map<BuyerViewModel, Buyer>(buyerViewModel);
 
                 await _buyerManager.Update(buyer);
 
@@ -117,20 +106,6 @@ namespace ComputerStore.WebUI.Controllers
                 _logger.LogError($"Error occured during updating buyer. Exception: {exception.Message}");
                 return View(buyerViewModel);
             }
-        }
-
-        private BuyerViewModel CreateBuyerViewModel(Buyer buyer)
-        {
-            return new BuyerViewModel
-                   {
-                       Id = buyer.Id,
-                       Address = buyer.Address,
-                       Email = buyer.Email,
-                       FirstName = buyer.FirstName,
-                       PhoneNumber = buyer.PhoneNumber,
-                       SecondName = buyer.SecondName,
-                       ZipCode = buyer.ZipCode
-                   };
         }
     }
 }
