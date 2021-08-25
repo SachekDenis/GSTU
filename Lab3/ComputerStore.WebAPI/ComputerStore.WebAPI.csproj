@@ -7,7 +7,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Lab2\ComputerStore.BusinessLogicLayer\ComputerStore.BusinessLogicLayer.csproj" />
     <ProjectReference Include="..\ComputerStore.WebUI\ComputerStore.WebUI.csproj" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.18" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="4.1.1" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.5.1" />
